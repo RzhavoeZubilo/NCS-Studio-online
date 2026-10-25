@@ -6,7 +6,6 @@ import { t } from '@/lib/i18n'
 
 export function EmptyState() {
   const lang = useStore((s) => s.lang)
-  const hasDb = useStore((s) => !!s.translations)
   const inputRef = useRef<HTMLInputElement>(null)
   const openFile = useStore((s) => s.openFile)
 
@@ -32,7 +31,7 @@ export function EmptyState() {
           <Upload className="h-4 w-4" /> {t(lang, 'chooseFile')}
         </button>
         <p className="mt-6 text-xs text-faint2">
-          {t(lang, hasDb ? 'translationsTip' : 'translationsTipMissing')}
+          {t(lang, 'translationsTip')}
         </p>
         <input
           ref={inputRef}

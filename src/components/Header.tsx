@@ -57,7 +57,6 @@ function Btn({
 export function Header() {
   const doc = useStore((s) => s.doc)
   const openFile = useStore((s) => s.openFile)
-  const translations = useStore((s) => s.translations)
   const showToast = useStore((s) => s.showToast)
   const view = useStore((s) => s.view)
   const setView = useStore((s) => s.setView)
@@ -222,11 +221,6 @@ export function Header() {
           className="inline-flex items-center gap-1.5 whitespace-nowrap rounded-lg border border-line bg-panel px-3 py-1.5 text-sm text-fg2 transition-colors hover:bg-panel2 hover:text-fg"
         >
           <Settings className="h-4 w-4" />
-          {translations && (
-            <span className="rounded-full bg-emerald-500/15 px-1.5 text-xs text-emerald-600">
-              {translations.size}
-            </span>
-          )}
         </button>
       </div>
 

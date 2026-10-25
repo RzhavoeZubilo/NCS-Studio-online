@@ -1,9 +1,6 @@
-import { useRef } from 'react'
-import type { ChangeEvent } from 'react'
-import { Languages, Trash2, X } from 'lucide-react'
+import { Trash2, X } from 'lucide-react'
 import { useStore } from '@/state/store'
 import { t } from '@/lib/i18n'
-import { readTextSmart } from '@/lib/fileio'
 
 function Segment({
   options,
@@ -43,21 +40,7 @@ export function SettingsPanel({ onClose }: { onClose: () => void }) {
   const setLang = useStore((s) => s.setLang)
   const paramLang = useStore((s) => s.paramLang)
   const setParamLang = useStore((s) => s.setParamLang)
-  const translations = useStore((s) => s.translations)
-  const translationsFile = useStore((s) => s.translationsFile)
-  const translationsFromCache = useStore((s) => s.translationsFromCache)
-  const loadTranslations = useStore((s) => s.loadTranslations)
-  const clearTranslations = useStore((s) => s.clearTranslations)
   const showToast = useStore((s) => s.showToast)
-  const inputRef = useRef<HTMLInputElement>(null)
-
-  const onCsv = async (e: ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0]
-    e.target.value = ''
-    if (!file) return
-    loadTranslations(file.name, await readTextSmart(file))
-    showToast(t(lang, 'translationsLoaded'))
-  }
 
   const field = 'text-xs font-medium uppercase tracking-wide text-faint'
 
@@ -95,62 +78,21 @@ export function SettingsPanel({ onClose }: { onClose: () => void }) {
             <Segment
               options={[
                 { value: 'original', label: lang === 'ru' ? 'Оригинал' : 'Original' },
-                { value: 'en', label: 'EN' },
-                { value: 'ru', label: 'RU' },
+                { value: 'ru', label: 'Русский' },
               ]}
               value={paramLang}
               onChange={(v) => setParamLang(v as typeof paramLang)}
             />
           </div>
+          <p className="mt-1.5 text-xs leading-relaxed text-faint2">
+            {lang === 'ru'
+              ? 'Русский язык — встроенный словарь терминов BMW + ваши дополнения из режима «Словарь».'
+              : 'Russian uses the built-in BMW term dictionary plus your additions from the Dictionary view.'}
+          </p>
         </div>
 
         <div>
-          <div className={field}>{t(lang, 'translationsDb')}</div>
-          <div className="mt-1.5 flex items-center gap-2 text-sm">
-            {translations ? (
-              <>
-                <Languages className="h-4 w-4 shrink-0 text-emerald-500" />
-                <span className="min-w-0 flex-1 truncate text-fg2">
-                  {translations.size} {t(lang, 'entries')} · {translationsFile}
-                  {translationsFromCache ? ` (${t(lang, 'fromCache')})` : ''}
-                </span>
-              </>
-            ) : (
-              <span className="text-faint">{t(lang, 'dbNotLoaded')}</span>
-            )}
-          </div>
-          <div className="mt-2 flex items-center gap-2">
-            <button
-              type="button"
-              onClick={() => inputRef.current?.click()}
-              className="rounded-lg border border-line bg-panel px-3 py-1.5 text-sm text-fg2 transition-colors hover:bg-panel2 hover:text-fg"
-            >
-              {t(lang, 'importFile')}
-            </button>
-            {translations && (
-              <button
-                type="button"
-                onClick={() => {
-                  void clearTranslations()
-                  showToast(t(lang, 'translationsCleared'))
-                }}
-                className="inline-flex items-center gap-1.5 whitespace-nowrap rounded-lg border border-line bg-panel px-3 py-1.5 text-sm text-mut transition-colors hover:bg-panel2 hover:text-fg"
-              >
-                <Trash2 className="h-3.5 w-3.5" /> {t(lang, 'clearDb')}
-              </button>
-            )}
-          </div>
-          <input
-            ref={inputRef}
-            type="file"
-            accept=".csv"
-            className="hidden"
-            onChange={(e) => void onCsv(e)}
-          />
-        </div>
-
-        <div>
-          <div className={field}>{lang === 'ru' ? 'Русский словарь (оверлей)' : 'Russian dictionary (overlay)'}</div>
+          <div className={field}>{lang === 'ru' ? 'Ваши дополнения (оверлей)' : 'Your additions (overlay)'}</div>
           <div className="mt-1.5 flex items-center gap-2 text-sm">
             <span className="min-w-0 flex-1 truncate text-fg2">
               {overlay

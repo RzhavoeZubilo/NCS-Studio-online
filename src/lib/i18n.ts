@@ -29,12 +29,8 @@ const DICT = {
   ],
   chooseFile: ['Choose file', 'Выбрать файл'],
   translationsTip: [
-    'English parameter names are available — manage the database in Settings.',
-    'Английские имена параметров доступны — база управляется в Настройках.',
-  ],
-  translationsTipMissing: [
-    'Tip: load a translations database (e.g. NCS Dummy Translations.csv) in Settings to see English names.',
-    'Подсказка: загрузите базу переводов (например, Translations.csv из NCS Dummy) в Настройках — появятся английские имена.',
+    'Russian parameter names use the built-in BMW term dictionary; add your own in the Dictionary view.',
+    'Русские описания параметров — встроенный словарь терминов BMW; свои дополнения — в режиме «Словарь».',
   ],
   openPrgFile: ['Open an EDIABAS .prg file', 'Откройте EDIABAS .prg файл'],
   dropPrg: [

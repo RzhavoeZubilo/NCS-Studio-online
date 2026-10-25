@@ -1,11 +1,12 @@
 import { create } from 'zustand'
 import { dominantIndent, parseTrc, type Segment, type TrcDocument } from '@/lib/trc'
-import { parseTranslationsCsv, parseCsv, type TranslationMap } from '@/lib/translations'
 import { readTextSmart } from '@/lib/fileio'
 import { parsePrg, type PrgFile } from '@/lib/prg'
 import { idbDel, idbGet, idbSet } from '@/lib/idb'
 import { indexSpDatenItems, readSpDatenFiles, type SpDatenIndex } from '@/lib/spdaten'
+import { parseCsv } from '@/lib/translations'
 import { mapFunctionNames, countSharedFunctions, pickModule } from '@/lib/ncsdata'
+import { translateFunctionName, translateValue } from '@/lib/ruTranslate'
 import type { Lang } from '@/lib/i18n'
 import { KdCanSerial, probeAdapter, type AdapterProbeResult } from '@/lib/serial'
 import {
@@ -16,14 +17,12 @@ import {
   type FoundEcu,
 } from '@/lib/carscan'
 
-type ParamLang = 'original' | 'en' | 'ru'
+type ParamLang = 'original' | 'ru'
 type Theme = 'dark' | 'light'
 type View = 'coding' | 'prg' | 'modules' | 'dict' | 'fa'
 
 interface AppState {
   doc: TrcDocument | null
-  translations: TranslationMap | null
-  translationsFile: string
   selected: number | null
   query: string
   changedOnly: boolean
@@ -31,7 +30,6 @@ interface AppState {
   toast: string | null
 
   openFile: (file: File) => Promise<void>
-  loadTranslations: (fileName: string, content: string) => void
   setQuery: (query: string) => void
   setChangedOnly: (value: boolean) => void
   select: (index: number | null) => void
@@ -47,13 +45,11 @@ interface AppState {
   prgActive: string | null
   prgJob: number | null
   prgTable: number | null
-  translationsFromCache: boolean
 
   spDaten: SpDatenIndex | null
   spDatenModule: string | null
   spDatenStatus: string | null
   lang: Lang
-  showTranslations: boolean
   settingsOpen: boolean
   theme: Theme
   paramLang: ParamLang
@@ -78,13 +74,10 @@ interface AppState {
   selectPrg: (name: string) => void
   selectPrgJob: (index: number | null) => void
   selectPrgTable: (index: number | null) => void
-  restoreTranslations: () => Promise<void>
-  clearTranslations: () => Promise<void>
   openSpDatenFolder: () => Promise<void>
   openSpDatenFiles: (files: File[]) => Promise<void>
   selectSpDatenModule: (name: string) => void
   setLang: (lang: Lang) => void
-  setShowTranslations: (show: boolean) => void
   setSettingsOpen: (open: boolean) => void
   setTheme: (theme: Theme) => void
   setParamLang: (lang: ParamLang) => void
@@ -109,8 +102,6 @@ let cancelScanFlag = false
 
 export const useStore = create<AppState>((set, get) => ({
   doc: null,
-  translations: null,
-  translationsFile: '',
   selected: null,
   query: '',
   changedOnly: false,
@@ -121,15 +112,13 @@ export const useStore = create<AppState>((set, get) => ({
   prgActive: null,
   prgJob: null,
   prgTable: null,
-  translationsFromCache: false,
   spDaten: null,
   spDatenModule: null,
   spDatenStatus: null,
   lang: (localStorage.getItem('lang') as Lang) || 'en',
-  showTranslations: true,
   settingsOpen: false,
   theme: (localStorage.getItem('theme') as Theme) || 'dark',
-  paramLang: (localStorage.getItem('paramLang') as ParamLang) || 'en',
+  paramLang: (localStorage.getItem('paramLang') as ParamLang) || 'ru',
   linkedModule: null,
   overlay: null,
   overlayFile: '',
@@ -151,7 +140,6 @@ export const useStore = create<AppState>((set, get) => ({
     localStorage.setItem('lang', lang)
     set({ lang })
   },
-  setShowTranslations: (showTranslations) => set({ showTranslations }),
   setSettingsOpen: (settingsOpen) => set({ settingsOpen }),
   setTheme: (theme) => {
     localStorage.setItem('theme', theme)
@@ -348,10 +336,6 @@ export const useStore = create<AppState>((set, get) => ({
       return
     }
     const content = await readTextSmart(file)
-    if (/\btranslations\b/i.test(file.name)) {
-      get().loadTranslations(file.name, content)
-      return
-    }
     set({
       doc: parseTrc(content, file.name),
       selected: null,
@@ -359,16 +343,6 @@ export const useStore = create<AppState>((set, get) => ({
       changedOnly: false,
       pendingScroll: null,
     })
-  },
-
-  loadTranslations: (fileName, content) => {
-    set({
-      translations: parseTranslationsCsv(content),
-      translationsFile: fileName,
-      translationsFromCache: false,
-    })
-    // Remember for next sessions (NCS Dummy-style: translations are always there).
-    void idbSet('translations', { fileName, content, savedAt: Date.now() })
   },
 
   setQuery: (query) => set({ query }),
@@ -451,28 +425,6 @@ export const useStore = create<AppState>((set, get) => ({
   selectPrg: (prgActive) => set({ prgActive, prgJob: null, prgTable: null }),
   selectPrgJob: (prgJob) => set({ prgJob }),
   selectPrgTable: (prgTable) => set({ prgTable }),
-
-  restoreTranslations: async () => {
-    try {
-      const saved = await idbGet<{ fileName: string; content: string; savedAt: number }>(
-        'translations',
-      )
-      if (saved?.content) {
-        set({
-          translations: parseTranslationsCsv(saved.content),
-          translationsFile: saved.fileName,
-          translationsFromCache: true,
-        })
-      }
-    } catch {
-      // No cached translations — stay unloaded.
-    }
-  },
-
-  clearTranslations: async () => {
-    await idbDel('translations')
-    set({ translations: null, translationsFile: '', translationsFromCache: false })
-  },
 
   openSpDatenFolder: async () => {
     const picker = (
@@ -558,17 +510,16 @@ export const useStore = create<AppState>((set, get) => ({
 
 /** Hook: parameter translation honoring parameter language and the RU overlay. */
 export function useTranslator() {
-  const en = useStore((s) => s.translations)
-  const show = useStore((s) => s.showTranslations)
   const paramLang = useStore((s) => s.paramLang)
   const overlay = useStore((s) => s.overlay)
   return (token: string): string | undefined => {
-    if (!show || paramLang === 'original') return undefined
+    if (paramLang === 'original') return undefined
     const key = token.trim().toLowerCase()
-    if (paramLang === 'ru' && overlay) {
-      const ru = overlay[key]
-      if (ru) return ru
-    }
-    return en?.get(key)
+    const own = overlay?.[key]
+    if (own) return own
+    const fn = translateFunctionName(token)
+    if (fn !== token) return fn
+    const val = translateValue(token)
+    return val !== token ? val : undefined
   }
 }

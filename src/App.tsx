@@ -21,7 +21,6 @@ export default function App() {
   const setQuery = useStore((s) => s.setQuery)
   const changedOnly = useStore((s) => s.changedOnly)
   const setChangedOnly = useStore((s) => s.setChangedOnly)
-  const translations = useStore((s) => s.translations)
   const spDaten = useStore((s) => s.spDaten)
   const linkedModule = useStore((s) => s.linkedModule)
   const openFile = useStore((s) => s.openFile)
@@ -93,14 +92,6 @@ export default function App() {
     }
   }, [handleFile])
 
-  const restoreTranslations = useStore((s) => s.restoreTranslations)
-
-  // Restore cached translations on startup (like NCS Dummy loading its own
-  // Translations.csv from the program folder).
-  useEffect(() => {
-    void restoreTranslations()
-  }, [restoreTranslations])
-
   // Auto-hide toasts.
   useEffect(() => {
     if (!toast) return
@@ -116,14 +107,13 @@ export default function App() {
       if (seg.kind !== 'option') return
       if (changedOnly && !isChanged(seg)) return
       if (q) {
-        const tr = translations?.get(seg.name.toLowerCase()) ?? ''
-        const hay = `${seg.name}\n${seg.values.map((v) => v.text).join('\n')}\n${tr}`.toLowerCase()
+        const hay = `${seg.name}\n${seg.values.map((v) => v.text).join('\n')}`.toLowerCase()
         if (!hay.includes(q)) return
       }
       out.push(i)
     })
     return out
-  }, [doc, query, changedOnly, translations])
+  }, [doc, query, changedOnly])
 
   const stats = doc ? docStats(doc) : null
 
