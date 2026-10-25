@@ -240,8 +240,10 @@ export function FaView() {
             {virtualizer.getVirtualItems().map((item) => {
               const { e } = rows[item.index]
               const ru = (e.ru ?? [])[0]
-              const main = lang === 'ru' ? ru || e.en : e.en
-              const alt = lang === 'ru' ? (ru ? e.en : '') : ru ?? ''
+              // Original English description is always the primary line
+              // (forums reference the original); Russian is the secondary.
+              const main = e.en
+              const alt = lang === 'ru' ? ru ?? '' : ''
               return (
                 <div
                   key={e.code + item.index}

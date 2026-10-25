@@ -7,6 +7,7 @@ import { indexSpDatenItems, readSpDatenFiles, type SpDatenIndex } from '@/lib/sp
 import { parseCsv } from '@/lib/translations'
 import { mapFunctionNames, countSharedFunctions, pickModule } from '@/lib/ncsdata'
 import { translateFunctionName, translateValue } from '@/lib/ruTranslate'
+import faOptions from '@/data/faOptions.json'
 import type { Lang } from '@/lib/i18n'
 import { KdCanSerial, probeAdapter, type AdapterProbeResult } from '@/lib/serial'
 import {
@@ -17,7 +18,7 @@ import {
   type FoundEcu,
 } from '@/lib/carscan'
 
-type ParamLang = 'original' | 'ru'
+type ParamLang = 'original' | 'en' | 'ru'
 type Theme = 'dark' | 'light'
 type View = 'coding' | 'prg' | 'modules' | 'dict' | 'fa'
 
@@ -509,6 +510,14 @@ export const useStore = create<AppState>((set, get) => ({
 }))
 
 /** Hook: parameter translation honoring parameter language and the RU overlay. */
+// Built-in option-code descriptions (from the FA reference): code → {ru, en}
+const FA_BY_CODE: Record<string, { ru?: string; en: string }> = Object.fromEntries(
+  (faOptions as { code: string; en: string; ru?: string[] }[]).map((o) => [
+    o.code.toLowerCase(),
+    { ru: o.ru?.[0], en: o.en },
+  ]),
+)
+
 export function useTranslator() {
   const paramLang = useStore((s) => s.paramLang)
   const overlay = useStore((s) => s.overlay)
@@ -517,9 +526,15 @@ export function useTranslator() {
     const key = token.trim().toLowerCase()
     const own = overlay?.[key]
     if (own) return own
-    const fn = translateFunctionName(token)
-    if (fn !== token) return fn
-    const val = translateValue(token)
-    return val !== token ? val : undefined
+    // FA option codes (S508A…) — from the built-in options reference
+    if (/^s[0-9a-z]{3,5}$/.test(key) && FA_BY_CODE[key]) {
+      const fa = FA_BY_CODE[key]
+      return paramLang === 'ru' ? (fa.ru ?? fa.en) : fa.en
+    }
+    const lang: 'ru' | 'en' = paramLang === 'ru' ? 'ru' : 'en'
+    const fn = translateFunctionName(token, lang)
+    if (fn.toLowerCase() !== token.toLowerCase()) return fn
+    const val = translateValue(token, lang)
+    return val.toLowerCase() !== token.toLowerCase() ? val : undefined
   }
 }

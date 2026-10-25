@@ -78,7 +78,8 @@ export function SettingsPanel({ onClose }: { onClose: () => void }) {
             <Segment
               options={[
                 { value: 'original', label: lang === 'ru' ? 'Оригинал' : 'Original' },
-                { value: 'ru', label: 'Русский' },
+                { value: 'en', label: 'EN' },
+                { value: 'ru', label: 'RU' },
               ]}
               value={paramLang}
               onChange={(v) => setParamLang(v as typeof paramLang)}
