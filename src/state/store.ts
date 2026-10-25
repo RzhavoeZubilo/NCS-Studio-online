@@ -1,0 +1,574 @@
+import { create } from 'zustand'
+import { dominantIndent, parseTrc, type Segment, type TrcDocument } from '@/lib/trc'
+import { parseTranslationsCsv, parseCsv, type TranslationMap } from '@/lib/translations'
+import { readTextSmart } from '@/lib/fileio'
+import { parsePrg, type PrgFile } from '@/lib/prg'
+import { idbDel, idbGet, idbSet } from '@/lib/idb'
+import { indexSpDatenItems, readSpDatenFiles, type SpDatenIndex } from '@/lib/spdaten'
+import { mapFunctionNames, countSharedFunctions, pickModule } from '@/lib/ncsdata'
+import type { Lang } from '@/lib/i18n'
+import { KdCanSerial, probeAdapter, type AdapterProbeResult } from '@/lib/serial'
+import {
+  scanBus,
+  readSgbdIndex,
+  readVin as readVinSvc,
+  resolveVariant,
+  type FoundEcu,
+} from '@/lib/carscan'
+
+type ParamLang = 'original' | 'en' | 'ru'
+type Theme = 'dark' | 'light'
+type View = 'coding' | 'prg' | 'modules' | 'dict' | 'fa'
+
+interface AppState {
+  doc: TrcDocument | null
+  translations: TranslationMap | null
+  translationsFile: string
+  selected: number | null
+  query: string
+  changedOnly: boolean
+  pendingScroll: number | null
+  toast: string | null
+
+  openFile: (file: File) => Promise<void>
+  loadTranslations: (fileName: string, content: string) => void
+  setQuery: (query: string) => void
+  setChangedOnly: (value: boolean) => void
+  select: (index: number | null) => void
+  setValues: (index: number, values: string[]) => void
+  revert: (index: number) => void
+  revertAll: () => void
+  scrollTo: (index: number) => void
+  clearScroll: () => void
+  showToast: (message: string) => void
+
+  view: View
+  prgFiles: { name: string; size: number; prg: PrgFile }[]
+  prgActive: string | null
+  prgJob: number | null
+  prgTable: number | null
+  translationsFromCache: boolean
+
+  spDaten: SpDatenIndex | null
+  spDatenModule: string | null
+  spDatenStatus: string | null
+  lang: Lang
+  showTranslations: boolean
+  settingsOpen: boolean
+  theme: Theme
+  paramLang: ParamLang
+  linkedModule: { fileName: string; matchPct: number } | null
+  overlay: Record<string, string> | null
+  overlayFile: string
+  dictStatus: string | null
+  autoTranslateRunning: boolean
+  faqOpen: boolean
+  carConnected: boolean
+  carAdapter: AdapterProbeResult | null
+  carScanning: boolean
+  carScanProgress: { done: number; total: number; found: FoundEcu[] } | null
+  carFound: FoundEcu[]
+  carError: string | null
+  carOnlyModules: boolean
+  carVin: string | null
+  readingVin: boolean
+
+  setView: (view: View) => void
+  openPrgFile: (file: File) => Promise<void>
+  selectPrg: (name: string) => void
+  selectPrgJob: (index: number | null) => void
+  selectPrgTable: (index: number | null) => void
+  restoreTranslations: () => Promise<void>
+  clearTranslations: () => Promise<void>
+  openSpDatenFolder: () => Promise<void>
+  openSpDatenFiles: (files: File[]) => Promise<void>
+  selectSpDatenModule: (name: string) => void
+  setLang: (lang: Lang) => void
+  setShowTranslations: (show: boolean) => void
+  setSettingsOpen: (open: boolean) => void
+  setTheme: (theme: Theme) => void
+  setParamLang: (lang: ParamLang) => void
+  loadOverlayCsv: (fileName: string, content: string) => void
+  setOverlayEntry: (name: string, ru: string) => void
+  clearOverlay: () => Promise<void>
+  setDictStatus: (status: string | null) => void
+  setAutoTranslateRunning: (running: boolean) => void
+  setFaqOpen: (open: boolean) => void
+  restoreOverlay: () => Promise<void>
+  linkModule: () => void
+  connectCar: () => Promise<void>
+  disconnectCar: () => Promise<void>
+  scanCar: () => Promise<void>
+  cancelScan: () => void
+  setCarOnlyModules: (v: boolean) => void
+  readVin: () => Promise<void>
+}
+
+let serialInstance: KdCanSerial | null = null
+let cancelScanFlag = false
+
+export const useStore = create<AppState>((set, get) => ({
+  doc: null,
+  translations: null,
+  translationsFile: '',
+  selected: null,
+  query: '',
+  changedOnly: false,
+  pendingScroll: null,
+  toast: null,
+  view: 'coding',
+  prgFiles: [],
+  prgActive: null,
+  prgJob: null,
+  prgTable: null,
+  translationsFromCache: false,
+  spDaten: null,
+  spDatenModule: null,
+  spDatenStatus: null,
+  lang: (localStorage.getItem('lang') as Lang) || 'en',
+  showTranslations: true,
+  settingsOpen: false,
+  theme: (localStorage.getItem('theme') as Theme) || 'dark',
+  paramLang: (localStorage.getItem('paramLang') as ParamLang) || 'en',
+  linkedModule: null,
+  overlay: null,
+  overlayFile: '',
+  dictStatus: null,
+  autoTranslateRunning: false,
+  faqOpen: false,
+  carConnected: false,
+  carAdapter: null,
+  carScanning: false,
+  carScanProgress: null,
+  carFound: [],
+  carError: null,
+  carOnlyModules: false,
+  carVin: null,
+  readingVin: false,
+
+  selectSpDatenModule: (spDatenModule) => set({ spDatenModule }),
+  setLang: (lang) => {
+    localStorage.setItem('lang', lang)
+    set({ lang })
+  },
+  setShowTranslations: (showTranslations) => set({ showTranslations }),
+  setSettingsOpen: (settingsOpen) => set({ settingsOpen }),
+  setTheme: (theme) => {
+    localStorage.setItem('theme', theme)
+    set({ theme })
+  },
+  linkModule: () => {
+    // Match the open trace to an SP-Daten module by shared function names
+    // (NCS Dummy's "Module (filtered 1 of 397)" flow).
+    const { doc, spDaten } = get()
+    if (!doc || !spDaten) {
+      set({ linkedModule: null })
+      return
+    }
+    const nameToId = new Map<string, number>()
+    for (const [id, name] of spDaten.fswNames) {
+      const key = name.toLowerCase()
+      if (!nameToId.has(key)) nameToId.set(key, id)
+    }
+    const optionNames: string[] = []
+    for (const seg of doc.segments) {
+      if (seg.kind === 'option') optionNames.push(seg.name.toLowerCase())
+    }
+    const traceIds = mapFunctionNames(optionNames, nameToId)
+    if (traceIds.length === 0) {
+      set({ linkedModule: null })
+      return
+    }
+    const sortedIds = spDaten.modules.map((m) =>
+      [...new Set(m.functions.filter((f) => !f.direct).map((f) => f.id))].sort((a, b) => a - b),
+    )
+    const hits = sortedIds.map((ids) => countSharedFunctions(traceIds, ids))
+    const pick = pickModule(hits, traceIds.length)
+    if (pick < 0) {
+      set({ linkedModule: null })
+      return
+    }
+    const mod = spDaten.modules[pick]
+    set({
+      linkedModule: {
+        fileName: mod.fileName,
+        matchPct: Math.round((hits[pick] * 100) / Math.max(1, traceIds.length)),
+      },
+    })
+  },
+  setParamLang: (paramLang) => {
+    localStorage.setItem('paramLang', paramLang)
+    set({ paramLang })
+  },
+  loadOverlayCsv: (fileName, content) => {
+    const overlay: Record<string, string> = { ...(get().overlay ?? {}) }
+    for (const row of parseCsv(content)) {
+      if (row.length < 2) continue
+      const key = row[0].trim().toLowerCase()
+      const ru = row[1].trim()
+      if (key && ru) overlay[key] = ru
+    }
+    localStorage.setItem('paramLang', 'ru')
+    void idbSet('ruOverlay', overlay)
+    set({ overlay, overlayFile: fileName, paramLang: 'ru' })
+  },
+  setOverlayEntry: (name, ru) => {
+    const overlay = { ...(get().overlay ?? {}) }
+    const key = name.trim().toLowerCase()
+    if (ru.trim()) overlay[key] = ru.trim()
+    else delete overlay[key]
+    void idbSet('ruOverlay', overlay)
+    set({ overlay })
+  },
+  clearOverlay: async () => {
+    await idbDel('ruOverlay')
+    set({ overlay: null, overlayFile: '' })
+  },
+  setDictStatus: (dictStatus) => set({ dictStatus }),
+  setAutoTranslateRunning: (autoTranslateRunning) => set({ autoTranslateRunning }),
+  setFaqOpen: (faqOpen) => set({ faqOpen }),
+
+  restoreOverlay: async () => {
+    try {
+      const saved = await idbGet<Record<string, string>>('ruOverlay')
+      if (saved) set({ overlay: saved })
+    } catch {
+      // no overlay yet
+    }
+  },
+
+  connectCar: async () => {
+    set({ carError: null })
+    try {
+      if (!serialInstance) serialInstance = new KdCanSerial()
+      if (!serialInstance.connected) {
+        await serialInstance.connect()
+        const probe = await probeAdapter(serialInstance)
+        set({ carConnected: true, carAdapter: probe })
+      } else {
+        set({ carConnected: true })
+      }
+    } catch (e) {
+      const msg = e instanceof Error ? e.message : String(e)
+      set({ carError: msg })
+      if (msg === 'no port selected' || e instanceof DOMException) {
+        // user cancelled the picker — not an error worth a toast
+        set({ carError: null })
+      }
+    }
+  },
+
+  disconnectCar: async () => {
+    if (serialInstance) await serialInstance.disconnect()
+    set({ carConnected: false, carAdapter: null, carFound: [], carScanProgress: null })
+  },
+
+  scanCar: async () => {
+    if (!serialInstance || !serialInstance.connected) {
+      set({ carError: 'Cable is not connected' })
+      return
+    }
+    set({ carScanning: true, carFound: [], carScanProgress: { done: 0, total: 0, found: [] }, carError: null })
+    cancelScanFlag = false
+    try {
+      // Prefer addresses known to the SP-Daten assignment table (much faster).
+      const spDaten = get().spDaten
+      const addresses = spDaten ? [...spDaten.ecuByAddress.keys()].sort((a, b) => a - b) : undefined
+      const found = await scanBus(
+        serialInstance,
+        (p) => set({ carScanProgress: p, carFound: p.found }),
+        () => cancelScanFlag,
+        addresses,
+      )
+      // Identify each ECU: read its SGBD index (22 F1 50) and resolve the
+      // exact variant file among the address candidates.
+      set({ spDatenStatus: get().lang === 'ru' ? 'Опрос блоков (INDEX)…' : 'Reading indexes…' })
+      const resolved: FoundEcu[] = []
+      for (const ecu of found) {
+        if (cancelScanFlag) break
+        const candidates = spDaten
+          ? spDaten.modules
+              .filter((m) =>
+                (spDaten.ecuByAddress.get(ecu.address) ?? []).some((entry) =>
+                  m.fileName.toUpperCase().startsWith(entry.sgbd.toUpperCase()),
+                ),
+              )
+              .map((m) => ({ fileName: m.fileName, codingIndex: m.codingIndex }))
+          : []
+        const id = await readSgbdIndex(serialInstance, ecu.address)
+        const updated: FoundEcu = { ...ecu }
+        if (id) {
+          updated.sgbdIndex = id.sgbdIndex
+          updated.codingIndex = id.codingIndex
+          const variant = resolveVariant(
+            updated,
+            candidates.map((c) => ({ fileName: c.fileName, codingIndex: c.codingIndex })),
+          )
+          if (variant) updated.variantFile = variant
+        }
+        resolved.push(updated)
+        set({ carFound: [...resolved] })
+      }
+      set({
+        carScanning: false,
+        carScanProgress: null,
+        spDatenStatus: null,
+      })
+    } catch (e) {
+      set({ carScanning: false, carScanProgress: null, spDatenStatus: null, carError: e instanceof Error ? e.message : String(e) })
+    }
+  },
+
+  cancelScan: () => {
+    cancelScanFlag = true
+  },
+  setCarOnlyModules: (carOnlyModules) => set({ carOnlyModules }),
+
+  readVin: async () => {
+    if (!serialInstance || !serialInstance.connected) {
+      set({ carError: 'Cable is not connected' })
+      return
+    }
+    set({ readingVin: true })
+    try {
+      const vin = await readVinSvc(serialInstance)
+      set({ carVin: vin })
+      if (vin) set({ toast: `VIN: ${vin}` })
+      else set({ toast: get().lang === 'ru' ? 'VIN не прочитан' : 'VIN not read' })
+    } catch (e) {
+      set({ toast: e instanceof Error ? e.message : String(e) })
+    } finally {
+      set({ readingVin: false })
+    }
+  },
+
+  openFile: async (file) => {
+    if (/\.prg$/i.test(file.name)) {
+      await get().openPrgFile(file)
+      return
+    }
+    const content = await readTextSmart(file)
+    if (/\btranslations\b/i.test(file.name)) {
+      get().loadTranslations(file.name, content)
+      return
+    }
+    set({
+      doc: parseTrc(content, file.name),
+      selected: null,
+      query: '',
+      changedOnly: false,
+      pendingScroll: null,
+    })
+  },
+
+  loadTranslations: (fileName, content) => {
+    set({
+      translations: parseTranslationsCsv(content),
+      translationsFile: fileName,
+      translationsFromCache: false,
+    })
+    // Remember for next sessions (NCS Dummy-style: translations are always there).
+    void idbSet('translations', { fileName, content, savedAt: Date.now() })
+  },
+
+  setQuery: (query) => set({ query }),
+  setChangedOnly: (changedOnly) => set({ changedOnly }),
+  select: (selected) => set({ selected }),
+
+  setValues: (index, values) => {
+    const doc = get().doc
+    if (!doc) return
+    const fallback = dominantIndent(doc)
+    set({
+      doc: {
+        ...doc,
+        segments: doc.segments.map((seg, i): Segment => {
+          if (i !== index || seg.kind !== 'option') return seg
+          return {
+            ...seg,
+            values: values.map((text, j) => ({
+              text,
+              indent: seg.values[j]?.indent ?? fallback,
+            })),
+          }
+        }),
+      },
+    })
+  },
+
+  revert: (index) => {
+    const doc = get().doc
+    if (!doc) return
+    set({
+      doc: {
+        ...doc,
+        segments: doc.segments.map((seg, i): Segment => {
+          if (i !== index || seg.kind !== 'option') return seg
+          return { ...seg, values: seg.original.map((v) => ({ ...v })) }
+        }),
+      },
+    })
+  },
+
+  revertAll: () => {
+    const doc = get().doc
+    if (!doc) return
+    set({
+      doc: {
+        ...doc,
+        segments: doc.segments.map((seg): Segment =>
+          seg.kind === 'option' ? { ...seg, values: seg.original.map((v) => ({ ...v })) } : seg,
+        ),
+      },
+    })
+  },
+
+  scrollTo: (index) => set({ pendingScroll: index, selected: index }),
+  clearScroll: () => set({ pendingScroll: null }),
+  showToast: (toast) => set({ toast }),
+
+  setView: (view) => set({ view }),
+
+  openPrgFile: async (file) => {
+    try {
+      const data = new Uint8Array(await file.arrayBuffer())
+      const prg = parsePrg(data)
+      set((s) => ({
+        prgFiles: [
+          ...s.prgFiles.filter((f) => f.name !== file.name),
+          { name: file.name, size: file.size, prg },
+        ],
+        prgActive: file.name,
+        prgJob: null,
+        prgTable: null,
+        view: 'prg',
+      }))
+    } catch (e) {
+      set({ toast: `PRG parse error: ${e instanceof Error ? e.message : String(e)}` })
+    }
+  },
+
+  selectPrg: (prgActive) => set({ prgActive, prgJob: null, prgTable: null }),
+  selectPrgJob: (prgJob) => set({ prgJob }),
+  selectPrgTable: (prgTable) => set({ prgTable }),
+
+  restoreTranslations: async () => {
+    try {
+      const saved = await idbGet<{ fileName: string; content: string; savedAt: number }>(
+        'translations',
+      )
+      if (saved?.content) {
+        set({
+          translations: parseTranslationsCsv(saved.content),
+          translationsFile: saved.fileName,
+          translationsFromCache: true,
+        })
+      }
+    } catch {
+      // No cached translations — stay unloaded.
+    }
+  },
+
+  clearTranslations: async () => {
+    await idbDel('translations')
+    set({ translations: null, translationsFile: '', translationsFromCache: false })
+  },
+
+  openSpDatenFolder: async () => {
+    const picker = (
+      window as unknown as {
+        showDirectoryPicker?: (o?: { mode?: string }) => Promise<FileSystemDirectoryHandle>
+      }
+    ).showDirectoryPicker
+    if (!picker) {
+      get().showToast('Folder picker needs Chrome or Edge — use “Choose files” instead')
+      return
+    }
+    let dir: FileSystemDirectoryHandle
+    try {
+      dir = await picker.call(window, { mode: 'read' })
+    } catch (e) {
+      if (e instanceof DOMException && e.name === 'AbortError') return
+      set({ toast: `Cannot open folder: ${e instanceof Error ? e.message : String(e)}` })
+      return
+    }
+    // daten\ holds modules/keywords; ecu\ holds T_GRTB.PRG (address map) and groups
+    const folders: FileSystemDirectoryHandle[] = []
+    let daten = dir
+    try {
+      daten = await dir.getDirectoryHandle('daten')
+      folders.push(daten)
+    } catch {
+      // maybe the user picked the daten folder itself
+      folders.push(dir)
+    }
+    try {
+      folders.push(await dir.getDirectoryHandle('ecu'))
+    } catch {
+      // no ecu folder — fine
+    }
+    const items: { name: string; data: Uint8Array }[] = []
+    for (const folder of folders) {
+      const iter = (
+        folder as unknown as {
+          values(): AsyncIterable<{ kind: string; name: string; getFile(): Promise<File> }>
+        }
+      ).values()
+      for await (const entry of iter) {
+        if (entry.kind !== 'file') continue
+        const file = await entry.getFile()
+        const data = new Uint8Array(await file.arrayBuffer())
+        items.push({ name: entry.name, data })
+        if (items.length % 25 === 0) set({ spDatenStatus: `Indexing… ${items.length} files` })
+      }
+    }
+    set({ spDatenStatus: null })
+    if (items.length === 0) {
+      set({ toast: 'No SP-Daten files found in this folder' })
+      return
+    }
+    const index = indexSpDatenItems(items, dir.name)
+    set({
+      spDaten: index,
+      spDatenModule: index.modules[0]?.fileName ?? null,
+      spDatenStatus: null,
+      view: 'modules',
+    })
+  },
+
+  openSpDatenFiles: async (files) => {
+    set({ spDatenStatus: 'Indexing…' })
+    const items = await readSpDatenFiles(files, (done, total) =>
+      set({ spDatenStatus: `Indexing… ${done}/${total}` }),
+    )
+    set({ spDatenStatus: null })
+    if (items.length === 0) {
+      set({ toast: 'No SP-Daten files among the selected files' })
+      return
+    }
+    const index = indexSpDatenItems(items, 'selection')
+    set({
+      spDaten: index,
+      spDatenModule: index.modules[0]?.fileName ?? null,
+      spDatenStatus: null,
+      view: 'modules',
+    })
+  },
+}))
+
+/** Hook: parameter translation honoring parameter language and the RU overlay. */
+export function useTranslator() {
+  const en = useStore((s) => s.translations)
+  const show = useStore((s) => s.showTranslations)
+  const paramLang = useStore((s) => s.paramLang)
+  const overlay = useStore((s) => s.overlay)
+  return (token: string): string | undefined => {
+    if (!show || paramLang === 'original') return undefined
+    const key = token.trim().toLowerCase()
+    if (paramLang === 'ru' && overlay) {
+      const ru = overlay[key]
+      if (ru) return ru
+    }
+    return en?.get(key)
+  }
+}
