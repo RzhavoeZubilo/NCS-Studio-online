@@ -5,6 +5,7 @@
 
 import type { EcuAddressEntry } from '@/lib/grtb'
 import type { SpDatenIndex, SpDatenModule } from '@/lib/spdaten'
+import { E89X_ECU_NAMES } from '@/data/ecuNamesE89x'
 
 export interface EcuLabel {
   /** short ECU name, e.g. "KOMBI" */
@@ -57,6 +58,10 @@ export function ecuLabel(
     if (e) return fromEntry(e)
   }
   if (sel.fileName) return { short: sgbdOf(sel.fileName), long: '' }
+  // without a T_GRTB table (no SP-Daten, or a selection without ecu\) fall
+  // back to the built-in E81–E93 address list
+  const builtIn = sel.address !== undefined && !spDaten?.ecuByAddress.size ? E89X_ECU_NAMES[sel.address] : undefined
+  if (builtIn) return { short: builtIn, long: '' }
   return { short: sel.address !== undefined ? hexAddr(sel.address) : '?', long: '' }
 }
 

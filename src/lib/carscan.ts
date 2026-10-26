@@ -3,12 +3,12 @@
  *
  * D-CAN E-series: tester transmits from 0xF1 (CAN ID 0x6F1); an ECU at
  * address A answers from source A (CAN ID 0x600|A).
- * Scan probe: TesterPresent (0x3E 0x00) — works in the default session and
- * changes no ECU state; any answer (positive 0x7E or negative 0x7F) proves
- * an ECU at that address. Functional (broadcast) addresses are never probed.
- * Identification: UDS ReadDataByIdentifier 22 F1 50 returns the SGBD index
- * (research §1.2: "SGBD-Index 22 F150 INDEX XXXXXX (Hex)") — the index
- * resolves the exact .Cxx variant file (last byte = coding index).
+ * Scan probe: KWP2000 TesterPresent with responseRequired (0x3E 0x01, as in
+ * KOMB87.prg job DIAGNOSE_AUFRECHT) — works in the default session and changes
+ * no ECU state; any answer (positive 0x7E or negative 0x7F) proves an ECU at
+ * that address. Functional (broadcast) addresses are never probed.
+ * Identification: the coding index (readSgbdIndex) resolves the exact .Cxx
+ * variant file.
  */
 
 import type { KdCanSerial } from '@/lib/serial'
@@ -18,7 +18,7 @@ export interface FoundEcu {
   address: number
   /** first response payload bytes (0x7E positive / 0x7F negative / ...) */
   response: number[]
-  /** SGBD index reported by 22 F1 50, as uppercase hex string */
+  /** SGBD index reported by 22 F1 50 (UDS ECUs), as uppercase hex string */
   sgbdIndex?: string
   /** coding index (last byte of the SGBD index), when readable */
   codingIndex?: number
@@ -55,7 +55,7 @@ export async function scanBus(
   for (const address of list) {
     if (shouldCancel()) break
     try {
-      const resp = await serial.request(address, new Uint8Array([0x3e, 0x00]), SCAN_TIMEOUT_MS)
+      const resp = await serial.request(address, new Uint8Array([0x3e, 0x01]), SCAN_TIMEOUT_MS)
       const ecu = resp.find((tel) => tel.source === address && tel.data.length >= 1)
       if (ecu) {
         found.push({ address, response: [...ecu.data] })
@@ -76,29 +76,45 @@ function toHex(bytes: number[]): string {
 }
 
 /**
- * Reads the SGBD index of one ECU: 22 F1 50 → 62 F1 50 <payload>.
- * The payload's last byte is the coding index used in .Cxx file names
- * (RAD22.C32 → index 0x32).
+ * Sends one request and returns the positive response payload — the service
+ * id + 0x40 followed by the echoed parameter bytes — or null for a negative
+ * answer (7F), a response-pending (7F xx 78) without a final answer, or silence.
+ */
+async function query(
+  serial: KdCanSerial,
+  address: number,
+  request: number[],
+  timeoutMs: number,
+): Promise<Uint8Array | null> {
+  try {
+    const resp = await serial.request(address, new Uint8Array(request), timeoutMs)
+    for (const tel of resp) {
+      if (tel.source !== address) continue
+      const d = tel.data
+      if (d[0] === request[0] + 0x40 && request.slice(1).every((b, i) => d[i + 1] === b)) return d
+    }
+  } catch {
+    // communication hiccup — treat as no answer
+  }
+  return null
+}
+
+/**
+ * Reads the coding index of one ECU. E-series ECUs speak KWP2000:
+ * 1A 80 ReadECUIdentification → 5A 80 ..., ID_COD_INDEX is payload byte 9
+ * (KOMB87.prg job IDENT). UDS ECUs answer 22 F1 50 → 62 F1 50 <SGBD index>,
+ * whose last byte is the coding index (RAD22.C32 → 0x32).
  */
 export async function readSgbdIndex(
   serial: KdCanSerial,
   address: number,
-): Promise<{ sgbdIndex: string; codingIndex: number } | null> {
-  try {
-    const resp = await serial.request(address, new Uint8Array([0x22, 0xf1, 0x50]), 250)
-    for (const tel of resp) {
-      if (tel.source !== address) continue
-      const d = tel.data
-      // positive response: 62 F1 50 [payload...]
-      if (d.length >= 5 && d[0] === 0x62 && d[1] === 0xf1 && d[2] === 0x50) {
-        const payload = [...d.subarray(3)]
-        return { sgbdIndex: toHex(payload), codingIndex: payload[payload.length - 1] }
-      }
-      // negative response (0x7F ...) — ECU present but does not support F150
-      if (d[0] === 0x7f) return null
-    }
-  } catch {
-    // communication hiccup — treat as unknown
+): Promise<{ sgbdIndex?: string; codingIndex: number } | null> {
+  const ident = await query(serial, address, [0x1a, 0x80], 300)
+  if (ident && ident.length > 9) return { codingIndex: ident[9] }
+  const uds = await query(serial, address, [0x22, 0xf1, 0x50], 250)
+  if (uds && uds.length >= 4) {
+    const payload = [...uds.subarray(3)]
+    return { sgbdIndex: toHex(payload), codingIndex: payload[payload.length - 1] }
   }
   return null
 }
@@ -122,21 +138,19 @@ export function resolveVariant(
   return matches.length === 1 ? matches[0].fileName : undefined
 }
 
-/** Reads the VIN from the CAS (address 0x40): 22 F1 90 → 62 F1 90 + 17 chars. */
+/** First 17 VIN characters of an ASCII payload, or null. */
+function parseVin(bytes: Uint8Array): string | null {
+  const vin = String.fromCharCode(...bytes).replace(/[^A-Z0-9]/g, '').slice(0, 17)
+  return /^[A-Z0-9]{17}$/.test(vin) ? vin : null
+}
+
+/**
+ * Reads the VIN from the CAS (address 0x40). E-series: KWP2000 1A 90
+ * (KOMB87.prg job C_FG_LESEN) → 5A 90 + ASCII; UDS fallback 22 F1 90.
+ */
 export async function readVin(serial: KdCanSerial, casAddress = 0x40): Promise<string | null> {
-  try {
-    const resp = await serial.request(casAddress, new Uint8Array([0x22, 0xf1, 0x90]), 300)
-    for (const tel of resp) {
-      if (tel.source !== casAddress) continue
-      const d = tel.data
-      if (d.length >= 20 && d[0] === 0x62 && d[1] === 0xf1 && d[2] === 0x90) {
-        const vin = String.fromCharCode(...d.subarray(3, 20))
-        return /^[A-Z0-9]{17}$/.test(vin) ? vin : null
-      }
-      if (d[0] === 0x7f) return null
-    }
-  } catch {
-    // no VIN from this module
-  }
-  return null
+  const kwp = await query(serial, casAddress, [0x1a, 0x90], 500)
+  if (kwp) return parseVin(kwp.subarray(2))
+  const uds = await query(serial, casAddress, [0x22, 0xf1, 0x90], 500)
+  return uds ? parseVin(uds.subarray(3)) : null
 }

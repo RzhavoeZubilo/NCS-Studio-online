@@ -51,8 +51,8 @@ export const FAQ: FaqItem[] = [
   {
     q: { en: 'The bus scan logged a fault in my car. Is that bad?', ru: 'После скана в машине всплыла ошибка. Это плохо?' },
     a: {
-      en: 'The bus scan only sends TesterPresent (3E) to each address and opens no diagnostic session, so it should not log faults. Versions before this fix requested the programming session (10 85), which made some ECUs (steering, airbag) log a diagnostic event. Such an entry does not affect operation and is cleared with a normal fault-code read/clear.',
-      ru: 'Скан шины посылает на каждый адрес только TesterPresent (3E) и не открывает диагностическую сессию, поэтому ошибок оставлять не должен. Версии до этого исправления запрашивали сессию программирования (10 85), из-за чего некоторые блоки (рейка, airbag) записывали диагностическое событие. На работу такая запись не влияет и стирается штатным чтением/очисткой ошибок.',
+      en: 'The bus scan only sends TesterPresent (3E 01) to each address and reads the identification (1A 80) of the ECUs that answer; it opens no diagnostic session, so it should not log faults. Versions before this fix requested the programming session (10 85), which made some ECUs (steering, airbag) log a diagnostic event. Such an entry does not affect operation and is cleared with a normal fault-code read/clear.',
+      ru: 'Скан шины посылает на каждый адрес только TesterPresent (3E 01) и читает идентификацию (1A 80) ответивших блоков; диагностическую сессию он не открывает, поэтому ошибок оставлять не должен. Версии до этого исправления запрашивали сессию программирования (10 85), из-за чего некоторые блоки (рейка, airbag) записывали диагностическое событие. На работу такая запись не влияет и стирается штатным чтением/очисткой ошибок.',
     },
   },
   {
