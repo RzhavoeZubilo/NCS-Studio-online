@@ -3,8 +3,9 @@
  *
  * D-CAN E-series: tester transmits from 0xF1 (CAN ID 0x6F1); an ECU at
  * address A answers from source A (CAN ID 0x600|A).
- * Scan probe: KWP2000 StartDiagnosticSession (0x10 0x85) — read-only; any
- * answer (positive 0x50 or negative 0x7F) proves an ECU at that address.
+ * Scan probe: TesterPresent (0x3E 0x00) — works in the default session and
+ * changes no ECU state; any answer (positive 0x7E or negative 0x7F) proves
+ * an ECU at that address. Functional (broadcast) addresses are never probed.
  * Identification: UDS ReadDataByIdentifier 22 F1 50 returns the SGBD index
  * (research §1.2: "SGBD-Index 22 F150 INDEX XXXXXX (Hex)") — the index
  * resolves the exact .Cxx variant file (last byte = coding index).
@@ -15,7 +16,7 @@ import type { KdCanSerial } from '@/lib/serial'
 export interface FoundEcu {
   /** diagnostic address, 0x00–0xFF */
   address: number
-  /** first response payload bytes (0x50 positive / 0x7F negative / ...) */
+  /** first response payload bytes (0x7E positive / 0x7F negative / ...) */
   response: number[]
   /** SGBD index reported by 22 F1 50, as uppercase hex string */
   sgbdIndex?: string
@@ -33,25 +34,28 @@ export interface ScanProgress {
 
 const SCAN_TIMEOUT_MS = 120
 
+/** Functional (broadcast) addresses: 0xDF and 0xE6–0xEF (EdiabasLib IsFunctionalAddress). */
+export function isFunctionalAddress(address: number): boolean {
+  return address === 0xdf || (address >= 0xe6 && address <= 0xef)
+}
+
 export async function scanBus(
   serial: KdCanSerial,
   onProgress: (p: ScanProgress) => void,
   shouldCancel: () => boolean,
   addresses?: number[],
 ): Promise<FoundEcu[]> {
-  const list = addresses ?? Array.from({ length: 256 }, (_, i) => i)
+  const list = (addresses ?? Array.from({ length: 256 }, (_, i) => i)).filter(
+    // tester's own virtual address and broadcast addresses are not ECUs
+    (a) => a !== 0xf1 && !isFunctionalAddress(a),
+  )
   const found: FoundEcu[] = []
   const total = list.length
   let done = 0
   for (const address of list) {
     if (shouldCancel()) break
-    if (address === 0xf1) {
-      // tester's own virtual address — skip
-      done++
-      continue
-    }
     try {
-      const resp = await serial.request(address, new Uint8Array([0x10, 0x85]), SCAN_TIMEOUT_MS)
+      const resp = await serial.request(address, new Uint8Array([0x3e, 0x00]), SCAN_TIMEOUT_MS)
       const ecu = resp.find((tel) => tel.source === address && tel.data.length >= 1)
       if (ecu) {
         found.push({ address, response: [...ecu.data] })
@@ -64,31 +68,7 @@ export async function scanBus(
     if (done % 8 === 0) onProgress({ done, total, found: [...found] })
   }
   onProgress({ done, total, found: [...found] })
-  // Close diagnostic sessions on every found ECU — leaving them open makes
-  // some ECUs (steering, airbag) log a diagnostic event.
-  if (!shouldCancel()) {
-    await closeSessions(serial, found, shouldCancel)
-    onProgress({ done, total, found: [...found] })
-  }
   return found
-}
-
-/**
- * Closes the diagnostic session on every found ECU (10 81 endDiagnosticSession).
- */
-export async function closeSessions(
-  serial: KdCanSerial,
-  found: FoundEcu[],
-  shouldCancel: () => boolean,
-): Promise<void> {
-  for (const ecu of found) {
-    if (shouldCancel()) return
-    try {
-      await serial.request(ecu.address, new Uint8Array([0x10, 0x81]), 80)
-    } catch {
-      // best effort — unclosed sessions are cleared at the next scan
-    }
-  }
 }
 
 function toHex(bytes: number[]): string {

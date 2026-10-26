@@ -1,6 +1,5 @@
 import { readFileSync } from 'node:fs'
 import { fileURLToPath } from 'node:url'
-import { existsSync } from 'node:fs'
 import { describe, expect, it } from 'vitest'
 import {
   docStats,
@@ -10,14 +9,12 @@ import {
   serializeTrc,
 } from '@/lib/trc'
 import { parseTranslationsCsv } from '@/lib/translations'
+import { withFixtures } from './fixtureSuite'
 
 const fixture = (name: string) =>
   readFileSync(fileURLToPath(new URL(`./fixtures/${name}`, import.meta.url)), 'latin1')
 
-const fixturesAvailable = existsSync(
-  fileURLToPath(new URL('./fixtures', import.meta.url)),
-)
-const dsc = fixturesAvailable ? describe : describe.skip
+const dsc = withFixtures('rad2-fsw-psw.trc', 'high-box.trc')
 
 dsc('parseTrc round-trip', () => {
   it('reproduces a real FSW/PSW file byte-for-byte', () => {
@@ -85,7 +82,7 @@ dsc('FSW/PSW structure', () => {
   })
 })
 
-dsc('parseTranslationsCsv', () => {
+describe('parseTranslationsCsv', () => {
   it('parses quoted fields and normalizes keys', () => {
     const map = parseTranslationsCsv(
       'CONTRIBUTORS,"revtor,IcemanBHE"\nLASTMODIFIED,20201210\n\nnicht_aktiv,not active\n',

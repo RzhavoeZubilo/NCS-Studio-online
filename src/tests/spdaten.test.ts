@@ -1,8 +1,8 @@
 import { readFileSync } from 'node:fs'
 import { fileURLToPath } from 'node:url'
-import { existsSync } from 'node:fs'
-import { describe, expect, it } from 'vitest'
+import { expect, it } from 'vitest'
 import { indexSpDatenItems } from '@/lib/spdaten'
+import { withFixtures } from './fixtureSuite'
 
 const fixture = (name: string) => ({
   name,
@@ -11,10 +11,7 @@ const fixture = (name: string) => ({
   ),
 })
 
-const fixturesAvailable = existsSync(
-  fileURLToPath(new URL('./fixtures', import.meta.url)),
-)
-const dsc = fixturesAvailable ? describe : describe.skip
+const dsc = withFixtures('RAD22.C32', 'SWTFSW03.dat', 'SWTPSW03.dat', 'E89SGET.000', 'BR_REF.DAT')
 
 dsc('indexSpDatenItems', () => {
   const index = indexSpDatenItems(

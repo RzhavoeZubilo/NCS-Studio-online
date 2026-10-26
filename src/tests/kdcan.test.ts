@@ -1,4 +1,3 @@
-import { existsSync } from 'node:fs'
 import { readFileSync } from 'node:fs'
 import { fileURLToPath } from 'node:url'
 import { describe, expect, it } from 'vitest'
@@ -111,11 +110,9 @@ describe('TelegramParser', () => {
 // T_GRTB.PRG fixture: the real SP-Daten assignment table (address -> module)
 import { parseZuordnung } from '@/lib/grtb'
 import { parsePrg } from '@/lib/prg'
+import { withFixtures } from './fixtureSuite'
 
-const fixturesAvailable = existsSync(
-  fileURLToPath(new URL('./fixtures/t-grtb.prg', import.meta.url)),
-)
-const dscT = fixturesAvailable ? describe : describe.skip
+const dscT = withFixtures('t-grtb.prg')
 
 dscT('T_GRTB.PRG (address assignment table)', () => {
   const entries = parseZuordnung(

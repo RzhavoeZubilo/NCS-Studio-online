@@ -6,6 +6,9 @@
  */
 
 import {
+  ADAPTER_GET_IGNITION,
+  ADAPTER_GET_TYPE,
+  ADAPTER_GET_VOLTAGE,
   TelegramParser,
   buildTelegram,
   bytesEqual,
@@ -179,11 +182,12 @@ export interface AdapterProbeResult {
   info: AdapterInfo
 }
 
-/** Probes the adapter type, ignition and voltage (research §1.5). */
+/** Probes the adapter type, ignition and voltage (research §1.5):
+ *  the command byte is sent twice, e.g. 82 F1 F1 FD FD sum. */
 export async function probeAdapter(serial: KdCanSerial): Promise<AdapterProbeResult> {
   const info: AdapterInfo = {}
   let kind: 'smart' | 'dumb' = 'dumb'
-  const typeResp = await serial.request(0xf1, new Uint8Array([0xfd]), 300)
+  const typeResp = await serial.request(0xf1, new Uint8Array([ADAPTER_GET_TYPE, ADAPTER_GET_TYPE]), 300)
   for (const tel of typeResp) {
     if (tel.source === 0xf1 && tel.data.length >= 4) {
       // payload: FD type_hi type_lo ver_hi ver_lo ...
@@ -197,14 +201,14 @@ export async function probeAdapter(serial: KdCanSerial): Promise<AdapterProbeRes
     }
   }
   if (kind === 'smart') {
-    const ign = await serial.request(0xf1, new Uint8Array([0xfe]), 200)
+    const ign = await serial.request(0xf1, new Uint8Array([ADAPTER_GET_IGNITION, ADAPTER_GET_IGNITION]), 200)
     for (const tel of ign) {
       if (tel.source === 0xf1 && tel.data.length >= 2) {
         info.ignition = tel.data[1]
         break
       }
     }
-    const volt = await serial.request(0xf1, new Uint8Array([0xfc]), 200)
+    const volt = await serial.request(0xf1, new Uint8Array([ADAPTER_GET_VOLTAGE, ADAPTER_GET_VOLTAGE]), 200)
     for (const tel of volt) {
       if (tel.source === 0xf1 && tel.data.length >= 2) {
         info.voltage = tel.data[1] / 10

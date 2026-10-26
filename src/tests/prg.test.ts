@@ -1,8 +1,8 @@
 import { readFileSync } from 'node:fs'
 import { fileURLToPath } from 'node:url'
-import { existsSync } from 'node:fs'
-import { describe, expect, it } from 'vitest'
+import { expect, it } from 'vitest'
 import { parsePrg } from '@/lib/prg'
+import { withFixtures } from './fixtureSuite'
 
 const fixture = (name: string) =>
   new Uint8Array(
@@ -11,10 +11,7 @@ const fixture = (name: string) =>
 
 // Reference values produced by BimmerDaten's decoderPrg.py (Python) on the
 // same fixtures — the TS port must match them exactly.
-const fixturesAvailable = existsSync(
-  fileURLToPath(new URL('./fixtures', import.meta.url)),
-)
-const dsc = fixturesAvailable ? describe : describe.skip
+const dsc = withFixtures('RAD2.prg', 'komb87.prg')
 
 dsc('parsePrg RAD2.prg (E90 radio professional)', () => {
   const prg = parsePrg(fixture('RAD2.prg'))

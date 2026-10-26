@@ -51,8 +51,8 @@ export const FAQ: FaqItem[] = [
   {
     q: { en: 'The bus scan logged a fault in my car. Is that bad?', ru: 'После скана в машине всплыла ошибка. Это плохо?' },
     a: {
-      en: 'During a bus scan the tool opens a diagnostic session on every address from the assignment table. Some ECUs (steering, airbag) log a non-critical diagnostic event when that happens from an unknown tester. It does not affect operation and is cleared with a normal fault-code read/clear (the upcoming Fehler loeschen button will do it too).',
-      ru: 'При скане шины инструмент открывает диагностическую сессию на каждый адрес из таблицы. Некоторые блоки (рейка, airbag) фиксируют некритичное диагностическое событие от неизвестного тестера. На работу это не влияет; ошибка стирается штатным чтением/очисткой ошибок (будущая кнопка Fehler loeschen тоже это сделает).',
+      en: 'The bus scan only sends TesterPresent (3E) to each address and opens no diagnostic session, so it should not log faults. Versions before this fix requested the programming session (10 85), which made some ECUs (steering, airbag) log a diagnostic event. Such an entry does not affect operation and is cleared with a normal fault-code read/clear.',
+      ru: 'Скан шины посылает на каждый адрес только TesterPresent (3E) и не открывает диагностическую сессию, поэтому ошибок оставлять не должен. Версии до этого исправления запрашивали сессию программирования (10 85), из-за чего некоторые блоки (рейка, airbag) записывали диагностическое событие. На работу такая запись не влияет и стирается штатным чтением/очисткой ошибок.',
     },
   },
   {
