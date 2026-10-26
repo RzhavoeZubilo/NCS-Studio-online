@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { Plus, RotateCcw, X } from 'lucide-react'
 import { useStore, useTranslator } from '@/state/store'
+import { usePossibleValues } from '@/state/possibleValues'
 import { isChanged } from '@/lib/trc'
 import { t } from '@/lib/i18n'
 
@@ -47,6 +48,7 @@ export function DetailPanel() {
   const tr = useTranslator()
   const setValues = useStore((s) => s.setValues)
   const revert = useStore((s) => s.revert)
+  const possible = usePossibleValues()
 
   if (!doc || selected == null) return null
   const seg = doc.segments[selected]
@@ -54,6 +56,8 @@ export function DetailPanel() {
 
   const changed = isChanged(seg)
   const nameTr = tr(seg.name)
+  // quick choices: the module's possible values when known
+  const quick = possible.get(seg.name.toLowerCase()) ?? ['aktiv', 'nicht_aktiv']
 
   return (
     <aside className="flex w-[380px] shrink-0 flex-col overflow-y-auto border-l border-line bg-panel/30">
@@ -125,7 +129,7 @@ export function DetailPanel() {
               {t(lang, 'quickSet')}
             </div>
             <div className="flex flex-wrap gap-1.5">
-              {['aktiv', 'nicht_aktiv'].map((val) => (
+              {quick.map((val) => (
                 <button
                   key={val}
                   type="button"

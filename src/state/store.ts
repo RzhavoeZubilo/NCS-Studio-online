@@ -6,7 +6,7 @@ import { idbDel, idbGet, idbSet } from '@/lib/idb'
 import { indexSpDatenItems, readSpDatenFiles, type SpDatenIndex } from '@/lib/spdaten'
 import { parseCsv } from '@/lib/translations'
 import { mapFunctionNames, countSharedFunctions, pickModule } from '@/lib/ncsdata'
-import { translateFunctionName, translateValue } from '@/lib/ruTranslate'
+import { translateValue } from '@/lib/ruTranslate'
 import faOptions from '@/data/faOptions.json'
 import type { Lang } from '@/lib/i18n'
 import { KdCanSerial, probeAdapter, type AdapterProbeResult } from '@/lib/serial'
@@ -20,7 +20,15 @@ import {
 
 type ParamLang = 'original' | 'en' | 'ru'
 type Theme = 'dark' | 'light'
-type View = 'coding' | 'prg' | 'modules' | 'dict' | 'fa'
+type View = 'coding' | 'prg' | 'dict' | 'fa'
+export type Step = 'read' | 'edit' | 'write'
+
+/** The ECU being coded: found on the bus (address) and/or its variant file. */
+export interface EcuSelection {
+  address?: number
+  /** variant file, e.g. "KOMB87.C0B" */
+  fileName?: string
+}
 
 interface AppState {
   doc: TrcDocument | null
@@ -48,8 +56,11 @@ interface AppState {
   prgTable: number | null
 
   spDaten: SpDatenIndex | null
-  spDatenModule: string | null
   spDatenStatus: string | null
+  /** remembered SP-Daten folder that needs the read permission re-granted */
+  spDatenSaved: string | null
+  ecuSel: EcuSelection | null
+  step: Step
   lang: Lang
   settingsOpen: boolean
   theme: Theme
@@ -66,7 +77,6 @@ interface AppState {
   carScanProgress: { done: number; total: number; found: FoundEcu[] } | null
   carFound: FoundEcu[]
   carError: string | null
-  carOnlyModules: boolean
   carVin: string | null
   readingVin: boolean
 
@@ -77,7 +87,11 @@ interface AppState {
   selectPrgTable: (index: number | null) => void
   openSpDatenFolder: () => Promise<void>
   openSpDatenFiles: (files: File[]) => Promise<void>
-  selectSpDatenModule: (name: string) => void
+  loadSpDatenDir: (dir: FileSystemDirectoryHandle) => Promise<void>
+  restoreSpDaten: () => Promise<void>
+  reconnectSpDaten: () => Promise<void>
+  selectEcu: (sel: EcuSelection | null) => void
+  setStep: (step: Step) => void
   setLang: (lang: Lang) => void
   setSettingsOpen: (open: boolean) => void
   setTheme: (theme: Theme) => void
@@ -94,12 +108,52 @@ interface AppState {
   disconnectCar: () => Promise<void>
   scanCar: () => Promise<void>
   cancelScan: () => void
-  setCarOnlyModules: (v: boolean) => void
   readVin: () => Promise<void>
 }
 
 let serialInstance: KdCanSerial | null = null
 let cancelScanFlag = false
+
+type DirHandle = FileSystemDirectoryHandle & {
+  queryPermission?(o: { mode: 'read' }): Promise<PermissionState>
+  requestPermission?(o: { mode: 'read' }): Promise<PermissionState>
+}
+const SP_DATEN_DIR_KEY = 'spDatenDir'
+
+/** Reads every file of an SP-Daten chassis folder (daten\ + ecu\). */
+async function readSpDatenDir(
+  dir: FileSystemDirectoryHandle,
+  onProgress: (count: number) => void,
+): Promise<{ name: string; data: Uint8Array }[]> {
+  // daten\ holds modules/keywords; ecu\ holds T_GRTB.PRG (address map) and groups
+  const folders: FileSystemDirectoryHandle[] = []
+  try {
+    folders.push(await dir.getDirectoryHandle('daten'))
+  } catch {
+    // maybe the user picked the daten folder itself
+    folders.push(dir)
+  }
+  try {
+    folders.push(await dir.getDirectoryHandle('ecu'))
+  } catch {
+    // no ecu folder — fine
+  }
+  const items: { name: string; data: Uint8Array }[] = []
+  for (const folder of folders) {
+    const iter = (
+      folder as unknown as {
+        values(): AsyncIterable<{ kind: string; name: string; getFile(): Promise<File> }>
+      }
+    ).values()
+    for await (const entry of iter) {
+      if (entry.kind !== 'file') continue
+      const file = await entry.getFile()
+      items.push({ name: entry.name, data: new Uint8Array(await file.arrayBuffer()) })
+      if (items.length % 25 === 0) onProgress(items.length)
+    }
+  }
+  return items
+}
 
 export const useStore = create<AppState>((set, get) => ({
   doc: null,
@@ -114,8 +168,10 @@ export const useStore = create<AppState>((set, get) => ({
   prgJob: null,
   prgTable: null,
   spDaten: null,
-  spDatenModule: null,
   spDatenStatus: null,
+  spDatenSaved: null,
+  ecuSel: null,
+  step: 'read',
   lang: (localStorage.getItem('lang') as Lang) || 'en',
   settingsOpen: false,
   theme: (localStorage.getItem('theme') as Theme) || 'dark',
@@ -132,11 +188,20 @@ export const useStore = create<AppState>((set, get) => ({
   carScanProgress: null,
   carFound: [],
   carError: null,
-  carOnlyModules: false,
   carVin: null,
   readingVin: false,
 
-  selectSpDatenModule: (spDatenModule) => set({ spDatenModule }),
+  selectEcu: (ecuSel) => {
+    const { linkedModule } = get()
+    // the open trace stays only when it belongs to the newly selected ECU
+    const keepDoc = !!ecuSel?.fileName && linkedModule?.fileName === ecuSel.fileName
+    set(
+      keepDoc
+        ? { ecuSel, view: 'coding' }
+        : { ecuSel, view: 'coding', doc: null, selected: null, query: '', changedOnly: false, linkedModule: null, step: 'read' },
+    )
+  },
+  setStep: (step) => set({ step }),
   setLang: (lang) => {
     localStorage.setItem('lang', lang)
     set({ lang })
@@ -178,11 +243,14 @@ export const useStore = create<AppState>((set, get) => ({
       return
     }
     const mod = spDaten.modules[pick]
+    const ecuSel = get().ecuSel
     set({
       linkedModule: {
         fileName: mod.fileName,
         matchPct: Math.round((hits[pick] * 100) / Math.max(1, traceIds.length)),
       },
+      // a trace opened without a chosen ECU (or with an unresolved variant) picks its module
+      ecuSel: !ecuSel ? { fileName: mod.fileName } : ecuSel.fileName ? ecuSel : { ...ecuSel, fileName: mod.fileName },
     })
   },
   setParamLang: (paramLang) => {
@@ -271,7 +339,8 @@ export const useStore = create<AppState>((set, get) => ({
       )
       // Identify each ECU: read its SGBD index (22 F1 50) and resolve the
       // exact variant file among the address candidates.
-      set({ spDatenStatus: get().lang === 'ru' ? 'Опрос блоков (INDEX)…' : 'Reading indexes…' })
+      // scanning stays on with no progress while the variants are identified
+      set({ carScanProgress: null })
       const resolved: FoundEcu[] = []
       for (const ecu of found) {
         if (cancelScanFlag) break
@@ -298,20 +367,15 @@ export const useStore = create<AppState>((set, get) => ({
         resolved.push(updated)
         set({ carFound: [...resolved] })
       }
-      set({
-        carScanning: false,
-        carScanProgress: null,
-        spDatenStatus: null,
-      })
+      set({ carScanning: false, carScanProgress: null })
     } catch (e) {
-      set({ carScanning: false, carScanProgress: null, spDatenStatus: null, carError: e instanceof Error ? e.message : String(e) })
+      set({ carScanning: false, carScanProgress: null, carError: e instanceof Error ? e.message : String(e) })
     }
   },
 
   cancelScan: () => {
     cancelScanFlag = true
   },
-  setCarOnlyModules: (carOnlyModules) => set({ carOnlyModules }),
 
   readVin: async () => {
     if (!serialInstance || !serialInstance.connected) {
@@ -343,6 +407,8 @@ export const useStore = create<AppState>((set, get) => ({
       query: '',
       changedOnly: false,
       pendingScroll: null,
+      view: 'coding',
+      step: 'edit',
     })
   },
 
@@ -445,47 +511,9 @@ export const useStore = create<AppState>((set, get) => ({
       set({ toast: `Cannot open folder: ${e instanceof Error ? e.message : String(e)}` })
       return
     }
-    // daten\ holds modules/keywords; ecu\ holds T_GRTB.PRG (address map) and groups
-    const folders: FileSystemDirectoryHandle[] = []
-    let daten = dir
-    try {
-      daten = await dir.getDirectoryHandle('daten')
-      folders.push(daten)
-    } catch {
-      // maybe the user picked the daten folder itself
-      folders.push(dir)
-    }
-    try {
-      folders.push(await dir.getDirectoryHandle('ecu'))
-    } catch {
-      // no ecu folder — fine
-    }
-    const items: { name: string; data: Uint8Array }[] = []
-    for (const folder of folders) {
-      const iter = (
-        folder as unknown as {
-          values(): AsyncIterable<{ kind: string; name: string; getFile(): Promise<File> }>
-        }
-      ).values()
-      for await (const entry of iter) {
-        if (entry.kind !== 'file') continue
-        const file = await entry.getFile()
-        const data = new Uint8Array(await file.arrayBuffer())
-        items.push({ name: entry.name, data })
-        if (items.length % 25 === 0) set({ spDatenStatus: `Indexing… ${items.length} files` })
-      }
-    }
-    set({ spDatenStatus: null })
-    if (items.length === 0) {
-      set({ toast: 'No SP-Daten files found in this folder' })
-      return
-    }
-    const index = indexSpDatenItems(items, dir.name)
-    set({
-      spDaten: index,
-      spDatenModule: index.modules[0]?.fileName ?? null,
-      spDatenStatus: null,
-      view: 'modules',
+    await get().loadSpDatenDir(dir)
+    void idbSet(SP_DATEN_DIR_KEY, dir).catch(() => {
+      // handle not storable (older browser) — the folder is just not remembered
     })
   },
 
@@ -499,13 +527,47 @@ export const useStore = create<AppState>((set, get) => ({
       set({ toast: 'No SP-Daten files among the selected files' })
       return
     }
-    const index = indexSpDatenItems(items, 'selection')
-    set({
-      spDaten: index,
-      spDatenModule: index.modules[0]?.fileName ?? null,
-      spDatenStatus: null,
-      view: 'modules',
-    })
+    set({ spDaten: indexSpDatenItems(items, 'selection'), spDatenSaved: null })
+  },
+
+  loadSpDatenDir: async (dir) => {
+    set({ spDatenStatus: 'Indexing…' })
+    try {
+      const items = await readSpDatenDir(dir, (n) => set({ spDatenStatus: `Indexing… ${n} files` }))
+      if (items.length === 0) {
+        set({ toast: 'No SP-Daten files found in this folder' })
+        return
+      }
+      set({ spDaten: indexSpDatenItems(items, dir.name), spDatenSaved: null })
+    } catch (e) {
+      set({ toast: `Cannot read folder: ${e instanceof Error ? e.message : String(e)}` })
+    } finally {
+      set({ spDatenStatus: null })
+    }
+  },
+
+  restoreSpDaten: async () => {
+    let dir: DirHandle | undefined
+    try {
+      dir = await idbGet<DirHandle>(SP_DATEN_DIR_KEY)
+    } catch {
+      return
+    }
+    if (!dir) return
+    // Chrome may keep the grant ("allow on every visit"); otherwise it needs a click
+    const state = (await dir.queryPermission?.({ mode: 'read' })) ?? 'prompt'
+    if (state === 'granted') await get().loadSpDatenDir(dir)
+    else set({ spDatenSaved: dir.name })
+  },
+
+  reconnectSpDaten: async () => {
+    const dir = await idbGet<DirHandle>(SP_DATEN_DIR_KEY).catch(() => undefined)
+    if (!dir) {
+      set({ spDatenSaved: null })
+      return
+    }
+    const state = (await dir.requestPermission?.({ mode: 'read' })) ?? 'denied'
+    if (state === 'granted') await get().loadSpDatenDir(dir)
   },
 }))
 
@@ -532,9 +594,9 @@ export function useTranslator() {
       return paramLang === 'ru' ? (fa.ru ?? fa.en) : fa.en
     }
     const lang: 'ru' | 'en' = paramLang === 'ru' ? 'ru' : 'en'
-    const fn = translateFunctionName(token, lang)
-    if (fn.toLowerCase() !== token.toLowerCase()) return fn
-    const val = translateValue(token, lang)
-    return val.toLowerCase() !== token.toLowerCase() ? val : undefined
+    // translateValue checks the exact value and function overrides before the
+    // word-by-word fallback, so nicht_aktiv reads "выключено", not "Nicht включено"
+    const tr = translateValue(token, lang)
+    return tr.toLowerCase() !== token.toLowerCase() ? tr : undefined
   }
 }
