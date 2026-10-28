@@ -1,0 +1,51 @@
+// DSC — dynamic stability control (E8x/E9x). Mostly chassis calibration data.
+// Written from the parameter names.
+SZL	Steering column switch cluster variant	Вариант подрулевого блока переключателей	?
+C#X_C#	DSC data set variant	Вариант набора данных DSC	?
+C#E_BAUART	Vehicle body type	Тип кузова	?
+C#E_MOTOR	Engine variant	Вариант двигателя
+C#E_GETRIEBE	Transmission variant	Вариант коробки передач
+C#E_SPURWEITE	Track width	Ширина колеи	?
+C#E_LUEFTER	Cooling fan variant	Вариант вентилятора охлаждения	?
+C#E_KUEHLSCHACHT	Brake cooling duct variant	Вариант охлаждения тормозов	?
+C#E_ASL	DSC function ASL	Функция DSC ASL	?
+C#E_BBV	Brake fade compensation	Компенсация перегрева тормозов	?
+C#E_BBV_KORR_HA	Brake fade compensation, rear axle	Компенсация перегрева тормозов, задняя ось	?
+C#E_BBV_KORR_VA	Brake fade compensation, front axle	Компенсация перегрева тормозов, передняя ось	?
+C#E_BTM	Brake drying	Просушка тормозов	?
+C#E_CBC	Cornering brake control	Контроль торможения в повороте (CBC)
+C#E_DBC_MIN_AUSLOESEDRUCK	Brake assist: minimum trigger pressure	Ассистент торможения: минимальное давление срабатывания	?
+C#E_DIFF_LOCK	Electronic differential lock	Электронная блокировка дифференциала	?
+C#E_DRUCKMODELL_HA	Brake pressure model, rear axle	Модель давления тормозов, задняя ось	?
+C#E_DRUCKMODELL_VA	Brake pressure model, front axle	Модель давления тормозов, передняя ось	?
+C#E_MIN_DRUCKAUFBAU_GRAD	Minimum pressure build-up rate	Минимальная скорость нарастания давления	?
+C#E_FLR	Fading brake support	Поддержка при перегреве тормозов	?
+C#E_GMB	Yaw moment limitation	Ограничение момента рыскания	?
+C#E_GMR_MAX_LIMIT_SCHRAEG	Yaw control: maximum limit on a slope	Контроль рыскания: верхний предел на уклоне	?
+C#E_GMR_MIN_LIMIT_SCHRAEG	Yaw control: minimum limit on a slope	Контроль рыскания: нижний предел на уклоне	?
+C#E_DELTA_PSI_BETA_LIMIT	Yaw / slip angle limit	Предел рыскания / угла увода	?
+C#E_LCL	DSC function LCL	Функция DSC LCL	?
+C#E_LENKWINKELKENNLINIE	Steering angle characteristic	Характеристика угла поворота руля	?
+C#E_LWK_X#	Steering angle characteristic, X point {2}	Характеристика угла руля, точка X {2}	?
+C#E_LWK_Y#	Steering angle characteristic, Y point {2}	Характеристика угла руля, точка Y {2}	?
+C#E_CF_ESM_HB	Single-track model: front cornering stiffness (high)	Одноколейная модель: жёсткость увода спереди (высокая)	?
+C#E_CF_ESM_LB	Single-track model: front cornering stiffness (low)	Одноколейная модель: жёсткость увода спереди (низкая)	?
+C#E_CR_ESM_HB	Single-track model: rear cornering stiffness (high)	Одноколейная модель: жёсткость увода сзади (высокая)	?
+C#E_CR_ESM_LB	Single-track model: rear cornering stiffness (low)	Одноколейная модель: жёсткость увода сзади (низкая)	?
+C#E_LF_ESM	Single-track model: front axle distance	Одноколейная модель: расстояние до передней оси	?
+C#E_LR_ESM	Single-track model: rear axle distance	Одноколейная модель: расстояние до задней оси	?
+C#E_M_ESM	Single-track model: vehicle mass	Одноколейная модель: масса автомобиля	?
+C#E_THETA_ESM	Single-track model: yaw inertia	Одноколейная модель: момент инерции рыскания	?
+C#E_SC_X_ESM	Single-track model: centre of gravity X	Одноколейная модель: центр масс X	?
+C#E_SC_Y_ESM	Single-track model: centre of gravity Y	Одноколейная модель: центр масс Y	?
+C#E_PRE_MSR	Engine drag torque control pre-control	Предуправление регулированием момента торможения двигателем	?
+C#E_PRE_USC	Understeer control pre-control	Предуправление контролем недостаточной поворачиваемости	?
+C#E_RPA	Flat tyre monitor (RPA)	Индикатор проколов шин (RPA)
+C#E_RPA_SCHWELLE	Flat tyre monitor threshold	Порог индикатора проколов	?
+C#E_SDR_CTC	DSC function SDR/CTC	Функция DSC SDR/CTC	?
+C#E_UEBERSTEUERN_MUE_#	Oversteer threshold, grip level {2}	Порог избыточной поворачиваемости, сцепление {2}	?
+C#E_UEBERSTEUERN_MUE_#_#	Oversteer threshold, grip level {2}.{3}	Порог избыточной поворачиваемости, сцепление {2}.{3}	?
+C#E_UNTERSTEUERN_MUE_#	Understeer threshold, grip level {2}	Порог недостаточной поворачиваемости, сцепление {2}	?
+C#E_UNTERSTEUERN_MUE_#_#	Understeer threshold, grip level {2}.{3}	Порог недостаточной поворачиваемости, сцепление {2}.{3}	?
+C#E_UNTERSTEUERSCHWELLE	Understeer threshold	Порог недостаточной поворачиваемости	?
+C#E_WLC	DSC function WLC	Функция DSC WLC	?

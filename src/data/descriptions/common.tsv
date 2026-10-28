@@ -1,0 +1,15 @@
+// Naming conventions shared by E-series ECUs. Written from the parameter
+// names; independent of NCS Dummy's Translations.csv.
+*_ALIVE_ZAEHLER	Monitor the alive counter of {1} messages	Контроль счётчика активности (alive) сообщений {1}
+*_ALIVE_MONITOR	Monitor the alive counter of {1} messages	Контроль счётчика активности (alive) сообщений {1}
+*_ALIVE	Monitor that {1} is alive on the bus	Контроль присутствия {1} на шине
+*_ID_MONITOR	Monitor the message ID of {1}	Контроль идентификатора сообщений {1}
+*_CSUM_MONITOR	Monitor the checksum of {1} messages	Контроль контрольной суммы сообщений {1}
+*_TIMEOUT	Timeout for {1}	Тайм-аут для {1}	?
+*_TIME_OUT	Timeout for {1}	Тайм-аут для {1}	?
+CSUM_*	Checksum of coding block {1} (calculated automatically)	Контрольная сумма блока кодировки {1} (считается автоматически)
+*_VERBAUT	{1} installed	{1} установлен
+*_ENABLE	{1} enabled	{1} включено	?
+CODING_VALID_BMW	Coding marked as valid (BMW)	Признак действительной кодировки (BMW)
+DATEN_INDEX	Coding data index	Индекс данных кодировки
+CODIERUNG_ERFOLGT	Coding completed (marker)	Кодирование выполнено (признак)

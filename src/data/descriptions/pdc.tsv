@@ -1,0 +1,64 @@
+// PDC — park distance control (E8x/E9x). Written from the parameter names.
+ANZAHL_WANDLER	Number of ultrasonic sensors	Количество ультразвуковых датчиков
+PDC_AKTIV/DEAKTIV	PDC on/off button	Кнопка включения/выключения парктроника
+PDC_DEAKTIVIERUNG	PDC can be switched off	Парктроник можно выключить
+PDC_SCHALTER	PDC button installed	Кнопка парктроника установлена
+EINSCHALTVERZOEGERUNG	Switch-on delay	Задержка включения
+EINSCHALTVEROEGERUNG_ZEIT	Switch-on delay time	Время задержки включения
+ANHAENGERKUPPLUNG	Trailer hitch: rear sensors adapt	Фаркоп: учёт задних датчиков
+AHK_OFFSET_HINTEN	Trailer hitch offset, rear	Смещение для фаркопа сзади	?
+AHK_OFFSET_FRONT	Trailer hitch offset, front	Смещение для фаркопа спереди	?
+WANDERKENNUNG	Moving obstacle detection	Распознавание движущихся препятствий	?
+FAHRZEUG_STILLSTAND	Behaviour when the vehicle is stationary	Поведение при неподвижном автомобиле	?
+STILLSTAND_ZEIT	Standstill time	Время стоянки	?
+AKUSTIK_RECHTS_LINKS	Tones come from the side of the obstacle	Сигнал со стороны препятствия	?
+AKUSTISCHE_FEHLERMELDUNG	Acoustic fault warning	Звуковое сообщение о неисправности
+EINSCHALTMELDUNG_IMMER	Always confirm switching on with a tone	Всегда подтверждать включение сигналом	?
+DAUERTON	Continuous tone in the close range	Непрерывный сигнал в ближней зоне
+DAUERTON_BEREICH_HINTEN	Continuous tone distance, rear	Расстояние непрерывного сигнала сзади
+DAUERTON_BEREICH_VORNE	Continuous tone distance, front	Расстояние непрерывного сигнала спереди
+ABSTAND_DAUERTON_KOPPLUNG	Link continuous tone distance front/rear	Связь расстояний непрерывного сигнала перед/зад	?
+WANDLER_STOERUNG	Sensor fault handling	Обработка неисправности датчика	?
+MESSBEREICH_ECKE_HINTEN	Detection range: rear corners	Зона обнаружения: задние углы
+MESSBEREICHE_MITTE_HINTEN	Detection range: rear centre	Зона обнаружения: задний центр
+MESSBEREICHE_ECKE_VORNE	Detection range: front corners	Зона обнаружения: передние углы
+MESSBEREICHE_MITTE_VORNE	Detection range: front centre	Зона обнаружения: передний центр
+ABSTAND_ECK_MIT_HI	Distance corner/centre, rear	Расстояние угол/центр сзади	?
+ABSTAND_MIT_MIT_HI	Distance centre/centre, rear	Расстояние центр/центр сзади	?
+ABSTAND_ECKE_MIT_VO	Distance corner/centre, front	Расстояние угол/центр спереди	?
+ABSTAND_MIT_MIT_VO	Distance centre/centre, front	Расстояние центр/центр спереди	?
+OFFSET_ECKE_HINTEN	Offset: rear corners	Смещение: задние углы	?
+OFFSET_MIT_HINTEN	Offset: rear centre	Смещение: задний центр	?
+OFFSET_ECKE_VORNE	Offset: front corners	Смещение: передние углы	?
+OFFSET_MITTE_VORNE	Offset: front centre	Смещение: передний центр	?
+SCHWELLWERT_ECKE_HI	Detection threshold: rear corners	Порог обнаружения: задние углы	?
+SCHWELLWERT_MITTE_HI	Detection threshold: rear centre	Порог обнаружения: задний центр	?
+SCHWELLWERT_ECKE_VO	Detection threshold: front corners	Порог обнаружения: передние углы	?
+SCHWELLWERT_MITTE_VO	Detection threshold: front centre	Порог обнаружения: передний центр	?
+TOTZEIT_ECHOS_HECK	Echo dead time, rear	Мёртвое время эхо сзади	?
+TOTZEIT_ECHOS_VORNE	Echo dead time, front	Мёртвое время эхо спереди	?
+LAUTSTAERKE_HINTEN	Tone volume, rear	Громкость сигнала сзади
+LAUTSTAERKE_VORN	Tone volume, front	Громкость сигнала спереди
+FREQUENZ_TONGEBER_HINTEN	Tone pitch, rear	Частота сигнала сзади
+FREQUENZ_TONGEBER_VORNE	Tone pitch, front	Частота сигнала спереди
+TON_ANZEIGEDAUER	Tone and display duration	Длительность сигнала и индикации	?
+TONAUSGABE_CAN	Tones via the radio (CAN)	Сигналы через аудиосистему (CAN)
+TONAUSGABE_LSP	Tones via own PDC speakers	Сигналы через собственные динамики парктроника
+ABSCHALT_GESCHWINDIGKEIT	Switch-off speed	Скорость отключения
+ABSCHALTWEG	Switch-off distance	Пробег до отключения	?
+SC_FLAG_WD_REAR	Self-check rear: sensor fault	Самодиагностика сзади: неисправность датчика	?
+SC_FLAG_OE_REAR	Self-check rear: open circuit	Самодиагностика сзади: обрыв	?
+SC_FLAG_LP_REAR	Self-check rear: low signal	Самодиагностика сзади: слабый сигнал	?
+SC_FLAG_DT_REAR	Self-check rear: continuous tone	Самодиагностика сзади: непрерывный сигнал	?
+SC_FLAG_WD_FRONT	Self-check front: sensor fault	Самодиагностика спереди: неисправность датчика	?
+SC_FLAG_OE_FRONT	Self-check front: open circuit	Самодиагностика спереди: обрыв	?
+SC_FLAG_LP_FRONT	Self-check front: low signal	Самодиагностика спереди: слабый сигнал	?
+SC_FLAG_DT_FRONT	Self-check front: continuous tone	Самодиагностика спереди: непрерывный сигнал	?
+SC_WD_REAR	Self-check rear: sensor fault parameters	Самодиагностика сзади: параметры неисправности датчика	?
+SC_OE_REAR	Self-check rear: open circuit parameters	Самодиагностика сзади: параметры обрыва	?
+SC_LP_REAR	Self-check rear: low signal parameters	Самодиагностика сзади: параметры слабого сигнала	?
+SC_DT_REAR	Self-check rear: continuous tone parameters	Самодиагностика сзади: параметры непрерывного сигнала	?
+SC_WD_FRONT	Self-check front: sensor fault parameters	Самодиагностика спереди: параметры неисправности датчика	?
+SC_OE_FRONT	Self-check front: open circuit parameters	Самодиагностика спереди: параметры обрыва	?
+SC_LP_FRONT	Self-check front: low signal parameters	Самодиагностика спереди: параметры слабого сигнала	?
+SC_DT_FRONT	Self-check front: continuous tone parameters	Самодиагностика спереди: параметры непрерывного сигнала	?

@@ -83,6 +83,14 @@ export function OptionRows({ rows }: { rows: number[] }) {
                 <div className="truncate text-sm text-fg">{text.title}</div>
                 {text.title !== seg.name && (
                   <div className="truncate text-xs text-faint">
+                    {text.unverified && (
+                      <span
+                        className="mr-1.5 rounded bg-panel2 px-1 text-[10px] text-mut"
+                        title={lang === 'ru' ? 'Описание составлено по имени параметра и ещё не проверено' : 'Described from the parameter name, not yet checked'}
+                      >
+                        ?
+                      </span>
+                    )}
                     <span className="font-mono">{seg.name}</span>
                     {text.original && <span> · {text.original}</span>}
                   </div>

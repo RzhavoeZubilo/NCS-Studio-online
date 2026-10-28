@@ -2,6 +2,7 @@ import { useMemo } from 'react'
 import { useStore, useTranslator } from '@/state/store'
 import { splitDescription, type Description } from '@/lib/descriptions'
 import { translateExact } from '@/lib/ruTranslate'
+import { lookupOwn } from '@/lib/ownDescriptions'
 
 export interface FunctionText {
   /** main line: Russian when known, else the English description, else the name */
@@ -12,6 +13,8 @@ export interface FunctionText {
   hint?: string
   /** value → meaning, from the description's "[wert_01: …]" list */
   values: Map<string, string>
+  /** the shown text is the project's own guess from the name, not yet checked on a car */
+  unverified?: boolean
 }
 
 /**
@@ -21,6 +24,7 @@ export interface FunctionText {
  */
 export function useDescribe() {
   const descriptions = useStore((s) => s.descriptions)
+  const ownDb = useStore((s) => s.ownDb)
   const overlay = useStore((s) => s.overlay)
   const paramLang = useStore((s) => s.paramLang)
   const tr = useTranslator()
@@ -42,10 +46,21 @@ export function useDescribe() {
       const d = describe(name)
       const values = d?.values ?? new Map<string, string>()
       if (paramLang === 'original') return { title: name, values }
-      const en = d?.text || undefined
-      const ru = ruExact(name) ?? (paramLang === 'ru' && !en ? tr(name) : undefined)
+      const own = ownDb ? lookupOwn(ownDb, name) : undefined
+      // English: the user's Translations.csv when loaded, else the project's own text
+      const en = d?.text || own?.en || undefined
+      const ownRu = paramLang === 'ru' ? own?.ru || undefined : undefined
+      const ru = ruExact(name) ?? ownRu ?? (paramLang === 'ru' && !en ? tr(name) : undefined)
       const fallback = paramLang === 'en' && !en ? tr(name) : undefined
-      return { title: ru ?? en ?? fallback ?? name, original: ru && en ? en : undefined, hint: d?.hint, values }
+      const title = ru ?? en ?? fallback ?? name
+      const fromOwn = !!own && (title === ownRu || (title === own.en && !d?.text))
+      return {
+        title,
+        original: ru && en ? en : undefined,
+        hint: d?.hint,
+        values,
+        unverified: fromOwn && own.unverified,
+      }
     }
 
     const value = (fnName: string, v: string): string | undefined => {
@@ -61,5 +76,5 @@ export function useDescribe() {
     }
 
     return { fn, value }
-  }, [descriptions, overlay, paramLang, tr])
+  }, [descriptions, ownDb, overlay, paramLang, tr])
 }

@@ -1,0 +1,246 @@
+// FRM, part 3: adaptive headlight swivel tuning (each with a sport-mode twin),
+// belt feeder, automatic levelling, mirrors, windows, colour switch. Written from the names.
+ABSCHW_D_TAU_HI	Swivel: damping weakening, high speed	Поворот фар: ослабление демпфирования, высокая скорость	?
+ABSCHW_D_TAU_HI_SP	Swivel: damping weakening, high speed (sport mode)	Поворот фар: ослабление демпфирования, высокая скорость (режим Sport)	?
+ABSCHW_D_TAU_LO	Swivel: damping weakening, low speed	Поворот фар: ослабление демпфирования, низкая скорость	?
+ABSCHW_D_TAU_LO_SP	Swivel: damping weakening, low speed (sport mode)	Поворот фар: ослабление демпфирования, низкая скорость (режим Sport)	?
+ABSCHWAECH_D_TAU	Swivel: damping weakening	Поворот фар: ослабление демпфирования	?
+ABSCHWAECH_D_TAU_SP	Swivel: damping weakening (sport mode)	Поворот фар: ослабление демпфирования (режим Sport)	?
+AEND_V_SCHWENK_N_AUSSEN	Swivel: speed change outwards	Поворот фар: изменение скорости наружу	?
+AEND_V_SCHWENK_N_AUSSE_SP	Swivel: speed change outwards (sport mode)	Поворот фар: изменение скорости наружу (режим Sport)	?
+KENNL_MAX_UEBERST	Swivel: maximum oversteer characteristic	Поворот фар: характеристика максимальной избыточной поворачиваемости	?
+KENNL_MAX_UEBERST_SP	Swivel: maximum oversteer characteristic (sport mode)	Поворот фар: характеристика максимальной избыточной поворачиваемости (режим Sport)	?
+KENNL_REDUZ_MAX_SCHWENK	Swivel: maximum angle reduction characteristic	Поворот фар: характеристика уменьшения максимального угла	?
+KENNL_REDUZ_MAX_SCHWEN_SP	Swivel: maximum angle reduction characteristic (sport mode)	Поворот фар: характеристика уменьшения максимального угла (режим Sport)	?
+LENK_UEBERSETZUNG	Swivel: steering ratio	Поворот фар: передаточное отношение руля	?
+LENK_UEBERSETZUNG_SP	Swivel: steering ratio (sport mode)	Поворот фар: передаточное отношение руля (режим Sport)	?
+LENK_UEBERSETZUNG_LO	Swivel: steering ratio, low speed	Поворот фар: передаточное отношение руля, низкая скорость	?
+LENK_UEBERSETZUNG_LO_SP	Swivel: steering ratio, low speed (sport mode)	Поворот фар: передаточное отношение руля, низкая скорость (режим Sport)	?
+MAX_DELTA_KEINE_VERR	Swivel: maximum delta without reduction	Поворот фар: максимальная дельта без уменьшения	?
+MAX_DELTA_KEINE_VERR_SP	Swivel: maximum delta without reduction (sport mode)	Поворот фар: максимальная дельта без уменьшения (режим Sport)	?
+MAX_VERRINGERUNG_V_SCHW	Swivel: maximum speed reduction	Поворот фар: максимальное снижение скорости	?
+MAX_VERRINGERUNG_V_SCH_SP	Swivel: maximum speed reduction (sport mode)	Поворот фар: максимальное снижение скорости (режим Sport)	?
+MIN_DELTA_MAX_VERR	Swivel: minimum delta for maximum reduction	Поворот фар: минимальная дельта для максимального уменьшения	?
+MIN_DELTA_MAX_VERR_SP	Swivel: minimum delta for maximum reduction (sport mode)	Поворот фар: минимальная дельта для максимального уменьшения (режим Sport)	?
+MIN_SW_SCHWENK_V_HORIZ	Swivel: minimum horizontal speed	Поворот фар: минимальная горизонтальная скорость	?
+MIN_SW_SCHWENK_V_HORIZ_SP	Swivel: minimum horizontal speed (sport mode)	Поворот фар: минимальная горизонтальная скорость (режим Sport)	?
+REDUZIERUNG_V_SCHWENK_HI	Swivel: speed reduction, high	Поворот фар: снижение скорости, высокая	?
+REDUZIERUNG_V_SCHWE_HI_SP	Swivel: speed reduction, high (sport mode)	Поворот фар: снижение скорости, высокая (режим Sport)	?
+REDUZIERUNG_V_SCHWENK_LO	Swivel: speed reduction, low	Поворот фар: снижение скорости, низкая	?
+REDUZIERUNG_V_SCHWE_LO_SP	Swivel: speed reduction, low (sport mode)	Поворот фар: снижение скорости, низкая (режим Sport)	?
+SW_NULL_BEREICH	Swivel: zero range	Поворот фар: нулевая зона	?
+SW_NULL_BEREICH_SP	Swivel: zero range (sport mode)	Поворот фар: нулевая зона (режим Sport)	?
+T_FILTER_UEBERST	Swivel: oversteer filter time	Поворот фар: время фильтра избыточной поворачиваемости	?
+T_FILTER_UEBERST_SP	Swivel: oversteer filter time (sport mode)	Поворот фар: время фильтра избыточной поворачиваемости (режим Sport)	?
+T_FILTER_V_VEH	Swivel: vehicle speed filter time	Поворот фар: время фильтра скорости	?
+T_FILTER_V_VEH_SP	Swivel: vehicle speed filter time (sport mode)	Поворот фар: время фильтра скорости (режим Sport)	?
+TAU_ABSCHWAECHUNG	Swivel: damping time constant	Поворот фар: постоянная демпфирования	?
+TAU_ABSCHWAECHUNG_SP	Swivel: damping time constant (sport mode)	Поворот фар: постоянная демпфирования (режим Sport)	?
+V_HI_ABSCHW_D_TAU	Swivel: high speed for damping weakening	Поворот фар: высокая скорость ослабления демпфирования	?
+V_HI_ABSCHW_D_TAU_SP	Swivel: high speed for damping weakening (sport mode)	Поворот фар: высокая скорость ослабления демпфирования (режим Sport)	?
+V_HI_AENDER_LENK_UEBERS	Swivel: high speed for steering ratio change	Поворот фар: высокая скорость смены передаточного отношения	?
+V_HI_AENDER_LENK_UEBER_SP	Swivel: high speed for steering ratio change (sport mode)	Поворот фар: высокая скорость смены передаточного отношения (режим Sport)	?
+V_HI_RED_SCHWENK_W	Swivel: high speed for angle reduction	Поворот фар: высокая скорость уменьшения угла	?
+V_HI_RED_SCHWENK_W_SP	Swivel: high speed for angle reduction (sport mode)	Поворот фар: высокая скорость уменьшения угла (режим Sport)	?
+V_HI_REDUZIER_V_SCHWENK	Swivel: high speed for speed reduction	Поворот фар: высокая скорость снижения скорости поворота	?
+V_HI_REDUZIER_V_SCHWEN_SP	Swivel: high speed for speed reduction (sport mode)	Поворот фар: высокая скорость снижения скорости поворота (режим Sport)	?
+V_HI_SW_MITLENKEN	Swivel: high speed for following the steering	Поворот фар: высокая скорость следования за рулём	?
+V_HI_SW_MITLENKEN_SP	Swivel: high speed for following the steering (sport mode)	Поворот фар: высокая скорость следования за рулём (режим Sport)	?
+V_HI_SW_NACH_INNEN	Swivel: high speed for turning inwards	Поворот фар: высокая скорость поворота внутрь	?
+V_HI_SW_NACH_INNEN_SP	Swivel: high speed for turning inwards (sport mode)	Поворот фар: высокая скорость поворота внутрь (режим Sport)	?
+V_LO_ABSCHW_D_TAU	Swivel: low speed for damping weakening	Поворот фар: низкая скорость ослабления демпфирования	?
+V_LO_ABSCHW_D_TAU_SP	Swivel: low speed for damping weakening (sport mode)	Поворот фар: низкая скорость ослабления демпфирования (режим Sport)	?
+V_LO_AENDER_LENK_UEBERS	Swivel: low speed for steering ratio change	Поворот фар: низкая скорость смены передаточного отношения	?
+V_LO_AENDER_LENK_UEBER_SP	Swivel: low speed for steering ratio change (sport mode)	Поворот фар: низкая скорость смены передаточного отношения (режим Sport)	?
+V_LO_RED_SCHWENK_W	Swivel: low speed for angle reduction	Поворот фар: низкая скорость уменьшения угла	?
+V_LO_RED_SCHWENK_W_SP	Swivel: low speed for angle reduction (sport mode)	Поворот фар: низкая скорость уменьшения угла (режим Sport)	?
+V_LO_REDUZIER_V_SCHWENK	Swivel: low speed for speed reduction	Поворот фар: низкая скорость снижения скорости поворота	?
+V_LO_REDUZIER_V_SCHWEN_SP	Swivel: low speed for speed reduction (sport mode)	Поворот фар: низкая скорость снижения скорости поворота (режим Sport)	?
+V_LO_SW_MITLENKEN	Swivel: low speed for following the steering	Поворот фар: низкая скорость следования за рулём	?
+V_LO_SW_MITLENKEN_SP	Swivel: low speed for following the steering (sport mode)	Поворот фар: низкая скорость следования за рулём (режим Sport)	?
+V_LO_SW_NACH_INNEN	Swivel: low speed for turning inwards	Поворот фар: низкая скорость поворота внутрь	?
+V_LO_SW_NACH_INNEN_SP	Swivel: low speed for turning inwards (sport mode)	Поворот фар: низкая скорость поворота внутрь (режим Sport)	?
+V_M_HI_REDUZIER_V_SCHWENK	Swivel: medium-high speed for speed reduction	Поворот фар: средне-высокая скорость снижения скорости поворота	?
+V_M_HI_REDUZIER_V_SCHW_SP	Swivel: medium-high speed for speed reduction (sport mode)	Поворот фар: средне-высокая скорость снижения скорости поворота (режим Sport)	?
+V_M_LO_REDUZIER_V_SCHWENK	Swivel: medium-low speed for speed reduction	Поворот фар: средне-низкая скорость снижения скорости поворота	?
+V_M_LO_REDUZIER_V_SCHW_SP	Swivel: medium-low speed for speed reduction (sport mode)	Поворот фар: средне-низкая скорость снижения скорости поворота (режим Sport)	?
+MAX_SCHWENK_V_H_BEGR	Swivel: maximum horizontal speed limit	Поворот фар: предел максимальной горизонтальной скорости	?
+MAX_SCHWENK_V_H_BEGR_SP	Swivel: maximum horizontal speed limit (sport mode)	Поворот фар: предел максимальной горизонтальной скорости (режим Sport)	?
+MAX_SW_SCHWENK_V_HORIZ	Swivel: maximum horizontal speed	Поворот фар: максимальная горизонтальная скорость	?
+MAX_SW_SCHWENK_V_VERTI	Swivel: maximum vertical speed	Поворот фар: максимальная вертикальная скорость	?
+MIN_SW_SCHWENK_V_VERTI	Swivel: minimum vertical speed	Поворот фар: минимальная вертикальная скорость	?
+MAX_SW_SCHWENK_W_AUSSEN	Swivel: maximum angle outwards	Поворот фар: максимальный угол наружу	?
+MAX_SW_SCHWENK_W_INNEN	Swivel: maximum angle inwards	Поворот фар: максимальный угол внутрь	?
+C_METER_NACH_INNEN_HI	Swivel: inward offset (m), high speed	Поворот фар: смещение внутрь (м), высокая скорость	?
+D_TAU_MITTEL_GIERR	Swivel: yaw rate averaging	Поворот фар: усреднение скорости рыскания	?
+D_TAU_MITTEL_LENKW	Swivel: steering angle averaging	Поворот фар: усреднение угла руля	?
+SCHW_TAU_LW_GR	Swivel: steering angle damping threshold	Поворот фар: порог демпфирования угла руля	?
+T_F_GIERRATE_DEF	Swivel: yaw rate filter default	Поворот фар: фильтр скорости рыскания по умолчанию	?
+T_FILTER_DYN_LZ	Swivel: dynamic filter time	Поворот фар: время динамического фильтра	?
+T_FILTER_GIERRATE	Swivel: yaw rate filter time	Поворот фар: время фильтра скорости рыскания	?
+T_FILTER_LENKWINKEL	Swivel: steering angle filter time	Поворот фар: время фильтра угла руля	?
+T_FILTER_TAU_LW	Swivel: steering angle damping filter	Поворот фар: фильтр демпфирования угла руля	?
+V_HI_TAU_GIERRATE	Swivel: high speed for yaw rate damping	Поворот фар: высокая скорость демпфирования рыскания	?
+V_LO_TAU_GIERRATE	Swivel: low speed for yaw rate damping	Поворот фар: низкая скорость демпфирования рыскания	?
+OHNE_GIERRATE	Swivel without yaw rate	Поворот фар без скорости рыскания	?
+DRIFT_DEKR	Swivel: drift decrement	Поворот фар: декремент дрейфа	?
+DRIFT_INKR	Swivel: drift increment	Поворот фар: инкремент дрейфа	?
+DRIFT_SCHWELLE	Swivel: drift threshold	Поворот фар: порог дрейфа	?
+KLASSIF_DRIFT_ENA	Swivel: drift classification	Поворот фар: классификация дрейфа	?
+KLASSIF_LENKM_ENA	Swivel: steering manoeuvre classification	Поворот фар: классификация манёвра рулём	?
+KLASSIF_UEBERST_ENA	Swivel: oversteer classification	Поворот фар: классификация избыточной поворачиваемости	?
+MERKM_#_BEGR	Swivel feature {1}: limit	Признак поворота {1}: ограничение	?
+MERKM_#_DEKR	Swivel feature {1}: decrement	Признак поворота {1}: декремент	?
+MERKM_#_INKR	Swivel feature {1}: increment	Признак поворота {1}: инкремент	?
+MERKM_#_MAX	Swivel feature {1}: maximum	Признак поворота {1}: максимум	?
+RAUSCH	Swivel: noise level	Поворот фар: уровень шума	?
+ZEITK_TRIGGER#	Swivel: trigger time constant {1}	Поворот фар: постоянная времени триггера {1}	?
+LICHTZ_R_L_FAKTOR	Light pattern right/left factor	Коэффициент светового пятна право/лево	?
+WINKEL_BLENDUNG	Glare angle	Угол ослепления	?
+BLEND_CHECK_IST_WINKEL	Glare check: actual angle	Проверка ослепления: фактический угол	?
+BLEND_CHECK_SOLL_WINKEL	Glare check: target angle	Проверка ослепления: заданный угол	?
+KEINE_L_R_SYNCHRONISATION	No left/right synchronisation	Без синхронизации лево/право	?
+V_REFERENZLAUF_EN	Speed for the reference run	Скорость опорного прогона	?
+ABSTELLPOS_CUSTOM	Park position: custom	Парковочная позиция: своя	?
+ABSTELLPOS_SMC	Park position: stepper controller	Парковочная позиция: контроллер шагового мотора	?
+CHECK_FGN_SMC_ALC_OFF	Check vehicle ID: stepper controller, adaptive light off	Проверка VIN: контроллер шагового мотора, адаптивный свет выкл.	?
+CHECK_SMC_ERROR	Check stepper controller errors	Проверка ошибок контроллера шагового мотора	?
+ERR_LWR_L_IGNORIEREN	Ignore left levelling fault	Игнорировать неисправность левого корректора	?
+ERR_LWR_R_IGNORIEREN	Ignore right levelling fault	Игнорировать неисправность правого корректора	?
+ERR_SCHWENK_L_IGNORIEREN	Ignore left swivel fault	Игнорировать неисправность поворота левой фары	?
+ERR_SCHWENK_R_IGNORIEREN	Ignore right swivel fault	Игнорировать неисправность поворота правой фары	?
+// automatic headlight levelling (ALWR) and road-type light
+AG_M_ALWR	Automatic levelling: parameter AG_M	Автокорректор фар: параметр AG_M	?
+F_ALWR	Automatic levelling: factor	Автокорректор фар: коэффициент	?
+F_A_ALWR	Automatic levelling: acceleration factor	Автокорректор фар: коэффициент ускорения	?
+F_SWEG_ALWR	Automatic levelling: travel factor	Автокорректор фар: коэффициент хода	?
+R_SWEG_ALWR	Automatic levelling: travel ratio	Автокорректор фар: отношение хода	?
+GL_ALWR	Automatic levelling: smoothing	Автокорректор фар: сглаживание	?
+STRST_MAXDIFF_ALWR	Automatic levelling: maximum difference	Автокорректор фар: максимальная разница	?
+T_ALWR_AM	Automatic levelling: time AM	Автокорректор фар: время AM	?
+T_ALWR_AUS	Automatic levelling: switch-off time	Автокорректор фар: время выключения	?
+T_ALWR_MKR	Automatic levelling: time MKR	Автокорректор фар: время MKR	?
+T_ALWR_NST	Automatic levelling: time NST	Автокорректор фар: время NST	?
+T_ALWR_SW	Automatic levelling: time SW	Автокорректор фар: время SW	?
+V_ALWR_AM	Automatic levelling: speed AM	Автокорректор фар: скорость AM	?
+V_ALWR_AN	Automatic levelling: switch-on speed	Автокорректор фар: скорость включения	?
+V_ALWR_AUS	Automatic levelling: switch-off speed	Автокорректор фар: скорость выключения	?
+V_ALWR_BAB#	Automatic levelling: motorway speed {1}	Автокорректор фар: скорость автомагистрали {1}	?
+W_ALWR_EKR	Automatic levelling: angle EKR	Автокорректор фар: угол EKR	?
+W_ALWR_MKR	Automatic levelling: angle MKR	Автокорректор фар: угол MKR	?
+W_ALWR_SW	Automatic levelling: angle SW	Автокорректор фар: угол SW	?
+Z_ALWR_NST	Automatic levelling: counter NST	Автокорректор фар: счётчик NST	?
+Z_ALWR_SW	Automatic levelling: counter SW	Автокорректор фар: счётчик SW	?
+V_HI_AUTOB	Motorway light: upper speed	Свет автомагистрали: верхняя скорость	?
+V_LO_AUTOB	Motorway light: lower speed	Свет автомагистрали: нижняя скорость	?
+V_HI_STADT	Town light: upper speed	Городской свет: верхняя скорость	?
+V_LO_STADT	Town light: lower speed	Городской свет: нижняя скорость	?
+V_MID_LANDSTR	Country road light: speed	Свет загородной дороги: скорость	?
+ZEIT_AUTOB	Motorway light: time	Свет автомагистрали: время	?
+WEG_GERADE	Straight road distance	Расстояние прямой дороги	?
+MAX_KRUEMM	Maximum road curvature	Максимальная кривизна дороги	?
+V_MIN_KRUEMM	Minimum speed for curvature	Минимальная скорость для кривизны	?
+OFFSET_GESCHW	Speed offset	Смещение скорости	?
+ADAPTION_CAN_LWR_LWS	Levelling adaption via steering angle sensor (CAN)	Адаптация корректора по датчику угла руля (CAN)	?
+LWR_MAX_POS_NORM	Levelling: maximum normal position	Корректор фар: максимальная нормальная позиция	?
+LWR_MAX_POS_REF	Levelling: maximum reference position	Корректор фар: максимальная опорная позиция	?
+LWR_OFFSET_PLATTLAUF_L	Levelling offset with a flat tyre, left	Смещение корректора при проколе, слева	?
+LWR_OFFSET_PLATTLAUF_R	Levelling offset with a flat tyre, right	Смещение корректора при проколе, справа	?
+LWR_DIAG_COOL_TIME	Levelling diagnosis: cool-down time	Диагностика корректора: время остывания	?
+LWR_DIAG_HEAT_TIME	Levelling diagnosis: heating time	Диагностика корректора: время нагрева	?
+LWR_DIAG_PARAM_A	Levelling diagnosis parameter A	Параметр A диагностики корректора	?
+LWR_STROM_HALT	Levelling motor: holding current	Мотор корректора: ток удержания	?
+LWR_STROM_NORMAL	Levelling motor: normal current	Мотор корректора: номинальный ток	?
+LWR_STROM_RAMPE	Levelling motor: current ramp	Мотор корректора: нарастание тока	?
+C#_HORI_BF	Headlight aim: horizontal, passenger side	Наводка фары: горизонталь, сторона пассажира	?
+C#_HORI_FA	Headlight aim: horizontal, driver side	Наводка фары: горизонталь, сторона водителя	?
+C#_VERT_BF	Headlight aim: vertical, passenger side	Наводка фары: вертикаль, сторона пассажира	?
+C#_VERT_FA	Headlight aim: vertical, driver side	Наводка фары: вертикаль, сторона водителя	?
+E__HORI_BF	Headlight aim: horizontal, passenger side	Наводка фары: горизонталь, сторона пассажира	?
+E__HORI_FA	Headlight aim: horizontal, driver side	Наводка фары: горизонталь, сторона водителя	?
+E__VERT_BF	Headlight aim: vertical, passenger side	Наводка фары: вертикаль, сторона пассажира	?
+E__VERT_FA	Headlight aim: vertical, driver side	Наводка фары: вертикаль, сторона водителя	?
+E#_HORI_BF	Headlight aim: horizontal, passenger side	Наводка фары: горизонталь, сторона пассажира	?
+E#_HORI_FA	Headlight aim: horizontal, driver side	Наводка фары: горизонталь, сторона водителя	?
+E#_VERT_BF	Headlight aim: vertical, passenger side	Наводка фары: вертикаль, сторона пассажира	?
+E#_VERT_FA	Headlight aim: vertical, driver side	Наводка фары: вертикаль, сторона водителя	?
+V__HORI_BF	Headlight aim: horizontal, passenger side	Наводка фары: горизонталь, сторона пассажира	?
+V__HORI_FA	Headlight aim: horizontal, driver side	Наводка фары: горизонталь, сторона водителя	?
+V__VERT_BF	Headlight aim: vertical, passenger side	Наводка фары: вертикаль, сторона пассажира	?
+V__VERT_FA	Headlight aim: vertical, driver side	Наводка фары: вертикаль, сторона водителя	?
+// belt feeder (coupe / convertible)
+ENABLE_GURTBRINGER_FA	Belt feeder, driver	Подаватель ремня водителя
+ENABLE_GURTBRINGER_BF	Belt feeder, passenger	Подаватель ремня пассажира
+GB_CA_FAHRZEUG	Belt feeder: vehicle with Comfort Access	Подаватель ремня: автомобиль с Comfort Access	?
+GB_DELTA_POS	Belt feeder: position delta	Подаватель ремня: дельта позиции	?
+GB_POS_AUS	Belt feeder: off position	Подаватель ремня: выключенная позиция	?
+GB_T_EINFAHREN	Belt feeder: retract time	Подаватель ремня: время втягивания	?
+GB_T_NOTLAUF	Belt feeder: emergency time	Подаватель ремня: аварийное время	?
+GB_USE_SBE	Belt feeder uses seat occupancy	Подаватель ремня учитывает занятость сиденья	?
+GB_TRIGGER_KL_#	Belt feeder triggered at terminal {1}	Подаватель ремня срабатывает при клемме {1}	?
+GB_TRIGGER_KL_R	Belt feeder triggered at terminal R	Подаватель ремня срабатывает при клемме R	?
+GB_ENTPRELL_TRIGGER	Belt feeder trigger debounce	Подаватель ремня: подавление дребезга триггера	?
+GB_ENTPRELL_CAN	Belt feeder CAN debounce	Подаватель ремня: подавление дребезга CAN	?
+GB_QUICKSTART	Belt feeder quick start	Подаватель ремня: быстрый старт	?
+GB_FAILSAFE	Belt feeder failsafe	Подаватель ремня: аварийный режим	?
+GB_NAD	Belt feeder parameter NAD	Подаватель ремня: параметр NAD	?
+GB_V_MAX_KMH	Belt feeder maximum speed	Подаватель ремня: максимальная скорость	?
+GB_ANZ_REVERSIEREN	Belt feeder: reversal count	Подаватель ремня: число реверсов	?
+GB_T_REVERSIEREN	Belt feeder: reversal time	Подаватель ремня: время реверса	?
+// exterior mirrors
+ASP_KEY_MEM_OHNE_MASTER	Mirror key memory without master	Память зеркал по ключу без мастер-ключа	?
+ASP_BORDSTEIN_AUTOM	Kerb view: passenger mirror tilts in reverse	Наклон зеркала пассажира к бордюру при заднем ходе
+ASP_WEG_BORDSTEIN_AUTOM	Kerb view: tilt travel	Наклон зеркала к бордюру: величина	?
+ASP_EINKLAPPEN	Folding mirrors	Складывающиеся зеркала
+ASP_KOMFORT_EINKLAPP	Fold mirrors when locking	Складывание зеркал при запирании
+ASP_GESCHW_AUTO_AUSKLAPP	Unfold mirrors automatically at speed	Автоматическое раскладывание зеркал при движении	?
+ASP_MAX_GESCHW_EINKLAPPEN	Maximum speed for folding mirrors	Максимальная скорость складывания зеркал	?
+ASP_ELEKTROCHROM	Auto-dimming exterior mirrors	Автозатемнение наружных зеркал
+ASP_HEIZUNG	Heated exterior mirrors	Обогрев наружных зеркал
+ASP_SPIEGEL_HEIZUNG_DELAY	Mirror heating delay	Задержка обогрева зеркал	?
+ASP_MEMORY	Mirror memory	Память положения зеркал
+ASP_NO_SPIEGEL_LIN_START	No mirror LIN start	Без запуска LIN зеркал	?
+HEIZ_ANF	Heating request	Запрос обогрева	?
+HEIZ_KNICK	Heating characteristic knee	Излом характеристики обогрева	?
+MAX_HEIZZEIT	Maximum heating time	Максимальное время обогрева	?
+VORH_HEIZZ	Pre-heating time	Время предварительного обогрева	?
+ABK_KNICK	Cooling characteristic knee	Излом характеристики охлаждения	?
+ABK_MIN_PROZ	Cooling minimum percentage	Минимальный процент охлаждения	?
+ABK_VERLAENG	Cooling extension	Продление охлаждения	?
+// windows (FRM)
+FH_COUPETUER	Coupe door: window drops on opening	Дверь купе: стекло опускается при открытии
+FH_LANGHUB	Window long stroke	Длинный ход стекла	?
+FH_KURZHUB_DISABLE_FEMOD	Short stroke off in factory mode	Короткий ход отключён в заводском режиме	?
+FH_KURZHUBDELAY_ZU	Short stroke closing delay	Задержка закрытия короткого хода	?
+FH_LIN_BEDIENBLOCK	Window switch block via LIN	Блок кнопок окон по LIN	?
+FH_MAN_MIT_EKS	Manual window operation with anti-trap	Ручное управление окнами с защитой от защемления
+FH_PANIKMODUS	Window panic mode	Аварийный режим окон	?
+FH_PANIKMODUS_MIT_EKS	Window panic mode with anti-trap	Аварийный режим окон с защитой от защемления	?
+FH_TIME_WAIT_ST_WRG_ENB	Window wait time	Время ожидания окон	?
+FH_WAIT_ST_WRG_ENB	Window wait state	Состояние ожидания окон	?
+FH_US_REVERSE	US window reversal	Реверс окон (США)	?
+FH_CONT_MAUT_NACH_KL#	Toll window continues after terminal {1}	Окно для оплаты проезда продолжает после клеммы {1}	?
+FH_TUERAUF_STOP_MAUT_#R	Toll window stops when the door opens	Окно для оплаты проезда останавливается при открытии двери	?
+FH_PARAMETER_#_#R	Window parameter {1}	Параметр стеклоподъёмника {1}	?
+HECKDECK_REVERS_ANZ_ZYKL	Rear deck reversal: number of cycles	Реверс заднего покрытия: число циклов	?
+HECKDECK_REVERS_DOPPELB	Rear deck reversal: double flash	Реверс заднего покрытия: двойное мигание	?
+NEUE_FAHRT_OPTION	New trip detection	Распознавание новой поездки	?
+NEUE_FAHRT_KL_#_NACHL	New trip after terminal {1} run-on	Новая поездка после задержки клеммы {1}	?
+// door contacts and interior colour
+SNU_NICHT_VERBAUT_#R	Door lock switch not installed	Датчик замка двери не установлен	?
+SNU_TK_ABFRAGE_OHNE_PULSE	Door contact query without pulses	Опрос дверного контакта без импульсов	?
+TK_SNU_HI	Door contact upper threshold	Верхний порог дверного контакта	?
+TK_SNU_LO	Door contact lower threshold	Нижний порог дверного контакта	?
+U_MIN_TK_SNU	Door contact minimum voltage	Минимальное напряжение дверного контакта	?
+OFFSET_ADC_SNU	Door lock switch ADC offset	Смещение АЦП датчика замка	?
+OFFSET_ADC_TK	Door contact ADC offset	Смещение АЦП дверного контакта	?
+DUAL_SP_LAMPEN_ARRAY_#	Dual mirror lamp array {1}	Массив ламп двойного зеркала {1}	?
+DUAL_SP_PARAMETER_#	Dual mirror parameter {1}	Параметр двойного зеркала {1}	?
+COLORSWITCH_E#_FRM	Interior light colour switch	Переключение цвета подсветки салона	?
+CS__NOM_BORDSP	Colour switch: nominal supply voltage	Переключение цвета: номинальное напряжение	?
+CS_DEFAULT_MODE	Colour switch: default mode	Переключение цвета: режим по умолчанию	?
+CS_MAX_PWM	Colour switch: maximum brightness	Переключение цвета: максимальная яркость	?
+CS_MIN_PWM	Colour switch: minimum brightness	Переключение цвета: минимальная яркость	?
+CS_MIN_PWM_RAMPE	Colour switch: minimum brightness ramp	Переключение цвета: нарастание минимальной яркости	?
+CS_SWITCH_TIME	Colour switch: switching time	Переключение цвета: время переключения	?
+CS_UEBERBLENDEN	Colour switch: cross-fade	Переключение цвета: плавный переход	?

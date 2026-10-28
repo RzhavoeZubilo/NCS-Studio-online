@@ -9,6 +9,7 @@ import { resolveEcu } from '@/lib/ecuInfo'
 import { locateSpDaten, readSpDatenLayout, type DirLike } from '@/lib/spdatenDir'
 import { parseCsv, type TranslationMap } from '@/lib/translations'
 import { looksLikeTranslationsCsv, parseDescriptions } from '@/lib/descriptions'
+import { loadOwnDb, type OwnDb } from '@/lib/ownDescriptions'
 import { mapFunctionNames, countSharedFunctions, pickModule } from '@/lib/ncsdata'
 import { translateValue } from '@/lib/ruTranslate'
 import faOptions from '@/data/faOptions.json'
@@ -74,6 +75,8 @@ interface AppState {
   overlay: Record<string, string> | null
   /** Translations.csv from NCS Dummy: name → English description */
   descriptions: TranslationMap | null
+  /** the project's own EN/RU descriptions (src/data/descriptions) */
+  ownDb: OwnDb | null
   overlayFile: string
   dictStatus: string | null
   autoTranslateRunning: boolean
@@ -158,6 +161,7 @@ export const useStore = create<AppState>((set, get) => ({
   linkedModule: null,
   overlay: null,
   descriptions: null,
+  ownDb: null,
   overlayFile: '',
   dictStatus: null,
   autoTranslateRunning: false,
@@ -266,6 +270,7 @@ export const useStore = create<AppState>((set, get) => ({
   setFaqOpen: (faqOpen) => set({ faqOpen }),
 
   restoreOverlay: async () => {
+    void loadOwnDb().then((ownDb) => set({ ownDb }))
     try {
       const saved = await idbGet<Record<string, string>>('ruOverlay')
       if (saved) set({ overlay: saved })

@@ -1,0 +1,73 @@
+// DWA — anti-theft alarm: control part and siren with tilt sensor (E8x/E9x).
+// Written from the parameter names.
+CODIERUNG_ERFOLGT_#	Coding completed (marker)	Кодирование выполнено (признак)
+LAUTSTAERKE	Siren volume	Громкость сирены	?
+TIMEOUT_DEAKT_IRNE	Interior protection off: timeout	Отключение защиты салона: тайм-аут	?
+ALARM_OPT_WARNBLINKER	Alarm flashes the hazard lights	Тревога мигает аварийкой
+ALARM_OPT_FERNLICHT	Alarm flashes the high beams	Тревога мигает дальним светом
+PARAMETER_IRS	Interior motion sensor parameters	Параметры датчика объёма салона	?
+FUNK_INNENRAUMSCHUTZ	Interior protection via radio sensor	Защита салона радиодатчиком	?
+NEIGUNGSGEBER	Tilt sensor	Датчик наклона
+TRIGGERANZAHL_KLAPPEN	Triggers needed from doors/lids	Число срабатываний дверей/крышек для тревоги	?
+TRIGGERANZAHL_SENSOREN	Triggers needed from sensors	Число срабатываний датчиков для тревоги	?
+PANIK_ALARM	Panic alarm from the remote	Тревожная кнопка на пульте
+HOTELSTELLUNG	Hotel position (interior protection off)	Режим «отель» (без защиты салона)	?
+NOTLAUFFUNKTION_HUPE	Emergency horn function	Аварийная функция клаксона	?
+SIGNAL_HK	Alarm signal for the boot lid	Сигнал тревоги для крышки багажника	?
+LADEEINRICHTUNG	Charging device	Зарядное устройство	?
+MOTORFERNSTART	Remote engine start	Дистанционный запуск двигателя	?
+ANFRAGE_FENSTERPOSITIONEN	Check window positions when arming	Проверка положения окон при постановке	?
+QUIT_OPT_SCHAERF	Light confirmation on arming	Световое подтверждение постановки
+QUIT_OPT_SCHAERF_KLAPPE	Light confirmation on arming with a lid open	Световое подтверждение постановки с открытой крышкой
+QUIT_OPT_ENTSCH	Light confirmation on disarming	Световое подтверждение снятия
+QUIT_AKUST_SCHAERF	Sound confirmation on arming	Звуковое подтверждение постановки
+QUIT_AKUST_SCHAERF_KLAPPE	Sound confirmation on arming with a lid open	Звуковое подтверждение постановки с открытой крышкой
+QUIT_AKUST_ENTSCH	Sound confirmation on disarming	Звуковое подтверждение снятия
+DEF_QUIT_OPT_SCHAERF	Default: light confirmation on arming	По умолчанию: световое подтверждение постановки
+DEF_QUIT_OPT_SCHAERF_KLAP	Default: light confirmation on arming with a lid open	По умолчанию: световое подтверждение постановки с открытой крышкой
+DEF_QUIT_OPT_ENTSCH	Default: light confirmation on disarming	По умолчанию: световое подтверждение снятия
+DEF_QUIT_AKUST_SCHAERF	Default: sound confirmation on arming	По умолчанию: звуковое подтверждение постановки
+DEF_QUIT_AKUST_SCHAERF_KL	Default: sound confirmation on arming with a lid open	По умолчанию: звуковое подтверждение постановки с открытой крышкой
+DEF_QUIT_AKUST_ENTSCH	Default: sound confirmation on disarming	По умолчанию: звуковое подтверждение снятия
+PIAU_AKUST_ENTSCH	Personal profile: sound confirmation on disarming	Личный профиль: звуковое подтверждение снятия	?
+PIAU_AKUST_SCHAERF_KLAPPE	Personal profile: sound confirmation on arming with a lid open	Личный профиль: звуковое подтверждение постановки с открытой крышкой	?
+// siren with tilt sensor
+ALARMTYP	Alarm sound type (country)	Тип звука тревоги (страна)
+ALARM_LEVEL_X	Tilt sensor alarm level, X axis	Порог тревоги датчика наклона, ось X	?
+ALARM_LEVEL_Y	Tilt sensor alarm level, Y axis	Порог тревоги датчика наклона, ось Y	?
+ALARM_LEVEL_Z	Tilt sensor alarm level, Z axis	Порог тревоги датчика наклона, ось Z	?
+MAX_DRIFT_X	Tilt sensor maximum drift, X axis	Максимальный дрейф датчика наклона, ось X	?
+MAX_DRIFT_Y	Tilt sensor maximum drift, Y axis	Максимальный дрейф датчика наклона, ось Y	?
+MAX_DRIFT_Z	Tilt sensor maximum drift, Z axis	Максимальный дрейф датчика наклона, ось Z	?
+ERR_BANDW_#ALARM_X	Tilt sensor error band, alarm {1}, X axis	Полоса ошибки датчика наклона, тревога {1}, ось X	?
+ERR_BANDW_#ALARM_Y	Tilt sensor error band, alarm {1}, Y axis	Полоса ошибки датчика наклона, тревога {1}, ось Y	?
+ERR_BANDW_#ALARM_Z	Tilt sensor error band, alarm {1}, Z axis	Полоса ошибки датчика наклона, тревога {1}, ось Z	?
+COUNT_RESET_LEV_#ALARM_X	Tilt sensor counter reset level, alarm {1}, X axis	Уровень сброса счётчика, тревога {1}, ось X	?
+COUNT_RESET_LEV_#ALARM_Y	Tilt sensor counter reset level, alarm {1}, Y axis	Уровень сброса счётчика, тревога {1}, ось Y	?
+COUNT_RESET_LEV_#ALARM_Z	Tilt sensor counter reset level, alarm {1}, Z axis	Уровень сброса счётчика, тревога {1}, ось Z	?
+CHECK_DRIFT_TIME	Tilt sensor drift check time	Время проверки дрейфа датчика наклона	?
+NOISE_CORRECTION_TIME	Tilt sensor noise correction time	Время коррекции шума датчика наклона	?
+ARMING_TIME	Arming delay	Задержка постановки на охрану	?
+ARMING_TIME_BETW_ALARMS	Re-arming time between alarms	Время повторной постановки между тревогами	?
+CONTROL_BYTE	Siren control byte	Управляющий байт сирены	?
+ALARM_TIME_EXT_SUPPLY	Alarm duration on vehicle power	Длительность тревоги от бортовой сети
+ALARM_TIME_SELF_SUPPLY	Alarm duration on the siren's own battery	Длительность тревоги от собственного аккумулятора сирены
+ALARM_PAUSE_TIME	Pause between alarms	Пауза между тревогами
+DUTY_CICLE_EXT_SUPPLY	Siren duty cycle on vehicle power	Скважность сирены от бортовой сети	?
+MIN_CHARGING_TEMP	Backup battery: minimum charging temperature	Резервный аккумулятор: мин. температура заряда
+MAX_CHARGING_TEMP	Backup battery: maximum charging temperature	Резервный аккумулятор: макс. температура заряда
+MIN_ALARM_TEMP	Minimum temperature for the alarm	Минимальная температура для тревоги	?
+MAX_ALARM_TEMP	Maximum temperature for the alarm	Максимальная температура для тревоги	?
+POWER_REDUCTION_TEMP	Power reduction temperature	Температура снижения мощности	?
+POWER_REDUCTION_DUTY	Power reduction duty cycle	Скважность при снижении мощности	?
+USA_MAX_SEMIPERIOD	US siren tone: maximum half-period	Тон сирены США: макс. полупериод	?
+USA_MIN_SEMIPERIOD	US siren tone: minimum half-period	Тон сирены США: мин. полупериод	?
+USA_SWEEP	US siren tone sweep rate	Частота качания тона сирены США	?
+ECE_SEMIPERIOD	ECE siren tone half-period	Полупериод тона сирены ECE	?
+ECE_MODULATION	ECE siren tone modulation	Модуляция тона сирены ECE	?
+BUZZER_LOW_LEVEL	Buzzer low level	Нижний уровень зуммера	?
+BUZZER_HIGH_LEVEL	Buzzer high level	Верхний уровень зуммера	?
+BUZZER_SEMIPERIOD	Buzzer tone half-period	Полупериод тона зуммера	?
+BUZZER_TIME	Buzzer duration	Длительность зуммера	?
+BACK_UP_BATTERY_DATA	Backup battery type	Тип резервного аккумулятора
+BACK_UP_BATTERY_CAPACITY	Backup battery capacity	Ёмкость резервного аккумулятора

@@ -1,0 +1,254 @@
+// CAS — car access system: keys, central locking, immobiliser, terminal control
+// (E8x/E9x). Written from the parameter names. ER = unlock, VR = lock,
+// FBD = remote key, PA = Comfort Access (passive access), FH = windows.
+// vehicle data
+BAUREIHE	Vehicle series	Серия автомобиля
+BAUART	Body style	Тип кузова
+MOTOR_ART	Engine type	Тип двигателя
+MOTOR_HUBRAUM	Engine	Двигатель
+ZYLINDER_ZAHL	Number of cylinders	Число цилиндров
+GETRIEBE_GAENGE	Number of gears	Число передач
+GETRIEBE_TYP	Transmission type	Тип коробки передач
+SS_GETRIEBE_#	Transmission variant {1}	Вариант коробки передач {1}	?
+TYP_LENKUNG	Left- or right-hand drive	Левый или правый руль
+KLASSE_BATTERIE	Battery size and type	Ёмкость и тип аккумулятора
+LAENDERVARIANTE_BNDB	Country variant	Страновой вариант
+SICHERHEITSFAHRZEUG	Armoured (security) vehicle	Бронированный (защищённый) автомобиль
+SCHLUESSELVARIANTE	Key variant	Вариант ключа	?
+CBS_VERSION	Service data (CBS) version	Версия сервисных данных (CBS)	?
+STROM_RUHE	Quiescent current limit	Предел тока покоя	?
+STROM_KS_MIN	Terminal current: minimum	Ток клеммы: минимум	?
+STROM_KS_MAX	Terminal current: maximum	Ток клеммы: максимум	?
+CLASS_PWR	Power class	Класс мощности	?
+// starting
+KOMFORTSTART	Comfort start (start/stop button)	Комфортный запуск (кнопка старт/стоп)
+KOMFORT_EIN	Comfort switch-on	Комфортное включение	?
+KOMFORT_AUS_IN_#MS	Comfort switch-off after {1} ms	Комфортное выключение через {1} мс	?
+KOMFORT_EJECT	Comfort key eject	Комфортный выброс ключа	?
+ERROR_EJECT	Eject the key on a fault	Выброс ключа при неисправности	?
+STARTABBRUCH_BREMSE	Abort starting when the brake is released	Прерывание пуска при отпускании тормоза	?
+STARTABBRUCH_P	Abort starting when not in P	Прерывание пуска вне положения P	?
+STARTABBRUCH_KLR	Abort starting at terminal R	Прерывание пуска при клемме R	?
+ZEIT_BREMSE	Brake pedal time for starting	Время нажатия тормоза для пуска	?
+BREMSE_DRUCK	Brake pressure for starting	Давление тормоза для пуска	?
+AUSWERTUNG_B_DRUCK	Evaluate brake pressure	Учитывать давление тормоза	?
+AUSWERTUNG_P_CAN	Evaluate P position via CAN	Учитывать положение P по CAN	?
+AUSWERTUNG_P_HW	Evaluate P position via wire	Учитывать положение P по проводу	?
+ANLASSSPERRE_BLS	Starter lock without brake light switch	Блокировка стартера без выключателя стоп-сигнала	?
+ANLASSERSPERRE_P	Starter lock unless in P	Блокировка стартера вне положения P
+ANLASSERSPERRE_KPS	Starter lock without clutch pedal	Блокировка стартера без педали сцепления	?
+ANLASSERSCHUTZ_#SEK	Starter protection for {1} s	Защита стартера {1} с	?
+STARTDELAY_K_START	Start delay	Задержка пуска	?
+STARTDELAY_K_START_R#X	Start delay variant {1}	Задержка пуска, вариант {1}	?
+STARTWUNSCH_KL#	Start request from terminal {1}	Запрос пуска от клеммы {1}	?
+// immobiliser
+EWS_NACHLAUF_KLR_AUS	Immobiliser run-on after terminal R off	Задержка иммобилайзера после выключения клеммы R	?
+EWS_FEHLER_MOTORLAUF	Immobiliser fault with the engine running	Ошибка иммобилайзера при работающем двигателе	?
+EWS_SCHRITTWEITE_#	Immobiliser code step {1}	Шаг кода иммобилайзера {1}	?
+EWS_EGS	Immobiliser with the transmission	Иммобилайзер с коробкой передач	?
+CHIPCARD	Chip card key	Ключ-карта	?
+PA_CHIPCARD_ACTIVE	Comfort Access chip card	Ключ-карта Comfort Access	?
+// terminal control (ignition states)
+KLR_EIN_GESCHW	Terminal R stays on while driving	Клемма R остаётся включённой при движении	?
+KLR_AUS_TK	Terminal R off on door opening	Выключение клеммы R при открытии двери	?
+DELAY_KLR_AUS	Terminal R switch-off delay	Задержка выключения клеммы R	?
+DELAY_KL#L	Terminal {1} switch-off delay	Задержка выключения клеммы {1}	?
+SPERRE_KLRAUS_SST	Block terminal R off at the start/stop button	Блокировка выключения клеммы R кнопкой старт/стоп	?
+KL#HW#_ALLWAYS	Terminal {1} wire always active	Провод клеммы {1} всегда активен	?
+KL#G_NACHLAUF_NACH_SZ#	Terminal {1} run-on after switch {2}	Задержка клеммы {1} после выключателя {2}	?
+KL#G_EIN_HKT_AUSSEN_#	Terminal {1} on via outside boot button	Клемма {1} от наружной кнопки багажника	?
+KL#G_EIN_HKT_FBD_#	Terminal {1} on via remote boot button	Клемма {1} от кнопки багажника на пульте	?
+ZEIT_KL#_ANSTRG	Terminal {1} drive time	Время управления клеммой {1}	?
+TC_KL#_AUTO_OFF	Automatic terminal {1} switch-off	Автоматическое выключение клеммы {1}
+TC_KL#_AUTO_OFF_LIGHT	Automatic terminal {1} switch-off with lights on	Автоматическое выключение клеммы {1} при включённом свете	?
+TC_KL#_AUTO_OFF_OSFG	Automatic terminal {1} switch-off (variant)	Автоматическое выключение клеммы {1} (вариант)	?
+TC_TIME_KL#_AUTO_OFF	Time before automatic terminal {1} switch-off	Время до автоматического выключения клеммы {1}
+TC_MSA_NO_KL#_AUTO_OFF	No automatic terminal {1} off during auto start-stop	Без автовыключения клеммы {1} при старт-стоп	?
+TC_MSA_IGNORE_ENG_RUN	Ignore engine running during auto start-stop	Игнорировать работу двигателя при старт-стоп	?
+TC_NOT_P_NO_KL#_AUTO_OFF	No automatic terminal {1} off when not in P	Без автовыключения клеммы {1} вне положения P	?
+OSFG_MSA_NO_KL#_AUTO_OFF	No automatic terminal {1} off during auto start-stop (variant)	Без автовыключения клеммы {1} при старт-стоп (вариант)	?
+TIME_KL#_AUT_OFF_DR_OPEN	Terminal {1} off after the door opens: time	Выключение клеммы {1} после открытия двери: время	?
+KLSTRG_DISFERTMODE	Terminal control off in factory mode	Управление клеммами отключено в заводском режиме	?
+KLSTRG_DISTRANSMODE	Terminal control off in transport mode	Управление клеммами отключено в транспортном режиме	?
+KLSTRG_DISWERKSTMODE	Terminal control off in workshop mode	Управление клеммами отключено в режиме мастерской	?
+KLSTRG_TESTER	Terminal control by the tester	Управление клеммами от тестера	?
+KLSTRG_GRB_ID	Terminal control ID	Идентификатор управления клеммами	?
+// steering lock
+ELV_AUT_FCT	Electric steering lock: automatic	Электрическая блокировка руля: автоматически	?
+ELV_RESET_FCT	Electric steering lock: reset	Электрическая блокировка руля: сброс	?
+ELV_CCM_NEU	Electric steering lock: new Check Control messages	Электрическая блокировка руля: новые сообщения Check Control	?
+ABZUGSPERRE_PLOCK_C#	Key removal lock unless in P	Блокировка извлечения ключа вне P	?
+// central locking
+SCHAERFEN/ENTSCHAERFEN	Arming/disarming by lock and/or remote	Постановка/снятие с охраны замком и/или пультом
+CLT_TASTE	Central lock button	Кнопка центрального замка
+ES_EINMALIG_CLT	Central lock button: single unlock	Кнопка центрального замка: однократное открытие	?
+ENABLE_CLT_NACH_CRASH	Central lock button works after a crash	Кнопка центрального замка работает после аварии	?
+SPERRE_CRASH_ER	Unlock after a crash	Открытие замков после аварии	?
+CRASH_SCHWERE	Crash severity for unlocking	Тяжесть аварии для открытия замков	?
+CRASH_BESCHLEUNIGUNG	Crash deceleration for unlocking	Замедление аварии для открытия замков	?
+VR_KLR	Lock at terminal R	Запирание при клемме R	?
+VR_KLR_EINMALIG	Lock once at terminal R	Однократное запирание при клемме R	?
+VR_GESCHW_EINMALIG	Lock once at a speed	Однократное запирание при скорости
+VERRIEGELUNGSSCHWELLE	Speed threshold for automatic locking	Порог скорости для автоматического запирания
+ZEIT_AUTO_ZV_VR	Time for automatic re-locking	Время автоматического повторного запирания
+VER_AUT_X_MIN_OHNE_NR	Re-lock after a delay (key without number)	Повторное запирание по времени (ключ без номера)	?
+VER_AUT_X_MIN_SENDER_#	Re-lock after a delay, key {1}	Повторное запирание по времени, ключ {1}
+VER_AUT_X_MIN_DEFAULT	Re-lock after a delay: default	Повторное запирание по времени: по умолчанию
+VER_AUT_X_MIN_PORT	Re-lock after a delay: profile transfer	Повторное запирание по времени: перенос профиля	?
+VERRIEGEL_XKM/H_OHNE_NR	Lock when driving off (key without number)	Запирание при начале движения (ключ без номера)	?
+VERRIEGELN_XKM/H_SENDER_#	Lock when driving off, key {1}	Запирание при начале движения, ключ {1}
+VERRIEGELN_XKM/H_DEFAULT	Lock when driving off: default	Запирание при начале движения: по умолчанию
+VERRIEGELN_XKM/H_PORT	Lock when driving off: profile transfer	Запирание при начале движения: перенос профиля	?
+ZV_SELEKTIV	Selective unlocking (driver's door first)	Селективное открытие (сначала дверь водителя)
+SEL_ZV_SENDER_#	Selective unlocking, key {1}	Селективное открытие, ключ {1}
+SEL_ZV_SENDER_DEFAULT	Selective unlocking: default	Селективное открытие: по умолчанию
+SEL_ZV_SENDER_PORT	Selective unlocking: profile transfer	Селективное открытие: перенос профиля	?
+ZV_AUTHENTISIERUNG	Central locking authentication	Аутентификация центрального замка	?
+ZV_DISFERTMODE	Central locking off in factory mode	Центральный замок отключён в заводском режиме	?
+ZV_DISTRANSMODE	Central locking off in transport mode	Центральный замок отключён в транспортном режиме	?
+ZV_DISWERKSTMODE	Central locking off in workshop mode	Центральный замок отключён в режиме мастерской	?
+CAN_MEHRFACH_SICHERN	Multiple securing via CAN	Многократная постановка по CAN	?
+ER_TANKKLAPPE_SER	Fuel flap unlocks with the driver's door	Лючок бака открывается с дверью водителя	?
+ER_TANKKLAPPE_VR	Fuel flap locks with the doors	Лючок бака запирается с дверями	?
+ER_KEYOUT_AUTOVR	Automatic lock after the key is removed	Автоматическое запирание после извлечения ключа	?
+FH_KINDERSICHERUNG	Child lock for rear windows	Блокировка задних окон от детей
+HINTERE_TUEREN_MINI	Rear doors variant	Вариант задних дверей	?
+MOTORHAUBENKONTAKT	Bonnet contact switch	Концевик капота
+NLF_AUS_ALLE_TUEREN	Run-on off when all doors are closed	Задержка выключается при закрытии всех дверей	?
+// boot lid and rear window
+HK_ENABLE_OPEN	Boot lid may be opened	Разрешено открытие багажника	?
+HS_ENABLE_OPEN	Rear window may be opened	Разрешено открытие заднего стекла	?
+HK_GESPERRT_IN_GESICHERT	Boot lid locked while secured	Багажник заблокирован при постановке на охрану	?
+AUT_OFFNEN_HK_IN_ENTLPOS	Boot lid opens automatically in released position	Автоматическое открытие багажника в разблокированном положении	?
+HK_V_VER_MODUS	Boot lid locking mode	Режим запирания багажника	?
+SPERRE_HECKKLAPPE_KLR	Boot lid locked at terminal R	Багажник заблокирован при клемме R	?
+SPERRE_HKL_KEY_VALID_#	Boot lid lock with a valid key {1}	Блокировка багажника при действительном ключе {1}	?
+GESCHW_SPERRE_TOEHK	Speed lock for opening the boot	Блокировка открытия багажника по скорости	?
+HECKSCHEI_ENTR_OHNE_NR	Rear window unlock (key without number)	Открытие заднего стекла (ключ без номера)	?
+HECKSCHEIBE_ENTR_SENDER_#	Rear window unlock, key {1}	Открытие заднего стекла, ключ {1}	?
+TOEHK_EO_HS_OHNE_NR	Boot opening (key without number)	Открытие багажника (ключ без номера)	?
+TOEHK_EO_HS_SCHL_NR#	Boot opening, key {1}	Открытие багажника, ключ {1}	?
+HKAT_EO_HS_OHNE_NR	Boot button opening (key without number)	Открытие багажника кнопкой (ключ без номера)	?
+HKAT_EO_HS_SCHL_NR#	Boot button opening, key {1}	Открытие багажника кнопкой, ключ {1}	?
+HKL_LIFT_BEI_CA	Boot lid lifts with Comfort Access	Подъём крышки багажника при Comfort Access	?
+// windows and comfort opening/closing
+FH_ABSCHALTKRITERIUM	Window switch-off criterion	Критерий отключения стеклоподъёмников	?
+FH_ECEFIN	Window behaviour for Europe/Finland	Поведение окон для Европы/Финляндии	?
+FH_USACANADA	Window behaviour for USA/Canada	Поведение окон для США/Канады	?
+FH_DISAKL#	Windows off at terminal {1}	Окна отключены при клемме {1}	?
+FH_DISAKLR	Windows off at terminal R	Окна отключены при клемме R	?
+FH_DISASHD_KL#	Sunroof off at terminal {1}	Люк отключён при клемме {1}	?
+FH_RESETTIMEOUTKL#	Window timeout reset at terminal {1}	Сброс тайм-аута окон при клемме {1}	?
+FH_TUERBED_EINSTG	Windows depend on the door (entry)	Окна зависят от двери (при посадке)	?
+FH_SCHLIESSEN_EINSTG	Close windows on entry	Закрытие окон при посадке	?
+FH_DISTGDEFECT	Windows off when a door is faulty	Окна отключены при неисправности двери	?
+FH_DISCLSYDEFECT	Windows off when the locking system is faulty	Окна отключены при неисправности замков	?
+FH_DISFBDDEFCT	Windows off when the remote is faulty	Окна отключены при неисправности пульта	?
+FH_KMFRTFBDTIM	Comfort window function via remote: time	Комфортное управление окнами с пульта: время	?
+FH_DISFERTMODE	Windows off in factory mode	Окна отключены в заводском режиме	?
+FH_DISTRANSMODE	Windows off in transport mode	Окна отключены в транспортном режиме	?
+FH_DISWERKSTMODE	Windows off in workshop mode	Окна отключены в режиме мастерской	?
+FH_SICHERHEITSFAHRZEUG	Windows of an armoured vehicle	Окна бронированного автомобиля	?
+FH_CABRIO_VERDECK_MODUL	Windows with the convertible top module	Окна с модулем складной крыши	?
+FH_HINTEN	Rear electric windows	Задние электростеклоподъёмники
+FH_KOMFORTF_MIT_SUBST	Comfort windows with a substitute signal	Комфортное управление окнами по замещающему сигналу	?
+FH_RELEASE_CA_BASIC	Window release for Comfort Access basic	Разрешение окон для Comfort Access (базовый)	?
+FH_RELEASE_TOP_ZWSTLG	Window release with the top in an intermediate position	Разрешение окон при промежуточном положении крыши	?
+FHM_CA_OHNE_EKS	Comfort Access windows without anti-trap	Окна Comfort Access без защиты от защемления	?
+FHM_CA_OHNE_EKS_DELAY	Comfort Access windows without anti-trap: delay	Окна Comfort Access без защиты от защемления: задержка	?
+SCHIEBEHEBEDACH	Sunroof installed	Люк установлен
+KOMFORTOEFFNUNG	Comfort opening (windows/sunroof) with the key in the door	Комфортное открытие (окна/люк) ключом в двери
+KOMFORTOEFFNUNG_FB	Comfort opening with the remote	Комфортное открытие с пульта
+KOMFORTSCHLIESSUNG	Comfort closing with the key in the door	Комфортное закрытие ключом в двери
+KOMFORTSCHLIESSUNG_FB	Comfort closing with the remote	Комфортное закрытие с пульта
+KOMFORTSCHLIESSUNG_PA	Comfort closing with Comfort Access	Комфортное закрытие через Comfort Access
+KMFRT_OEFFNEN	Comfort opening: hold time	Комфортное открытие: время удержания	?
+KMFRT_SCHLIESSEN	Comfort closing: hold time	Комфортное закрытие: время удержания	?
+KMFRT_OEFF_HINTEN	Comfort opening: rear windows	Комфортное открытие: задние окна	?
+KMFRT_OEFF_SHD	Comfort opening: sunroof	Комфортное открытие: люк	?
+KMFRT_SCHL_VORNE	Comfort closing: front windows	Комфортное закрытие: передние окна	?
+KOMFORT_SCHL_SHD	Comfort closing: sunroof	Комфортное закрытие: люк	?
+ANSTEUERZEIT	Comfort function drive time	Время работы комфортной функции	?
+MIND_KMFRT_NACH_UNTERB	Minimum comfort time after an interruption	Минимальное время комфорта после прерывания	?
+MAX_KMFRT_UNTERB	Maximum comfort interruption	Максимальное прерывание комфортной функции	?
+MAX_KMFRT_UNTERB_FBD	Maximum comfort interruption (remote)	Максимальное прерывание комфортной функции (пульт)	?
+SLEEPTIMER_FH_KLRAUS	Window sleep timer after terminal R off	Таймер окон после выключения клеммы R	?
+// remote key (FBD)
+FBD_AKTIV_KL#AUS	Remote active with terminal {1} off	Пульт активен при выключенной клемме {1}	?
+FBD_AKTIV_KEYIN	Remote active with the key inserted	Пульт активен при вставленном ключе	?
+FBD_TESTKEY_AKTIV	Test key active	Тестовый ключ активен	?
+FBD_HECKKLAPPE_TOTZEIT	Remote boot button dead time	Мёртвое время кнопки багажника на пульте	?
+FBD_PANIK_TOTZEIT	Remote panic button dead time	Мёртвое время тревожной кнопки пульта	?
+FBD_PANIKDAUER	Panic alarm duration	Длительность тревоги с пульта	?
+FBD_MOTORLAUF	Remote with the engine running	Пульт при работающем двигателе	?
+FBD_MOTORSTART	Remote engine start	Запуск двигателя с пульта	?
+FBDIN_#_#_KBAUD	Remote receiver {1}.{2} kBaud	Приёмник пульта {1}.{2} кбод	?
+FBD_DISFERTMODE	Remote off in factory mode	Пульт отключён в заводском режиме	?
+FBD_DISTRANSMODE	Remote off in transport mode	Пульт отключён в транспортном режиме	?
+FBD_DISWERKSTMODE	Remote off in workshop mode	Пульт отключён в режиме мастерской	?
+FBD_HSF_#	Remote frequency {1}	Частота пульта {1}	?
+FBD_SERVICEFKT_AKTIV	Remote service functions	Сервисные функции пульта	?
+FBD_HKL_NUR_ER	Remote boot button only when unlocked	Кнопка багажника на пульте только после открытия	?
+FBD_LOAD_POS_HK_HK	Remote load position: boot lid	Загрузочная позиция с пульта: крышка багажника	?
+FBD_LOAD_POS_LF_PING	Remote load position: LF ping	Загрузочная позиция с пульта: LF-опрос	?
+FBD_NO_LOAD_POS	No load position from the remote	Без загрузочной позиции с пульта	?
+FBD_COMFORT_OPEN_LF_PING	Comfort opening with LF ping	Комфортное открытие с LF-опросом	?
+MFS_KEY_PLGD	Mechanical key	Механический ключ	?
+MFS_MIT_TON	Mechanical key with tone	Механический ключ со звуком	?
+SONDERTASTE_INNENLICHT	Remote special button: interior light	Специальная кнопка пульта: свет в салоне	?
+SONDERTASTE_PANIKALARM	Remote special button: panic alarm	Специальная кнопка пульта: тревога	?
+MOTORFERNSTART_GENERELL	Remote engine start	Дистанционный запуск двигателя	?
+MOTORFERNSTART_CAN	Remote engine start via CAN	Дистанционный запуск двигателя по CAN	?
+PERSONALISIERUNG_AUS	Key personalisation off	Персонализация ключей выключена	?
+EINSTIEGSHILFE_OHNE_NR	Entry aid (key without number)	Помощь при посадке (ключ без номера)	?
+EINSTIEGSHILFE_SENDER_#	Entry aid, key {1}	Помощь при посадке, ключ {1}	?
+EINSTIEGSHILFE_DEFAULT	Entry aid: default	Помощь при посадке: по умолчанию	?
+EINSTIEGSHILFE_PORT	Entry aid: profile transfer	Помощь при посадке: перенос профиля	?
+// Comfort Access (PA)
+PASSIVE_ACCESS	Comfort Access	Comfort Access (бесключевой доступ)
+PA_CONFIG_FBDREFCHECK	Comfort Access: remote reference check	Comfort Access: проверка эталона пульта	?
+PA_TVRERFATH	Comfort Access: lock time, driver handle	Comfort Access: время запирания ручкой водителя	?
+PA_TSPERRVR	Comfort Access: lock-out time after locking	Comfort Access: время блокировки после запирания	?
+PA_TBEREITPE	Comfort Access: readiness time	Comfort Access: время готовности	?
+PA_TBEREIT_PG	Comfort Access: readiness time (start)	Comfort Access: время готовности (пуск)	?
+PA_TBEREIT_HK	Comfort Access: readiness time (boot)	Comfort Access: время готовности (багажник)	?
+PA_ID_GEBER	Comfort Access: ID transmitter	Comfort Access: идентификационный передатчик	?
+PA_FBD_REF	Comfort Access: remote reference	Comfort Access: эталон пульта	?
+PA_SILENTTIMEOUT	Comfort Access: silent timeout	Comfort Access: тайм-аут тишины	?
+PA_SILENT_TO_#TAGE	Comfort Access: silent after {1} days	Comfort Access: тишина через {1} дней	?
+PA_DISABLE_HK_REV	Comfort Access: no boot reversal	Comfort Access: без реверса багажника	?
+PA_HK_BACK_IR_SEARCH	Comfort Access: boot search, rear interior	Comfort Access: поиск ключа у багажника, задний салон	?
+PA_HK_INTERIOR_SEARCH	Comfort Access: boot search, interior	Comfort Access: поиск ключа у багажника, салон	?
+PA_HK_PGS_SEARCH	Comfort Access: boot search, start area	Comfort Access: поиск ключа у багажника, зона пуска	?
+PA_HK_#SEARCH	Comfort Access: boot search {1}	Comfort Access: поиск ключа у багажника {1}	?
+PA_HK_REOPEN_CTL_DEP	Comfort Access: boot reopens if key inside	Comfort Access: багажник открывается снова, если ключ внутри	?
+PA_HK_REOPEN_CTR_LOCK	Comfort Access: boot reopens on central lock	Comfort Access: повторное открытие багажника при центральном замке	?
+PA_HK_REOPEN_INDICATE	Comfort Access: indicate boot reopening	Comfort Access: индикация повторного открытия багажника	?
+PA_HK_REV_ZYKL	Comfort Access: boot reversal cycle	Comfort Access: цикл реверса багажника	?
+PA_HK_RSCR_ACTIVE	Comfort Access: rear screen function	Comfort Access: функция заднего стекла	?
+PA_HA_SEARCH_ACTIVE	Comfort Access: rear axle search	Comfort Access: поиск у задней оси	?
+PA_MONITOR_ACTIVE	Comfort Access monitoring	Контроль Comfort Access	?
+PA_TRUNK_HIGH	Comfort Access: high boot antenna	Comfort Access: верхняя антенна багажника	?
+PA_SUPERRANGE_R#	Comfort Access extended range	Comfort Access: увеличенная дальность	?
+PA_TAGE_REAR_RL_MIRROW	Comfort Access: rear handle electronics	Comfort Access: электроника задних ручек	?
+PA_LF_PING_TAGE	Comfort Access: LF ping door handles	Comfort Access: LF-опрос дверных ручек	?
+PA_LF_PING_PGS	Comfort Access: LF ping start area	Comfort Access: LF-опрос зоны пуска	?
+PA_MAUT_CLOSE_SILENT	Comfort Access: toll window closes silently	Comfort Access: тихое закрытие окна для оплаты проезда	?
+PA_SEARCH_HK_VORRASTE	Comfort Access: boot pre-latch search	Comfort Access: поиск при предварительной фиксации багажника	?
+RSSI_THRESHOLD	Radio signal strength threshold	Порог уровня радиосигнала	?
+// Check Control and data
+BEDINGUNG_CC_#KM	Check Control condition after {1} km	Условие Check Control после {1} км	?
+GESCHW_REQ_CC	Speed for Check Control requests	Скорость для запросов Check Control	?
+CCM_SEND_INVALID	Send invalid Check Control messages	Отправка недействительных сообщений Check Control	?
+CCM_#X#_IM_NACHLAUF	Check Control message during run-on	Сообщение Check Control во время задержки	?
+SENDMHKCCMLIMIT	Boot lid Check Control send limit	Предел отправки сообщений багажника	?
+EE_ZEIT_NLF	Electrical system: run-on time	Бортовая сеть: время задержки	?
+EE_ZEIT_ABFR	Electrical system: query time	Бортовая сеть: время опроса	?
+EE_TRSP_CCM_#CD	Transport mode Check Control message	Сообщение Check Control транспортного режима	?
+EE_TRSP_PERM	Transport mode permanent	Транспортный режим постоянно	?
+EE_TRSP_DEBUG	Transport mode debug	Отладка транспортного режима	?
+BOS_DATEN_ANFRAGEN	Request service data	Запрос сервисных данных	?
+FS_DATEN_ANFRAGEN	Request fault memory data	Запрос данных памяти неисправностей	?
+SQCNT_UPDATE	Sequence counter update	Обновление счётчика последовательности	?
+NEUES_FSE_KONZEPT	New fault memory concept	Новая концепция памяти неисправностей	?
+TEST_DUTY_CYCLE	Test duty cycle	Тестовая скважность	?

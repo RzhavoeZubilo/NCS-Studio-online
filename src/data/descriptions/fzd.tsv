@@ -1,0 +1,63 @@
+// FZD — roof function centre: sunroof, rain/light sensor, interior lights (E8x/E9x).
+// Written from the parameter names.
+ALLG_PARAMETER_HUB	Sunroof: general tilt parameters	Люк: общие параметры подъёма	?
+ALLG_PARAMETER_SCHIEB	Sunroof: general slide parameters	Люк: общие параметры сдвига	?
+AST_PARAMETER_HUB	Sunroof: anti-trap parameters for tilting	Люк: параметры защиты от защемления при подъёме	?
+AST_PARAMETER_SCHIEB	Sunroof: anti-trap parameters for sliding	Люк: параметры защиты от защемления при сдвиге	?
+NFT_PARAMETER_HUB	Sunroof: emergency parameters for tilting	Люк: аварийные параметры подъёма	?
+NFT_PARAMETER_SCHIEB	Sunroof: emergency parameters for sliding	Люк: аварийные параметры сдвига	?
+PARAMETER_SHD	Sunroof parameter set	Набор параметров люка	?
+PARAMETER_BESCHLAG	Sunroof mechanism parameters	Параметры механизма люка	?
+PARAMETER_LICHT	Light sensor characteristics	Характеристики датчика света	?
+EKS_POS_MAX_SHIFT	Anti-trap: maximum slide position	Защита от защемления: макс. позиция сдвига	?
+EKS_POS_MIN_SHIFT	Anti-trap: minimum slide position	Защита от защемления: мин. позиция сдвига	?
+EKS_POS_MAX_TILT	Anti-trap: maximum tilt position	Защита от защемления: макс. позиция подъёма	?
+EKS_POS_MIN_TILT	Anti-trap: minimum tilt position	Защита от защемления: мин. позиция подъёма	?
+EKS_POS_MAX_DD	Anti-trap: maximum position, roof variant	Защита от защемления: макс. позиция, вариант крыши	?
+EKS_POS_MIN_DD	Anti-trap: minimum position, roof variant	Защита от защемления: мин. позиция, вариант крыши	?
+LENGTH_NO_STOP	Sliding without stopping: travel	Сдвиг без остановки: ход	?
+LENGTH_NO_STOP_TILT	Tilting without stopping: travel	Подъём без остановки: ход	?
+HEBEN_AUS_GEOEFFNET	Tilt from the open position	Подъём из открытого положения	?
+OEFFNEN_AUS_GEHOBEN	Open from the tilted position	Открытие из поднятого положения	?
+SCHIEBEHEBEDACH_TIPP_AUF	Sunroof one-touch opening	Открытие люка одним касанием
+SCHIEBEHEBEDACH_TIPP_ZU	Sunroof one-touch closing	Закрытие люка одним касанием
+SCHIEBEHEBEDACH_TIPP_HEB	Sunroof one-touch tilt	Подъём люка одним касанием
+SCHIEBEHEBEDACH_TIPP_SENK	Sunroof one-touch lowering	Опускание люка одним касанием
+SHD_POS#	Sunroof preset position {1}	Предустановленная позиция люка {1}	?
+SHD_POSITION_CLOSED	Sunroof position: closed	Позиция люка: закрыт	?
+SHD_POSITION_NORMED	Sunroof position: reference	Позиция люка: опорная	?
+SHD_POSITION_OPEN	Sunroof position: open	Позиция люка: открыт	?
+SHD_POSITION_TILTED	Sunroof position: tilted	Позиция люка: поднят	?
+SHD_POS_QUARTERTURN	Sunroof position per quarter turn	Позиция люка на четверть оборота	?
+QUARTERTURN	Quarter-turn position counting	Отсчёт позиции по четвертям оборота	?
+MOTOR_DIRECTION	Sunroof motor direction	Направление вращения мотора люка	?
+POS_DIRECTION	Position counting direction	Направление отсчёта позиции	?
+TOLERANCE	Position tolerance	Допуск позиции	?
+ANTIWUMMER	Anti-buffeting position	Позиция против гула (антибуффетинг)	?
+PANIC_CLOSE	Emergency close of the sunroof (open)	Аварийное закрытие люка (открытого)	?
+PANIC_CLOSE_TILT	Emergency close of the sunroof (tilted)	Аварийное закрытие люка (поднятого)	?
+PANIC_FREIGABE_CAS	Emergency close released by CAS	Разрешение аварийного закрытия от CAS	?
+PANIC_FREIGABE_KL#	Emergency close released at terminal {1}	Разрешение аварийного закрытия при клемме {1}	?
+T_PANIC#	Emergency close timing {1}	Время аварийного закрытия {1}	?
+KLEMME_#_NOTWENDIG	Terminal {1} required for operation	Для работы нужна клемма {1}	?
+REGENSCHLIESSEN	Close the sunroof when it rains	Закрытие люка при дожде
+REGENSCHLIESSENTILT	Close the tilted sunroof when it rains	Закрытие поднятого люка при дожде
+RAIN_CLOSE_INTENSITY	Rain intensity that closes the sunroof	Интенсивность дождя для закрытия люка	?
+NO_RAIN_INTENSITY	Rain intensity treated as no rain	Интенсивность, считающаяся отсутствием дождя	?
+KOMFORT_OEFFNEN_FZD	Comfort opening of the sunroof (remote)	Комфортное открытие люка (с пульта)
+KOMFORT_SCHLIESSEN_FZD	Comfort closing of the sunroof (remote)	Комфортное закрытие люка (с пульта)
+KOMFORT_HEBEN_FZD	Comfort tilting of the sunroof (remote)	Комфортный подъём люка (с пульта)
+FZD_KOMFORT_POS_AUF	Comfort opening target position	Целевая позиция комфортного открытия	?
+FZD_KOMFORT_POS_ZU	Comfort closing target position	Целевая позиция комфортного закрытия	?
+DATA_TRANSFER	Data transfer	Передача данных	?
+E#X_CAR	Vehicle body variant	Вариант кузова	?
+MDS_CAR	Vehicle with panorama roof	Автомобиль с панорамной крышей	?
+NO_SHD	No sunroof installed	Люк не установлен
+EM_MASK	Equipment mask	Маска комплектации	?
+BSS	Function with the rain/light sensor	Функция с датчиком дождя/света	?
+RLS	Rain/light sensor	Датчик дождя/света
+EC_SPIEGEL	Auto-dimming interior mirror	Автозатемняемое внутреннее зеркало
+EC_SPIEGEL_KOMPASS_CABRIO	Auto-dimming mirror with compass (convertible)	Автозатемняемое зеркало с компасом (кабриолет)	?
+INNENLICHT	Interior light	Освещение салона
+FZD_MSA	Auto start-stop interaction	Взаимодействие со старт-стоп	?
+FZD_IGR	Integrated recirculation function	Интегрированная рециркуляция	?

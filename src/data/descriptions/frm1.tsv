@@ -1,0 +1,188 @@
+// FRM — footwell module: exterior/interior lights, adaptive headlights, windows
+// (E8x/E9x). Written from the parameter names. AL = low beam, FL = high beam,
+// NSW = front fog, NSL = rear fog, SL = side light, BLK = turn signal,
+// LWR = headlight levelling, ALC/AHL = adaptive headlights, BFD = brake force display,
+// ABBL/KRV = cornering light, GB = belt feeder (coupe), _SP = sport mode set.
+// light switch, dimmer, turn signals
+LENKWINKEL_UEBERSCHREITEN	Steering angle above threshold	Угол руля выше порога	?
+LENKWINKEL_UNTERSCHREITEN	Steering angle below threshold	Угол руля ниже порога	?
+LENKSTOCK_UMSCHALT_VERZ	Stalk switch-over delay	Задержка переключения подрулевого рычага	?
+U_POTI_DIMM_MIN	Dimmer potentiometer: minimum voltage	Потенциометр подсветки: минимальное напряжение	?
+U_POTI_DIMM_DELTA	Dimmer potentiometer: voltage step	Потенциометр подсветки: шаг напряжения	?
+MELDUNG_AENDERUNG_DIMMER	Report dimmer changes	Сообщать об изменении подсветки	?
+POTI_DIMM_INVERS	Dimmer potentiometer inverted	Потенциометр подсветки инвертирован	?
+POTI_LWR_INVERS	Levelling potentiometer inverted	Потенциометр корректора фар инвертирован	?
+UMSCHALTOPT_LICHTSCHALTER	Light switch switching option	Вариант переключения выключателя света	?
+NOTLAUF_FKT_SCHALTERSTELL	Emergency function by switch position	Аварийная функция по положению выключателя	?
+NOTLAUF_FKT_GESCHW	Emergency light function: speed	Аварийная функция света: скорость	?
+NOTLAUF_FKT_TIMER	Emergency light function: timer	Аварийная функция света: таймер	?
+TIPP_BLK	Comfort turn signal (tap)	Комфортный поворотник (касание)
+TIPP_BLK_LOESCHT_IMMER	Comfort turn signal: opposite tap always cancels	Комфортный поворотник: отмена касанием в другую сторону	?
+MIND_ANZ_ZYKL_TIPP_BLK	Comfort turn signal: number of flashes	Комфортный поворотник: число миганий
+MIND_ANZ_ZYKL_TIPP_BLK_#	Comfort turn signal: number of flashes (key {1})	Комфортный поворотник: число миганий (ключ {1})
+DEF_ZYKL_TIPP_BLK_CKM	Comfort turn signal flashes: default	Число миганий комфортного поворотника: по умолчанию
+UNP_ZYKL_TIPP_BLK_CKM	Comfort turn signal flashes: no profile	Число миганий комфортного поворотника: без профиля	?
+BLK_TIMER_STAND	Turn signal timer when stationary	Таймер поворотника на стоянке	?
+WARNBLK_ENERGY_SAVE_MODE	Hazard lights energy saving mode	Энергосберегающий режим аварийки
+ZUWACHS_TASTVERH_KL_#G	Duty cycle increase, terminal {1}	Увеличение скважности, клемма {1}	?
+TASTVERH_BEL_WBL_MIN	Hazard switch illumination: minimum duty	Подсветка кнопки аварийки: минимальная скважность	?
+ZUWACHS_TASTVERH_WBL_BEL	Hazard switch illumination: duty increase	Подсветка кнопки аварийки: увеличение скважности	?
+ZUWACHS_TASTVERH_FLC_LED	High beam assist LED: duty increase	Светодиод ассистента дальнего света: увеличение скважности	?
+DOPPELBLINKIMPULS_CRASH	Double flash pulse after a crash	Двойные импульсы мигания после аварии	?
+DOPPELBLINKIMPULS_WARNBLK	Double flash pulse for hazards	Двойные импульсы мигания аварийки	?
+// confirmation flashes
+QUITT_BLK_ZU_CHECK	Confirmation flash: check closed doors	Подтверждение миганием: проверка закрытых дверей	?
+QUITT_BLK_SICHERN	Flash to confirm locking	Мигание при запирании
+QUITT_BLK_ENTSICHERN	Flash to confirm unlocking	Мигание при открытии
+QUITT_BLK_SICHERN_#	Flash to confirm locking (key {1})	Мигание при запирании (ключ {1})
+QUITT_BLK_ENTSICHERN_#	Flash to confirm unlocking (key {1})	Мигание при открытии (ключ {1})
+DEF_QUITT_BLK_SICH_CKM	Locking flash: default	Мигание при запирании: по умолчанию
+DEF_QUITT_BLK_ENTSI_CKM	Unlocking flash: default	Мигание при открытии: по умолчанию
+UNP_QUITT_BLK_SICH_CKM	Locking flash: no profile	Мигание при запирании: без профиля	?
+UNP_QUITT_BLK_ENTSI_CKM	Unlocking flash: no profile	Мигание при открытии: без профиля	?
+QUITT_BLK_IGNORE_MOTORH	Confirmation flash ignores the bonnet contact	Подтверждение миганием без учёта капота	?
+// crash
+WERT_CRASHVERHALTEN	Crash behaviour value	Значение поведения при аварии	?
+CRASH_WARNBLINKEN	Hazard lights after a crash	Аварийка после аварии
+CRASH_#G_EIN	Crash: interior light on	Авария: включение света в салоне	?
+// follow-me-home, automatic lights, welcome light
+HEIMLEUCHTEN	Follow-me-home lights	Подсветка «проводи домой»
+HEIMLEUCHTEN_#	Follow-me-home lights (key {1})	Подсветка «проводи домой» (ключ {1})
+HEIMLEUCHTEN_ABBRUCH	Follow-me-home cancelled by the light switch	Отмена «проводи домой» выключателем света	?
+HEIMLEUCHTEN_VERLAENG	Follow-me-home extension	Продление «проводи домой»	?
+DEF_HEIMLEUCHTEN_CKM	Follow-me-home: default	«Проводи домой»: по умолчанию
+UNP_HEIMLEUCHTEN_CKM	Follow-me-home: no profile	«Проводи домой»: без профиля	?
+MAX_BETAETIGUNG_FOMEHO	Follow-me-home: maximum activations	«Проводи домой»: максимум активаций	?
+AUTOM_LICHT_ABSCHALTUNG	Automatic light switch-off	Автоматическое выключение света
+AUTOM_LICHT_KONTROLLE	Automatic light check	Автоматическая проверка света	?
+CC_MELD_LICHT_AN_WARNUNG	Check Control: lights-on warning	Check Control: предупреждение о невыключенном свете
+WELCOME_LIGHT_ACTIVE	Welcome light	Приветственная подсветка
+WELCOMELIGHT_CKM_#	Welcome light (key {1})	Приветственная подсветка (ключ {1})
+DEF_WELCOMELIGHT_CKM	Welcome light: default	Приветственная подсветка: по умолчанию
+UNP_WELCOMELIGHT_CKM	Welcome light: no profile	Приветственная подсветка: без профиля	?
+WL_AL	Welcome light: low beam	Приветственная подсветка: ближний свет
+WL_FL	Welcome light: high beam	Приветственная подсветка: дальний свет
+WL_NSW	Welcome light: front fog lights	Приветственная подсветка: противотуманные фары
+WL_NSL	Welcome light: rear fog light	Приветственная подсветка: задний противотуманный
+WL_SL_#	Welcome light: side lights ({1})	Приветственная подсветка: габариты ({1})	?
+WL_DAUER	Welcome light duration	Длительность приветственной подсветки
+WL_MAX_DAUER	Welcome light maximum duration	Максимальная длительность приветственной подсветки
+WL_ZYKLEN	Welcome light cycles	Циклы приветственной подсветки	?
+VORFELD_BEL_GEDIMMT	Approach light dimmed	Подсветка у дверей приглушена	?
+KL_VA_EIN_BEI_ENTRIEGELN	Front lights on when unlocking	Передний свет при открытии	?
+NACHLAUF_KLEMME_VA	Front lights terminal run-on	Задержка клеммы переднего света	?
+// day lights, fog, high beam
+TAGFAHRLICHT_ECE_#	Daytime running lights (Europe)	Дневные ходовые огни (Европа)
+SL_ABSCH_OHNE_ECE	Side lights off without Europe DRL	Габариты выключены без европейских ДХО	?
+FL_UND_NSW_NICHT_GLEICHZ	High beam and front fogs not together	Дальний свет и ПТФ не одновременно
+LH_UND_NSW_NICHT_GLEICHZ	Headlight flasher and front fogs not together	Мигание фарами и ПТФ не одновременно	?
+FL_ASSIST_CC_NOT_AKTIV	High beam assist: Check Control when inactive	Ассистент дальнего света: Check Control при неактивности	?
+FL_ASSIST_FUNKTIONS_ANZ	High beam assist function display	Индикация работы ассистента дальнего света	?
+FL_ASSIST_ZUST_#_#	High beam assist state {1}.{2}	Состояние ассистента дальнего света {1}.{2}	?
+FL_AUS_BEI_BIX_IN_S_FLC	High beam off with bi-xenon in assist mode	Дальний свет выключается с биксеноном в режиме ассистента	?
+XENON_LI	Xenon headlights	Ксеноновые фары
+ABSCHALTUNG_RFS	Reversing light switch-off	Отключение фонаря заднего хода	?
+// PWM duty cycles
+PWM_AL	Low beam PWM duty	Скважность ШИМ ближнего света	?
+PWM_FL	High beam PWM duty	Скважность ШИМ дальнего света	?
+PWM_FL_BEI_BIXENON	High beam PWM duty with bi-xenon	Скважность ШИМ дальнего света с биксеноном	?
+PWM_IB	Interior light PWM duty	Скважность ШИМ света салона	?
+PWM_NSL	Rear fog light PWM duty	Скважность ШИМ заднего противотуманного	?
+PWM_NSL_FKT_SL	Rear fog light PWM as side light	Скважность ШИМ заднего противотуманного как габарита	?
+PWM_RFS	Reversing light PWM duty	Скважность ШИМ фонаря заднего хода	?
+PWM_VFB	Approach light PWM duty	Скважность ШИМ подсветки у дверей	?
+// interior light
+IB_#MIN_OPTION	Interior light off after {1} min	Свет салона выключается через {1} мин	?
+IB_SOFTON_OPTION	Interior light soft on	Плавное включение света салона
+// headlight levelling (LWR)
+LWR_ANSTEUERN	Headlight levelling control	Управление корректором фар
+LWR_ABS_MIN_STELLUNG_#	Levelling: minimum position {1}	Корректор фар: минимальная позиция {1}	?
+LWR_FEHLER_BEWERTUNG	Levelling: fault evaluation	Корректор фар: оценка неисправности	?
+LWR_HYSTERESE_START	Levelling: start hysteresis	Корректор фар: гистерезис старта	?
+LWR_SCHRITTABSTAND_GRENZE	Levelling: step spacing limit	Корректор фар: предел шага	?
+LWR_SCHRITTE_STELLUNG_#	Levelling: steps for position {1}	Корректор фар: шаги для позиции {1}	?
+LWR_TEMPERATUR_GRENZE	Levelling: temperature limit	Корректор фар: предел температуры	?
+LWR_TESTBETRIEB	Levelling: test mode	Корректор фар: тестовый режим	?
+LWR_TREIBER_CODIERUNG_#	Levelling: driver coding {1}	Корректор фар: кодирование драйвера {1}	?
+LWR_VORBESTROMUNG	Levelling: pre-energising	Корректор фар: предварительное питание	?
+LWR_ABSTELLPOS	Levelling: park position	Корректор фар: парковочная позиция	?
+LWR_DIAG_PARAM	Levelling: diagnosis parameter	Корректор фар: параметр диагностики	?
+LWR_HEBEL	Levelling: lever ratio	Корректор фар: рычаг	?
+U_LWR_POTI_STELLUNG_#	Levelling potentiometer voltage, position {1}	Напряжение потенциометра корректора, позиция {1}	?
+SCHRITTABSTAND_STARTPHASE	Step spacing in the start phase	Шаг в фазе запуска	?
+HALB/VOLLSCHRITT	Stepper motor: half or full step	Шаговый мотор: полушаг или полный шаг	?
+VERHALTEN_UEBERWACHUNG	Monitoring behaviour	Поведение контроля	?
+NORM_LEUCHTWEITE	Nominal beam range	Номинальная дальность света	?
+// brake force display (adaptive brake lights)
+BFD_#_ALGORITHMUS	Brake force display stage {1}: algorithm	Адаптивные стоп-сигналы, ступень {1}: алгоритм	?
+BFD_#_BLINK_FREQ_AUS	Brake force display stage {1}: flash off time	Адаптивные стоп-сигналы, ступень {1}: пауза мигания	?
+BFD_#_BLINK_FREQ_EIN	Brake force display stage {1}: flash on time	Адаптивные стоп-сигналы, ступень {1}: время свечения	?
+BFD_#_ENTPRELL_ABS	Brake force display stage {1}: ABS debounce	Адаптивные стоп-сигналы, ступень {1}: подавление дребезга ABS	?
+BFD_#_ENTPRELL_AX	Brake force display stage {1}: deceleration debounce	Адаптивные стоп-сигналы, ступень {1}: подавление дребезга замедления	?
+BFD_#_MIN_GESCHW	Brake force display stage {1}: minimum speed	Адаптивные стоп-сигналы, ступень {1}: минимальная скорость
+BFD_#_STUFE_DELAY	Brake force display stage {1}: delay	Адаптивные стоп-сигналы, ступень {1}: задержка	?
+BFD_#_WEGFALL	Brake force display stage {1}: drop-out	Адаптивные стоп-сигналы, ступень {1}: отключение	?
+BFD_#_WERT_AX_EIN	Brake force display stage {1}: deceleration to activate	Адаптивные стоп-сигналы, ступень {1}: замедление включения
+BFD_#_WERT_AX_RUCK	Brake force display stage {1}: deceleration to deactivate	Адаптивные стоп-сигналы, ступень {1}: замедление выключения	?
+BFD_#_MIT_BFD	Brake force display stage {1}: with brake force lamps	Адаптивные стоп-сигналы, ступень {1}: с фонарями BFD	?
+BFD_#_MIT_BL_M	Brake force display stage {1}: with the centre brake light	Адаптивные стоп-сигналы, ступень {1}: с центральным стоп-сигналом	?
+BFD_#_MIT_NSL	Brake force display stage {1}: with the rear fog light	Адаптивные стоп-сигналы, ступень {1}: с задним противотуманным	?
+BREMSL_FKT_MIT_BFD	Brake light function with brake force display	Функция стоп-сигнала с адаптивными стоп-сигналами	?
+// adaptive headlights (ALC / AHL)
+ALC_FAHRZEUG	Adaptive headlights installed	Адаптивные фары установлены
+ALC_ERR_BLK_FREQ	Adaptive headlights fault: flash rate	Неисправность адаптивных фар: частота мигания	?
+ALC_ERR_BLK_AL_EIN	Adaptive headlights fault: low beam on	Неисправность адаптивных фар: включение ближнего	?
+ALC_ERR_NSW_ZUSCHALTEN	Adaptive headlights fault: add front fogs	Неисправность адаптивных фар: включение ПТФ	?
+ALC_FAILSAVE	Adaptive headlights failsafe	Аварийный режим адаптивных фар	?
+ALC_PARAMETER_FAILSAVE_#	Adaptive headlights failsafe parameter {1}	Параметр аварийного режима адаптивных фар {1}	?
+ALC_SCHWENK_IM_STAND	Adaptive headlights swivel when stationary	Поворот адаптивных фар на стоянке	?
+ALC_ZUSTANDS_AUTOM	Adaptive headlights state machine	Автомат состояний адаптивных фар	?
+ALC_EINSCHALTBEDINGUNG	Adaptive headlights switch-on condition	Условие включения адаптивных фар	?
+ALC_SCHWENK_LATCH	Adaptive headlights swivel latch	Фиксация поворота адаптивных фар	?
+ALC_DISABLE_AUSGL_NICK_GW	Adaptive headlights: no pitch compensation	Адаптивные фары: без компенсации тангажа	?
+CKM_ALC	Adaptive headlights setting per key	Настройка адаптивных фар для ключа	?
+CKM_ALC_DEF	Adaptive headlights setting: default	Настройка адаптивных фар: по умолчанию	?
+AHL_MODE_CKM_#	Adaptive headlights mode (key {1})	Режим адаптивных фар (ключ {1})	?
+DEF_AHL_MODE_CKM	Adaptive headlights mode: default	Режим адаптивных фар: по умолчанию	?
+UNP_AHL_MODE_CKM	Adaptive headlights mode: no profile	Режим адаптивных фар: без профиля	?
+ABBIEGELICHT_CKM_#	Cornering light (key {1})	Поворотный свет (ключ {1})
+DEF_ABBIEGELICHT_CKM	Cornering light: default	Поворотный свет: по умолчанию
+UNP_ABBIEGELICHT_CKM	Cornering light: no profile	Поворотный свет: без профиля	?
+SMART_BEAM_CKM_#	Smart beam (key {1})	Умный свет (ключ {1})	?
+DEF_SMART_BEAM_CKM	Smart beam: default	Умный свет: по умолчанию	?
+UNP_SMART_BEAM_CKM	Smart beam: no profile	Умный свет: без профиля	?
+ALC_ABSENKUNG_#_KM/H	Beam lowering at {1} km/h	Опускание пучка при {1} км/ч	?
+ALC_ANHEBUNG_#_KM/H	Beam raising at {1} km/h	Подъём пучка при {1} км/ч	?
+ALC_ABTASTRATE_DYN	Levelling: dynamic sampling rate	Корректор: динамическая частота опроса	?
+ALC_ABTASTRATE_TREND	Levelling: trend sampling rate	Корректор: частота опроса тренда	?
+ALC_ABWEICHUNG_TREND	Levelling: trend deviation	Корректор: отклонение тренда	?
+ALC_AUSWERT_GRADIENT	Levelling: evaluate gradient	Корректор: учитывать градиент	?
+ALC_AUSWERT_PROP_ABWEICH	Levelling: evaluate proportional deviation	Корректор: учитывать пропорциональное отклонение	?
+ALC_DAUER_DYN_NACHFUEHR	Levelling: dynamic tracking duration	Корректор: длительность динамического слежения	?
+ALC_DEF_LWR_SENSOR_HI	Levelling: rear sensor default	Корректор: задний датчик по умолчанию	?
+ALC_DIFFERENZ_MSP_DYN_STA	Levelling: dynamic/static difference	Корректор: разница динамика/статика	?
+ALC_EPSILON_DELTA_A	Levelling: epsilon delta A	Корректор: эпсилон дельта A	?
+ALC_EPSILON_DELTA_AV	Levelling: epsilon delta AV	Корректор: эпсилон дельта AV	?
+ALC_GRADIENT_SCHLECHTWEG	Levelling: rough road gradient	Корректор: градиент плохой дороги	?
+ALC_HOEHENWEG	Levelling: height travel	Корректор: ход по высоте	?
+ALC_KENNLIN_LWR_SENSOR_HI	Levelling: rear sensor characteristic	Корректор: характеристика заднего датчика	?
+ALC_KENNLIN_LWR_SENSOR_VO	Levelling: front sensor characteristic	Корректор: характеристика переднего датчика	?
+ALC_LWR_NEIGUNG_KONSTANTE	Levelling: tilt constant	Корректор: константа наклона	?
+ALC_LWR_VORZEICHEN	Levelling: sign	Корректор: знак	?
+ALC_MIN_STEIGUNG_VZ_WECHS	Levelling: minimum slope for sign change	Корректор: минимальный наклон для смены знака	?
+ALC_MINDESTANZAHL_VZ_WECH	Levelling: minimum sign changes	Корректор: минимум смен знака	?
+ALC_MITTELUNGSINT_VZ_WECH	Levelling: averaging interval for sign changes	Корректор: интервал усреднения смен знака	?
+ALC_MITTELUNGSINTERV_DYN	Levelling: dynamic averaging interval	Корректор: интервал динамического усреднения	?
+ALC_MITTELUNGSINTERV_TREN	Levelling: trend averaging interval	Корректор: интервал усреднения тренда	?
+ALC_NACHLAUF_SCHLECHTWEG	Levelling: rough road run-on	Корректор: выбег на плохой дороге	?
+ALC_OFFSET_LWR	Levelling offset	Смещение корректора	?
+ALC_SAETT_TIMER_SCHLECHTW	Levelling: rough road saturation timer	Корректор: таймер насыщения на плохой дороге	?
+ALC_SCHW_GRAD_BESCHLEUNIG	Levelling: gradient threshold, accelerating	Корректор: порог градиента при разгоне	?
+ALC_SCHW_GRAD_BREMSEN	Levelling: gradient threshold, braking	Корректор: порог градиента при торможении	?
+ALC_SCHW_GRAD_SCHLECHTWEG	Levelling: gradient threshold, rough road	Корректор: порог градиента на плохой дороге	?
+ALC_SCHW_PROP_ABWEICHUNG	Levelling: proportional deviation threshold	Корректор: порог пропорционального отклонения	?
+ALC_SCHW_TREND	Levelling: trend threshold	Корректор: порог тренда	?
+ALC_VMAX_BESCHLEUNIGUNG	Levelling: maximum speed, accelerating	Корректор: максимальная скорость при разгоне	?
+ALC_VMAX_BREMSEN	Levelling: maximum speed, braking	Корректор: максимальная скорость при торможении	?
+ALC_VMIN_BESCHLEUNIGUNG	Levelling: minimum speed, accelerating	Корректор: минимальная скорость при разгоне	?
+ALC_VMIN_BREMSEN	Levelling: minimum speed, braking	Корректор: минимальная скорость при торможении	?

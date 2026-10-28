@@ -1,0 +1,309 @@
+// FRM, part 2. Lamp abbreviations: AL low beam, FL high beam, SL side light,
+// POL position light, TFL/DRL daytime running light, BL brake light, BL_M/BLM
+// centre brake light, BFD brake force display, NSL rear fog, NSW front fog,
+// RFS reversing light, KZL licence plate light, FRA_V/H/Z front/rear/side turn
+// signal, SML side marker, IB interior light. KALTUE/WARMUE = bulb check off/on.
+// vehicle and general
+CBD_ZEICHN_INDEX	Coding data drawing index	Индекс чертежа данных кодировки	?
+CODIERINDEX_FRM	FRM coding index	Индекс кодировки FRM
+VIER_TUERER	Four-door vehicle	Четырёхдверный автомобиль
+GETRIEBE_HANDSCHALTER	Manual transmission	Механическая коробка передач
+SICHERHEITS_FZG	Armoured (security) vehicle	Бронированный (защищённый) автомобиль
+BEHOERDENFAHRZEUG	Authority (police) vehicle	Служебный (полицейский) автомобиль	?
+BEHOERDE_FL_ASYNCHRON	Authority vehicle: alternating high beams	Служебный автомобиль: попеременный дальний свет	?
+RECHTS_LENKER	Right-hand drive	Правый руль
+LINKSVERKEHR	Left-hand traffic	Левостороннее движение
+RECHTSVERKEHR	Right-hand traffic	Правостороннее движение
+FZG_RADSTAND	Wheelbase	Колёсная база	?
+SCHALTER_R_GANG	Reverse gear switch	Выключатель задней передачи	?
+IBUS_R_GANG	Reverse gear via I-bus	Задняя передача по шине I-bus	?
+CAN_#H	CAN message {1}	Сообщение CAN {1}	?
+IK_BUS_TEILNEMER	I/K-bus participant	Участник шины I/K	?
+H_SENSOREN_UEBER_FCAN	Height sensors via F-CAN	Датчики высоты по F-CAN	?
+VERBAU_H_SENSOR_VORNE	Front height sensor installed	Передний датчик высоты установлен	?
+TIMEOUT_SET_DTC	Timeout before setting a fault code	Тайм-аут до записи кода неисправности	?
+ANALOG_AVG	Analogue input averaging	Усреднение аналоговых входов	?
+REF_DEMO	Reference / demo run	Опорный / демонстрационный прогон	?
+VERZ_REF_DEMO	Reference / demo run delay	Задержка опорного / демонстрационного прогона	?
+DWA_UEBERFALL_ALARM_#R	Hold-up (panic) alarm via the alarm system	Тревога нападения через сигнализацию	?
+LED_LICHTFUNKTION	LED light functions	Светодиодные световые функции	?
+LEUCHTDICHTE_EXPONENTIEL	Exponential brightness curve	Экспоненциальная кривая яркости	?
+// energy, load dump, short circuits
+AL_KL#_SCHUTZ	Low beam terminal {1} protection	Защита ближнего света по клемме {1}	?
+ENERGIE_UBATT_LIMIT	Energy saving: battery voltage limit	Энергосбережение: предел напряжения	?
+ENERGIE_ZEIT_ENTPRELL	Energy saving: debounce time	Энергосбережение: время подавления дребезга	?
+ENERGIE_ZEIT_LIMIT	Energy saving: time limit	Энергосбережение: предел времени	?
+LOAD_DUMP_MAX_TIME	Load dump protection: maximum time	Защита от выброса напряжения: максимальное время	?
+LOAD_DUMP_PRELL	Load dump protection: debounce	Защита от выброса напряжения: подавление дребезга	?
+LOAD_DUMP_SCHUTZ	Load dump protection	Защита от выброса напряжения	?
+LOAD_DUMP_DIMM_AL	Load dump: dim low beam	Выброс напряжения: приглушать ближний	?
+LOAD_DUMP_DIMM_BL	Load dump: dim brake lights	Выброс напряжения: приглушать стоп-сигналы	?
+LOAD_DUMP_DIMM_FRA_H	Load dump: dim rear turn signals	Выброс напряжения: приглушать задние поворотники	?
+LOAD_DUMP_DIMM_FRA_V	Load dump: dim front turn signals	Выброс напряжения: приглушать передние поворотники	?
+LOAD_DUMP_DIMM_WERT_FRA	Load dump: turn signal dimming value	Выброс напряжения: значение приглушения поворотников	?
+LOAD_DUMP_DIMM_WERT_KL#G	Load dump: dimming value, terminal {1}	Выброс напряжения: значение приглушения, клемма {1}	?
+LOAD_DUMP_ABSCHALT_FL	Load dump: switch off high beam	Выброс напряжения: отключать дальний	?
+LOAD_DUMP_ABSCHALT_KL#G	Load dump: switch off terminal {1}	Выброс напряжения: отключать клемму {1}	?
+LOAD_DUMP_ABSCHALT_KZL	Load dump: switch off licence plate light	Выброс напряжения: отключать подсветку номера	?
+LOAD_DUMP_ABSCHALT_NSL	Load dump: switch off rear fog	Выброс напряжения: отключать задний противотуманный	?
+LOAD_DUMP_ABSCHALT_NSW	Load dump: switch off front fogs	Выброс напряжения: отключать ПТФ	?
+LOAD_DUMP_ABSCHALT_RFS	Load dump: switch off reversing lights	Выброс напряжения: отключать фонари заднего хода	?
+LOAD_DUMP_ABSCHALT_SL_#	Load dump: switch off side light {1}	Выброс напряжения: отключать габарит {1}	?
+KURZSCHL_WIERHOL_ZAEHLER	Short circuit retry counter	Счётчик повторов при коротком замыкании	?
+KURZSCHLUSS_CHECK_TIME	Short circuit check time	Время проверки короткого замыкания	?
+KURZSCHLUSS_ENTPRELL	Short circuit debounce	Подавление дребезга короткого замыкания	?
+KURZSCHLUSS_CHECK_DISABLE	Short circuit check disabled	Проверка короткого замыкания отключена	?
+// bulb checks
+KALTUE_AL_M#_#_M#_#	Cold bulb check: low beam	Проверка холодной лампы: ближний свет
+KALTUE_FL_M#_#_M#_#	Cold bulb check: high beam	Проверка холодной лампы: дальний свет
+KALTUE_SL_#_M#_#_M#_#	Cold bulb check: side light {1}	Проверка холодной лампы: габарит {1}
+KALTUE_POL_M#_#_M#_#	Cold bulb check: position light	Проверка холодной лампы: позиционный свет
+KALTUE_BL_M#_#_M#_#	Cold bulb check: brake lights	Проверка холодной лампы: стоп-сигналы
+KALTUE_BLM_M#_#	Cold bulb check: centre brake light	Проверка холодной лампы: центральный стоп-сигнал
+KALTUE_BFD_M#_#_M#_#	Cold bulb check: brake force display	Проверка холодной лампы: адаптивные стоп-сигналы
+KALTUE_NSL_M#_#_M#_#	Cold bulb check: rear fog	Проверка холодной лампы: задний противотуманный
+KALTUE_NSW_M#_#_M#_#_C#	Cold bulb check: front fogs	Проверка холодной лампы: ПТФ
+KALTUE_RFS_M#_#_M#_#	Cold bulb check: reversing lights	Проверка холодной лампы: задний ход
+KALTUE_KZL_M#_#	Cold bulb check: licence plate light	Проверка холодной лампы: подсветка номера
+KALTUE_FRA_V_M#_#_M#_#	Cold bulb check: front turn signals	Проверка холодной лампы: передние поворотники
+KALTUE_FRA_H_M#_#_M#_#	Cold bulb check: rear turn signals	Проверка холодной лампы: задние поворотники
+KALTUE_FRA_Z_M#_#_M#_#	Cold bulb check: side turn signals	Проверка холодной лампы: боковые повторители
+KALTUE_SML_M#_#_M#_#	Cold bulb check: side markers	Проверка холодной лампы: боковые габариты
+WARMUE_AL_M#_#_M#_#	Hot bulb check: low beam	Проверка горящей лампы: ближний свет
+WARMUE_FL_M#_#_M#_#	Hot bulb check: high beam	Проверка горящей лампы: дальний свет
+WARMUE_SL_#_M#_#_M#_#	Hot bulb check: side light {1}	Проверка горящей лампы: габарит {1}
+WARMUE_POL_M#_#_M#_#	Hot bulb check: position light	Проверка горящей лампы: позиционный свет
+WARMUE_BL_M#_#_M#_#	Hot bulb check: brake lights	Проверка горящей лампы: стоп-сигналы
+WARMUE_BLM_M#_#	Hot bulb check: centre brake light	Проверка горящей лампы: центральный стоп-сигнал
+WARMUE_BFD_M#_#_M#_#	Hot bulb check: brake force display	Проверка горящей лампы: адаптивные стоп-сигналы
+WARMUE_NSL_M#_#_M#_#	Hot bulb check: rear fog	Проверка горящей лампы: задний противотуманный
+WARMUE_NSW_M#_#_M#_#_C#	Hot bulb check: front fogs	Проверка горящей лампы: ПТФ
+WARMUE_RFS_M#_#_M#_#	Hot bulb check: reversing lights	Проверка горящей лампы: задний ход
+WARMUE_KZL_M#_#	Hot bulb check: licence plate light	Проверка горящей лампы: подсветка номера
+WARMUE_IB_M#_#	Hot bulb check: interior light	Проверка горящей лампы: свет салона
+WARMUE_KL_#G_M#_#	Hot bulb check: terminal {1} lights	Проверка горящей лампы: свет клеммы {1}
+WARMUE_FRA_V_M#_#_M#_#	Hot bulb check: front turn signals	Проверка горящей лампы: передние поворотники
+WARMUE_FRA_H_M#_#_M#_#	Hot bulb check: rear turn signals	Проверка горящей лампы: задние поворотники
+WARMUE_FRA_Z_M#_#_M#_#	Hot bulb check: side turn signals	Проверка горящей лампы: боковые повторители
+WARMUE_SML_M#_#_M#_#	Hot bulb check: side markers	Проверка горящей лампы: боковые габариты
+E#_OPENLOAD_TFL	Open load check: daytime running lights	Проверка обрыва: ДХО	?
+OPEN_LOAD_LED_BLINKER_H	Open load check: rear LED turn signals	Проверка обрыва: задние светодиодные поворотники	?
+OPEN_LOAD_LED_BLINKER_V	Open load check: front LED turn signals	Проверка обрыва: передние светодиодные поворотники	?
+LED_BLINKER_HINTEN	LED rear turn signals	Светодиодные задние поворотники
+LED_BLINKER_VORNE	LED front turn signals	Светодиодные передние поворотники
+FSP_ISP_SPERREN	Lock fault and info memory	Блокировка памяти неисправностей и информации	?
+FSP_LAMPEN_MASK_FRM#	Fault memory lamp mask	Маска ламп для памяти неисправностей	?
+FSP_MASKIERUNG_FRM#	Fault memory masking	Маскирование памяти неисправностей	?
+ISP_MASKIERUNG_FRM#	Info memory masking	Маскирование информационной памяти	?
+// Check Control messages for lamps
+CC_MELDUNG_AL_L	Check Control: left low beam failed	Check Control: неисправен левый ближний
+CC_MELDUNG_AL_R	Check Control: right low beam failed	Check Control: неисправен правый ближний
+CC_MELDUNG_FL_L	Check Control: left high beam failed	Check Control: неисправен левый дальний
+CC_MELDUNG_FL_R	Check Control: right high beam failed	Check Control: неисправен правый дальний
+CC_MELDUNG_SL_#_L	Check Control: left side light {1} failed	Check Control: неисправен левый габарит {1}
+CC_MELDUNG_SL_#_R	Check Control: right side light {1} failed	Check Control: неисправен правый габарит {1}
+CC_MELDUNG_POL_L	Check Control: left position light failed	Check Control: неисправен левый позиционный
+CC_MELDUNG_POL_R	Check Control: right position light failed	Check Control: неисправен правый позиционный
+CC_MELDUNG_TFL_L	Check Control: left daytime light failed	Check Control: неисправен левый ДХО
+CC_MELDUNG_TFL_R	Check Control: right daytime light failed	Check Control: неисправен правый ДХО
+CC_MELDUNG_BL_L	Check Control: left brake light failed	Check Control: неисправен левый стоп-сигнал
+CC_MELDUNG_BL_R	Check Control: right brake light failed	Check Control: неисправен правый стоп-сигнал
+CC_MELDUNG_BL_M_#	Check Control: centre brake light failed	Check Control: неисправен центральный стоп-сигнал
+CC_MELDUNG_BFD_L	Check Control: left brake force light failed	Check Control: неисправен левый адаптивный стоп-сигнал
+CC_MELDUNG_BFD_R	Check Control: right brake force light failed	Check Control: неисправен правый адаптивный стоп-сигнал
+CC_MELDUNG_NSL_L_#	Check Control: left rear fog failed	Check Control: неисправен левый задний противотуманный
+CC_MELDUNG_NSL_R_#	Check Control: right rear fog failed	Check Control: неисправен правый задний противотуманный
+CC_MELDUNG_NSW_L	Check Control: left front fog failed	Check Control: неисправна левая ПТФ
+CC_MELDUNG_NSW_R	Check Control: right front fog failed	Check Control: неисправна правая ПТФ
+CC_MELDUNG_RFS_L	Check Control: left reversing light failed	Check Control: неисправен левый фонарь заднего хода
+CC_MELDUNG_RFS_R	Check Control: right reversing light failed	Check Control: неисправен правый фонарь заднего хода
+CC_MELDUNG_KZL_#R	Check Control: licence plate light failed	Check Control: неисправна подсветка номера
+CC_MELDUNG_FRA_V_L	Check Control: left front turn signal failed	Check Control: неисправен левый передний поворотник
+CC_MELDUNG_FRA_V_R	Check Control: right front turn signal failed	Check Control: неисправен правый передний поворотник
+CC_MELDUNG_FRA_H_L	Check Control: left rear turn signal failed	Check Control: неисправен левый задний поворотник
+CC_MELDUNG_FRA_H_R	Check Control: right rear turn signal failed	Check Control: неисправен правый задний поворотник
+CC_MELDUNG_FRA_Z_L	Check Control: left side repeater failed	Check Control: неисправен левый повторитель
+CC_MELDUNG_FRA_Z_R	Check Control: right side repeater failed	Check Control: неисправен правый повторитель
+CC_MELDUNG_SML_L	Check Control: left side marker failed	Check Control: неисправен левый боковой габарит
+CC_MELDUNG_SML_R	Check Control: right side marker failed	Check Control: неисправен правый боковой габарит
+CC_MELDUNG_IB_#R	Check Control: interior light failed	Check Control: неисправен свет салона
+CC_MELDUNG_KL_#G	Check Control: terminal {1} lights	Check Control: свет клеммы {1}	?
+CC_MELD_PARKLICHT_EIN	Check Control: parking light on	Check Control: включён стояночный свет
+CC_MELD_SW_CI_NOT_AKTIV	Check Control: switch not active	Check Control: переключатель неактивен	?
+FH_CC_MELDUNGEN	Window Check Control messages	Сообщения Check Control стеклоподъёмников	?
+// daytime running lights and light mapping
+DRL_TFL_MIT_BL	Daytime lights via brake lights	ДХО через стоп-сигналы	?
+DRL_TFL_MIT_BFD_#R	Daytime lights via brake force lights	ДХО через адаптивные стоп-сигналы	?
+DRL_TFL_MIT_SL_#	Daytime lights via side light {1}	ДХО через габарит {1}
+DRL_TFL_MIT_KZL	Daytime lights with licence plate light	ДХО с подсветкой номера
+DRL_TFL_MIT_NSW	Daytime lights via front fogs	ДХО через ПТФ
+DRL_TFL_MIT_SML_#R	Daytime lights with side markers	ДХО с боковыми габаритами	?
+DRL_TFL_MIT_BLK_V_GED	Daytime lights via dimmed front turn signals	ДХО через приглушённые передние поворотники
+VERHALTEN_DRL_TFL_#R	Daytime lights behaviour	Поведение ДХО	?
+DEF_TAGFAHRLICHT_ECE_CKM#	Daytime lights: default	ДХО: по умолчанию
+UNP_TAGFAHRLICHT_ECE_CKM#	Daytime lights: no profile	ДХО: без профиля	?
+OPTIONEN_SL_ABSCH_TFL_FL	Side lights off with daytime lights / high beam	Отключение габаритов при ДХО / дальнем	?
+SL_SCHALT_UMSCHALT_OPT	Side light switching option	Вариант переключения габаритов	?
+SIGNALBILD_SL	Side light pattern	Рисунок габаритов	?
+SL_PARKL_ABSCH_#H	Side/parking light off after {1} h	Габариты/стояночный свет выключаются через {1} ч	?
+ZEIT_PARKL_AKTIVIERUNG	Parking light activation time	Время активации стояночного света	?
+PARKL_SL_#_GEDREHT	Parking light: side light {1} swapped	Стояночный свет: габарит {1} поменян	?
+PARKL_FKT_MIT_BL	Parking light via brake lights	Стояночный свет через стоп-сигналы	?
+PARKL_FKT_MIT_BFD	Parking light via brake force lights	Стояночный свет через адаптивные стоп-сигналы	?
+PARKL_FKT_MIT_NSW	Parking light via front fogs	Стояночный свет через ПТФ	?
+PARKL_FKT_MIT_POL	Parking light via position lights	Стояночный свет через позиционные огни	?
+PARKL_FKT_MIT_SL_#	Parking light via side light {1}	Стояночный свет через габарит {1}	?
+SL_FKT_MIT_BL	Side light via brake lights	Габарит через стоп-сигналы	?
+SL_FKT_MIT_BFD	Side light via brake force lights	Габарит через адаптивные стоп-сигналы	?
+SL_FKT_MIT_NSW	Side light via front fogs	Габарит через ПТФ	?
+SL_FKT_MIT_POL	Side light via position lights	Габарит через позиционные огни	?
+SL_FKT_MIT_SL_#	Side light via side light {1}	Габарит через габарит {1}	?
+BREMSL_FKT_MIT_BL	Brake light function via brake lamps	Функция стоп-сигнала через стоп-лампы	?
+BREMSL_FKT_MIT_NSL	Brake light function via rear fog	Функция стоп-сигнала через задний противотуманный	?
+BREMSL_FKT_MIT_SL_#	Brake light function via side light {1}	Функция стоп-сигнала через габарит {1}	?
+BL_ERSETZT_SL_#	Brake light replaces side light {1}	Стоп-сигнал заменяет габарит {1}	?
+BFD_ERSETZT_BL	Brake force light replaces brake light	Адаптивный стоп-сигнал заменяет стоп-сигнал	?
+BFD_ERSETZT_SL_#	Brake force light replaces side light {1}	Адаптивный стоп-сигнал заменяет габарит {1}	?
+NSL_ERSETZT_BL	Rear fog replaces brake light	Задний противотуманный заменяет стоп-сигнал	?
+NSL_ERSETZT_SL_#	Rear fog replaces side light {1}	Задний противотуманный заменяет габарит {1}	?
+BL_SCHALTLOGIK_E#_#	Brake light switching logic	Логика включения стоп-сигналов	?
+HECKKL_SL_LOGIK	Boot lid side light logic	Логика габаритов на крышке багажника	?
+RZL_MIT_SL_L_AUS_BEI_DEF	Rear light: left side light off on fault	Задний фонарь: левый габарит выключается при неисправности	?
+RZL_MIT_SL_R_AUS_BEI_DEF	Rear light: right side light off on fault	Задний фонарь: правый габарит выключается при неисправности	?
+RZL_MIT_TFL_L_AUS_BEI_DEF	Rear light: left daytime light off on fault	Задний фонарь: левый ДХО выключается при неисправности	?
+RZL_MIT_TFL_R_AUS_BEI_DEF	Rear light: right daytime light off on fault	Задний фонарь: правый ДХО выключается при неисправности	?
+SIDEMARKER_US_MIT_FRA_V	US side markers with front turn signals	Американские боковые габариты с передними поворотниками
+SM_FKT_ZUSATZBLINKER	Side marker as additional turn signal	Боковой габарит как дополнительный поворотник	?
+KLS_BEI_AL_AKTIV	Lights with low beam	Подсветка вместе с ближним светом	?
+NSL_AUS_BEI_FE_MODE	Rear fog off in factory mode	Задний противотуманный выключен в заводском режиме	?
+NSL_AUS_BEI_FE_MODE_HECK	Rear fog off in factory mode (rear)	Задний противотуманный выключен в заводском режиме (сзади)	?
+NSL_EIN_BEI_NSL_AHM_DEF	Rear fog on when the trailer fog light fails	Задний противотуманный при неисправности противотуманного прицепа	?
+NSW_AUTOBAHN	Front fogs on the motorway	ПТФ на автомагистрали	?
+V_NSW	Front fog speed threshold	Порог скорости для ПТФ	?
+BFD_GESPERRT_BEI_NSL	Brake force display blocked with rear fog	Адаптивные стоп-сигналы заблокированы при заднем противотуманном	?
+BFD_#_MIT_BL	Brake force display stage {1}: with brake lights	Адаптивные стоп-сигналы, ступень {1}: со стоп-сигналами	?
+BFD_#_MIT_SL_#	Brake force display stage {1}: with side light {2}	Адаптивные стоп-сигналы, ступень {1}: с габаритом {2}	?
+BFD_#_MIT_FRA_H	Brake force display stage {1}: with rear turn signals	Адаптивные стоп-сигналы, ступень {1}: с задними поворотниками	?
+BFD#_SL_#	Brake force display {1}: side light {2}	Адаптивные стоп-сигналы {1}: габарит {2}	?
+BFD#_A_LOE	Brake force display {1}: deceleration to clear	Адаптивные стоп-сигналы {1}: замедление сброса	?
+BFD#_A_MIN	Brake force display {1}: minimum deceleration	Адаптивные стоп-сигналы {1}: минимальное замедление	?
+BFD#_AKTIV	Brake force display {1} active	Адаптивные стоп-сигналы {1} активны
+BFD#_BFD	Brake force display {1}: brake force lamps	Адаптивные стоп-сигналы {1}: фонари BFD	?
+BFD#_BL	Brake force display {1}: brake lights	Адаптивные стоп-сигналы {1}: стоп-сигналы	?
+BFD#_BL_M	Brake force display {1}: centre brake light	Адаптивные стоп-сигналы {1}: центральный стоп-сигнал	?
+BFD#_BLINKEN	Brake force display {1}: flashing	Адаптивные стоп-сигналы {1}: мигание	?
+BFD#_ESS_ANZEIGE	Brake force display {1}: emergency stop signal	Адаптивные стоп-сигналы {1}: сигнал экстренной остановки	?
+BFD#_NSL	Brake force display {1}: rear fog	Адаптивные стоп-сигналы {1}: задний противотуманный	?
+BFD#_T_ABS	Brake force display {1}: ABS time	Адаптивные стоп-сигналы {1}: время ABS	?
+BFD#_V_MIN	Brake force display {1}: minimum speed	Адаптивные стоп-сигналы {1}: минимальная скорость	?
+E#_#_BFD_AUS_BEI_KL#	Brake force lights off at terminal {3}	Адаптивные стоп-сигналы выключены при клемме {3}	?
+E#_#_NSL_AUS_BEI_KL#	Rear fog off at terminal {3}	Задний противотуманный выключен при клемме {3}	?
+// hazard flashing on emergency braking
+WBLG_A_ABS	Hazards on hard braking: deceleration with ABS	Аварийка при резком торможении: замедление с ABS	?
+WBLG_A_ANF	Hazards on hard braking: deceleration to start	Аварийка при резком торможении: замедление включения	?
+WBLG_F	Hazards on hard braking: flash rate	Аварийка при резком торможении: частота мигания	?
+WBLG_G_MIN	Hazards on hard braking: minimum speed	Аварийка при резком торможении: минимальная скорость	?
+WBLG_N	Hazards on hard braking: number of flashes	Аварийка при резком торможении: число миганий	?
+WBLG_T_L_MIN	Hazards on hard braking: minimum light time	Аварийка при резком торможении: минимальное время	?
+WBLG_V_WBL	Hazards on hard braking: speed to switch off	Аварийка при резком торможении: скорость выключения	?
+STROMSPAR_WARNBLINKEN	Power-saving hazard flashing	Энергосберегающая аварийка	?
+WARNBLK_ENERGY_SAVE_AHM	Hazard energy saving with trailer	Энергосбережение аварийки с прицепом	?
+TIPP_BLK_ABBR_GEGENRICHT	Comfort turn signal: cancel by opposite tap	Комфортный поворотник: отмена касанием в другую сторону	?
+TIPP_BLK_ABBR_GLEICHRICHT	Comfort turn signal: cancel by same-direction tap	Комфортный поворотник: отмена касанием в ту же сторону	?
+HEIMLEUCHTEN_FUNKSCHL	Follow-me-home via the remote	«Проводи домой» с пульта	?
+// PWM duty cycles (brightness)
+PWM_BFD_FKT_SL	Brake force light brightness as side light	Яркость адаптивного стоп-сигнала как габарита	?
+PWM_BFD_ERSETZT_SL_#	Brake force light brightness replacing side light {1}	Яркость адаптивного стоп-сигнала вместо габарита {1}	?
+PWM_BFD_#R	Brake force light brightness	Яркость адаптивного стоп-сигнала	?
+PWM_BL_FKT_BL	Brake light brightness as brake light	Яркость стоп-сигнала как стоп-сигнала	?
+PWM_BL_FKT_SL	Brake light brightness as side light	Яркость стоп-сигнала как габарита	?
+PWM_BL_M	Centre brake light brightness	Яркость центрального стоп-сигнала	?
+PWM_FL_NSW_FKT_ABBLIEGEL	High beam / front fog brightness as cornering light	Яркость дальнего / ПТФ как поворотного света	?
+PWM_FL_FKT_DRL_#R	High beam brightness as daytime light	Яркость дальнего как ДХО
+PWM_NSL_FKT_BFD	Rear fog brightness as brake force light	Яркость заднего противотуманного как адаптивного стоп-сигнала	?
+PWM_NSW_FKT_PARKL	Front fog brightness as parking light	Яркость ПТФ как стояночного света	?
+PWM_NSW_FKT_TFL	Front fog brightness as daytime light	Яркость ПТФ как ДХО
+PWM_NSW_#R	Front fog brightness	Яркость ПТФ	?
+PWM_POL	Position light brightness	Яркость позиционных огней	?
+PWM_POL_BEI_AKTIVEN_AL	Position light brightness with low beam	Яркость позиционных огней с ближним	?
+PWM_POL_BEI_AKTIVEN_FL	Position light brightness with high beam	Яркость позиционных огней с дальним	?
+PWM_SL_#_FKT_BL	Side light {1} brightness as brake light	Яркость габарита {1} как стоп-сигнала	?
+PWM_SL_#_FKT_BL_TFL	Side light {1} brightness as brake/daytime light	Яркость габарита {1} как стоп-сигнала/ДХО	?
+PWM_SL_#_FKT_PARKL	Side light {1} brightness as parking light	Яркость габарита {1} как стояночного	?
+PWM_SL_#_FKT_SL	Side light {1} brightness as side light	Яркость габарита {1}	?
+PWM_SL_#_FKT_SL_TFL	Side light {1} brightness as side/daytime light	Яркость габарита {1} как габарита/ДХО	?
+PWM_FRA_H	Rear turn signal brightness	Яркость задних поворотников	?
+PWM_FRA_V	Front turn signal brightness	Яркость передних поворотников	?
+PWM_FRA_V_FKT_SIDEMARKER	Front turn signal brightness as side marker	Яркость передних поворотников как боковых габаритов	?
+PWM_FRA_H_FKT_BFD	Rear turn signal brightness as brake force light	Яркость задних поворотников как адаптивного стоп-сигнала	?
+PWM_FRA_Z_AN_SML	Side repeater brightness on side marker	Яркость повторителя на боковом габарите	?
+PWM_KZL_#R	Licence plate light brightness	Яркость подсветки номера	?
+MIN_TASTVERH_KL_#G	Minimum duty, terminal {1}	Минимальная скважность, клемма {1}	?
+MIN_TASTVERH_BEL_FLC_LED	Minimum duty, high beam assist LED	Минимальная скважность, светодиод ассистента дальнего	?
+// welcome light minimum brightness
+WL_BL	Welcome light: brake lights	Приветственная подсветка: стоп-сигналы
+WL_BFD	Welcome light: brake force lights	Приветственная подсветка: адаптивные стоп-сигналы
+WL_FRA_H	Welcome light: rear turn signals	Приветственная подсветка: задние поворотники
+WL_FRA_V	Welcome light: front turn signals	Приветственная подсветка: передние поворотники
+WL_KZL_#R	Welcome light: licence plate light	Приветственная подсветка: подсветка номера
+WL_POL_#R	Welcome light: position lights	Приветственная подсветка: позиционные огни
+WL_SL_#_#R	Welcome light: side light {1}	Приветственная подсветка: габарит {1}
+WL_AL_MIN_PWM	Welcome light: low beam minimum brightness	Приветственная подсветка: мин. яркость ближнего	?
+WL_BL_MIN_PWM	Welcome light: brake light minimum brightness	Приветственная подсветка: мин. яркость стоп-сигналов	?
+WL_BFD_MIN_PWM	Welcome light: brake force light minimum brightness	Приветственная подсветка: мин. яркость адаптивных стоп-сигналов	?
+WL_BLK_H_MIN_PWM	Welcome light: rear turn signal minimum brightness	Приветственная подсветка: мин. яркость задних поворотников	?
+WL_BLK_V_MIN_PWM	Welcome light: front turn signal minimum brightness	Приветственная подсветка: мин. яркость передних поворотников	?
+WL_FL_MIN_PWM	Welcome light: high beam minimum brightness	Приветственная подсветка: мин. яркость дальнего	?
+WL_KZL_MIN_PWM	Welcome light: licence plate light minimum brightness	Приветственная подсветка: мин. яркость подсветки номера	?
+WL_NSL_MIN_PWM	Welcome light: rear fog minimum brightness	Приветственная подсветка: мин. яркость заднего противотуманного	?
+WL_NSW_MIN_PWM	Welcome light: front fog minimum brightness	Приветственная подсветка: мин. яркость ПТФ	?
+WL_POL_MIN_PWM	Welcome light: position light minimum brightness	Приветственная подсветка: мин. яркость позиционных огней	?
+WL_SL_#_MIN_PWM	Welcome light: side light {1} minimum brightness	Приветственная подсветка: мин. яркость габарита {1}	?
+// IGR (light functions under IGR control)
+IGR_ABBIEGELICHT	IGR: cornering light	IGR: поворотный свет	?
+IGR_AL	IGR: low beam	IGR: ближний свет	?
+IGR_BFD_#R	IGR: brake force lights	IGR: адаптивные стоп-сигналы	?
+IGR_BL_#R	IGR: brake lights	IGR: стоп-сигналы	?
+IGR_DAUER_BLK_#R	IGR: turn signal duration	IGR: длительность поворотника	?
+IGR_DRL_H	IGR: rear daytime lights	IGR: задние ДХО	?
+IGR_FL	IGR: high beam	IGR: дальний свет	?
+IGR_INNENLICHT	IGR: interior light	IGR: свет салона	?
+IGR_LH	IGR: headlight flasher	IGR: мигание фарами	?
+IGR_NSL	IGR: rear fog	IGR: задний противотуманный	?
+IGR_NSW	IGR: front fogs	IGR: ПТФ	?
+IGR_RFS	IGR: reversing lights	IGR: фонари заднего хода	?
+IGR_SL	IGR: side lights	IGR: габариты	?
+IGR_TFL_S__DRL_S	IGR: daytime lights	IGR: ДХО	?
+IGR_TIPP_BLK_#R	IGR: comfort turn signal	IGR: комфортный поворотник	?
+IGR_WBL	IGR: hazard lights	IGR: аварийка	?
+// cornering light
+START_ABBL	Cornering light start	Включение поворотного света	?
+ENDE_ABBL	Cornering light end	Выключение поворотного света	?
+ABBL_LZ_RKW	Cornering light on time, return angle	Поворотный свет: время свечения, угол возврата	?
+ABBL_LZ_STAND	Cornering light on time when stationary	Поворотный свет: время свечения на стоянке	?
+ABBIEGELI_AUS_BEI_FL_LH	Cornering light off with high beam / flasher	Поворотный свет выключается с дальним / миганием	?
+ABBIEGELICHT_MIT_NSW	Cornering light via front fogs	Поворотный свет через ПТФ
+VERBAU_ABBIEGEL_PL#_#R	Cornering light installed	Поворотный свет установлен	?
+EINLENKEN_RKW	Cornering light: steering in, return angle	Поворотный свет: доворот, угол возврата	?
+ENTGEGENGES_RKW	Cornering light: opposite steering, return angle	Поворотный свет: противоположный поворот, угол возврата	?
+NACHL_RKW	Cornering light: return angle run-on	Поворотный свет: выбег угла возврата	?
+NO_BLK_RKW	Cornering light: no turn signal on return	Поворотный свет: без поворотника при возврате	?
+HYST_RKW	Cornering light: return angle hysteresis	Поворотный свет: гистерезис угла возврата	?
+HYST_STAND_KRV	Cornering light: hysteresis when stationary	Поворотный свет: гистерезис на стоянке	?
+RAMPE_EIN_BLK	Cornering light fade-in with turn signal	Плавное включение поворотного света с поворотником	?
+RAMPE_AUS_BLK	Cornering light fade-out with turn signal	Плавное выключение поворотного света с поворотником	?
+RAMPE_EIN_KRV	Cornering light fade-in by steering	Плавное включение поворотного света по рулю	?
+RAMPE_AUS_KRV	Cornering light fade-out by steering	Плавное выключение поворотного света по рулю	?
+RAMPE_EIN_RUE	Cornering light fade-in in reverse	Плавное включение поворотного света задним ходом	?
+RAMPE_AUS_RUE	Cornering light fade-out in reverse	Плавное выключение поворотного света задним ходом	?
+V_E_HI_BLK	Cornering light with turn signal: upper switch-on speed	Поворотный свет с поворотником: верхняя скорость включения	?
+V_E_LO_BLK	Cornering light with turn signal: lower switch-on speed	Поворотный свет с поворотником: нижняя скорость включения	?
+V_E_HI_KRV	Cornering light by steering: upper switch-on speed	Поворотный свет по рулю: верхняя скорость включения	?
+V_E_LO_KRV	Cornering light by steering: lower switch-on speed	Поворотный свет по рулю: нижняя скорость включения	?
+V_S_HI_BLK	Cornering light with turn signal: upper switch-off speed	Поворотный свет с поворотником: верхняя скорость выключения	?
+V_S_LO_BLK	Cornering light with turn signal: lower switch-off speed	Поворотный свет с поворотником: нижняя скорость выключения	?
+V_S_HI_KRV	Cornering light by steering: upper switch-off speed	Поворотный свет по рулю: верхняя скорость выключения	?
+V_S_LO_KRV	Cornering light by steering: lower switch-off speed	Поворотный свет по рулю: нижняя скорость выключения	?
+BI_XENON_BEI_LH_#R	Bi-xenon used for the headlight flasher	Биксенон для мигания фарами	?
+ALC_IMMER_BEI_S_FLC	Adaptive headlights always with high beam assist	Адаптивные фары всегда с ассистентом дальнего	?
+ALC_NSW_NEU_ANF	Adaptive headlights: new front fog request	Адаптивные фары: новый запрос ПТФ	?

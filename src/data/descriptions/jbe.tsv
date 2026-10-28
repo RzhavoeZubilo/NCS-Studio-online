@@ -1,0 +1,230 @@
+// JBE — junction box electronics (E8x/E9x): wipers, windows, glovebox, power
+// management and more. Written from the parameter names.
+CC_F_WASCHWASSERSTAND	Check Control: washer fluid level filter time	Check Control: время фильтра уровня омывателя	?
+CC_F_KUEHLMITTELSTAND	Check Control: coolant level filter time	Check Control: время фильтра уровня охлаждающей жидкости	?
+CC_I_ZEITZELLE	Check Control: time cell	Check Control: временная ячейка	?
+CODIERUNG_ERFOLGT_BLK#	Coding completed for block {1} (marker)	Кодирование блока {1} выполнено (признак)
+// wipers and washers
+REGENSENSOR	Rain sensor	Датчик дождя
+STANDRUECKSCHALTUNG	Wiper speed drops one step when stationary	Снижение скорости дворников на стоянке
+RUECKSCHALTUNG_AKT_KMH	Speed for the wiper step-down	Скорость для снижения ступени дворников	?
+SERVICEPOSITION	Wiper service position	Сервисное положение дворников
+WISHENINTERVALL_STILL	Wiper interval when stationary	Интервал дворников на стоянке
+ZYCLUS_VOLLEND_KLR_AUS	Finish the wipe cycle after terminal R off	Завершить цикл дворника после выключения клеммы R
+ANZ_EIN_N_BLOCK_WI_HECK	Rear wiper: switch-on attempts after blocking	Задний дворник: попытки включения после блокировки	?
+ANZ_EIN_N_BLOCK_WI_FRONT	Front wipers: switch-on attempts after blocking	Передние дворники: попытки включения после блокировки	?
+BLOCKERKENNUNG_WISCH_HECK	Rear wiper blocking detection time	Время распознавания блокировки заднего дворника
+BLOCKERKENNUNG_WISCH_FRON	Front wiper blocking detection time	Время распознавания блокировки передних дворников
+SPERRZ_N_BLOCK_WI_HECK	Rear wiper lock time after blocking	Время блокировки заднего дворника после заклинивания
+SPERRZ_N_BLOCK_WI_FRONT	Front wiper lock time after blocking	Время блокировки передних дворников после заклинивания
+HECKWI_STOP_NACH_KLR_EIN	Rear wiper stops after terminal R on	Задний дворник останавливается после включения клеммы R	?
+HECKWISCHER_EIN_RUECKWGAN	Rear wiper on in reverse gear	Задний дворник при включении задней передачи
+INTERVAL_HECKWISCHER	Rear wiper interval mode	Интервальный режим заднего дворника
+ANZAHL_NACHWISCHZ_FRONT	Front wipes after washing	Число протираний после омывания спереди
+ANZAHL_NACHWISCHZ_HECK	Rear wipes after washing	Число протираний после омывания сзади
+ANZAHL_SPRITZIMPULSE	Number of washer spray pulses	Число импульсов омывателя
+DAUER_SPRITZIMPULSE	Washer spray pulse duration	Длительность импульса омывателя
+PAUSE_SPRITZIMPULSE	Pause between washer spray pulses	Пауза между импульсами омывателя
+HECKWASCH_START_DELAY	Rear washer start delay	Задержка запуска заднего омывателя
+HECKWASCH_STOP_TIME	Rear washer stop time	Время остановки заднего омывателя	?
+WISCH_ERST_XXS_WASCH_FRON	Front: wipe only after washing for a set time	Спереди: протирание только после омывания в течение заданного времени	?
+WISCH_ERST_XXS_WASCH_HECK	Rear: wipe only after washing for a set time	Сзади: протирание только после омывания в течение заданного времени	?
+WASHWITHOUTWIPE_TIME	Washing without wiping: time	Омывание без протирания: время	?
+TAKTWASCHEN_HECK_#R	Rear pulse washing	Импульсное омывание сзади	?
+WI_WA_AKTIV_AB_KL#	Wipers/washers active from terminal {1}	Дворники/омыватели работают с клеммы {1}
+SCHEIBWA_BEI_WASSER_NIEDR	Washer works with low fluid level	Омыватель работает при низком уровне жидкости	?
+SCHEINWERFERREININUNG	Headlight washers	Омыватели фар
+ANZAHL_WASCHBET_ZUR_SRA	Washer operations before headlight washing	Число омываний до омывания фар
+SRA_SPERRZEIT	Headlight washer lock time	Время блокировки омывателя фар
+SPRITZDUESEN_SPIEGEL_HEIZ	Heated washer jets and mirrors	Обогрев форсунок омывателя и зеркал
+WASCHEN_WENN_HK_AUF	Wash with the boot lid open	Омывание при открытой крышке багажника	?
+WASCHEN_WENN_HS_AUF	Wash with the rear window open	Омывание при открытом заднем стекле	?
+WISCHEN_WENN_HK_AUF	Wipe with the boot lid open	Протирание при открытой крышке багажника	?
+WISCHEN_WENN_HS_AUF	Wipe with the rear window open	Протирание при открытом заднем стекле	?
+FEMODE_NOTLAUF_FRONTWISCH	Front wiper emergency mode	Аварийный режим передних дворников	?
+// windows
+FENSTERHEBER_ELEKTRISCH	Electric windows	Электростеклоподъёмники
+FENSTERHEBER_FAHRZEUGTYP	Window lifter vehicle type	Тип автомобиля для стеклоподъёмников	?
+FENSTERHEBER_FREIG_CA	Window release by Comfort Access	Разрешение стеклоподъёмников от Comfort Access	?
+FENSTERHEBER_FREIG_DELAY	Window release delay	Задержка разрешения стеклоподъёмников	?
+BROSE_FH_#	Window motor (Brose) parameter {1}	Параметр мотора стеклоподъёмника (Brose) {1}	?
+KOSTAL_FH_#	Window motor (Kostal) parameter {1}	Параметр мотора стеклоподъёмника (Kostal) {1}	?
+FH_KL#_RESTART	Windows work again after terminal {1} restart	Стеклоподъёмники снова работают после перезапуска клеммы {1}	?
+FH_MIT_EKS	Windows with anti-trap protection	Стеклоподъёмники с защитой от защемления
+FH_MANUELL_MIT_EKS	Manual window operation with anti-trap protection	Ручное управление окнами с защитой от защемления
+FH_PANIK_MODUS	Window panic mode (close despite resistance)	Аварийный режим окон (закрытие при сопротивлении)	?
+FH_PANIK_MODUS_EKS	Window panic mode with anti-trap	Аварийный режим окон с защитой от защемления	?
+FH_TIPP_AUF_FATH	Driver's window one-touch down	Окно водителя: опускание одним касанием
+FH_TIPP_ZU_FATH	Driver's window one-touch up	Окно водителя: подъём одним касанием
+FH_TIPP_AUF_BFTH	Passenger window one-touch down	Окно пассажира: опускание одним касанием
+FH_TIPP_ZU_BFTH	Passenger window one-touch up	Окно пассажира: подъём одним касанием
+FH_CC_MELDUNGEN_JBBF	Window Check Control messages	Сообщения Check Control стеклоподъёмников	?
+FH_TUERAUF_STOP_MAUT	Toll-booth window: stop when the door opens	Окно для оплаты проезда: остановка при открытии двери	?
+FH_CABRIO_THERMOSCHUTZ	Convertible windows: thermal protection	Окна кабриолета: тепловая защита	?
+FH_CABRIO_WIEDERHOLSPERRE	Convertible windows: repeat lock	Окна кабриолета: блокировка повтора	?
+FH_CABRIO_VERZOEGERUNG	Convertible windows: delay	Окна кабриолета: задержка	?
+FH_T_SCHUTZ_VERSTAERKUNG	Window thermal protection: gain	Тепловая защита окон: усиление	?
+FH_T_SCHUTZ_WIDERSTAND	Window thermal protection: resistance	Тепловая защита окон: сопротивление	?
+FH_T_SCHUTZ_ZEITKONSTANT	Window thermal protection: time constant	Тепловая защита окон: постоянная времени	?
+FHSTROM_ABLAUFENDETIMEOUT	Window current: end-of-travel timeout	Ток стеклоподъёмника: тайм-аут конца хода	?
+FHSTROM_ABTAST_ZEIT	Window current: sampling time	Ток стеклоподъёмника: время выборки	?
+FHSTROM_MAX_WERT_FAKTOR	Window current: maximum value factor	Ток стеклоподъёмника: коэффициент максимума	?
+FHSTROM_STOP_ENTPRELLZEIT	Window current: stop debounce time	Ток стеклоподъёмника: время подавления дребезга при остановке	?
+COMFORT_GESCHWINDIGKEIT	Comfort mode speed	Скорость в режиме Comfort	?
+COMFORT_STROM	Comfort mode current	Ток в режиме Comfort	?
+SPORT_GESCHWINDIGKEIT	Sport mode speed	Скорость в режиме Sport	?
+SPORT_STROM	Sport mode current	Ток в режиме Sport	?
+// glovebox, boot, roller blinds
+HANDSCHUHFACH_T_AUF	Glovebox actuator: opening time	Привод бардачка: время открытия	?
+HANDSCHUHFACH_T_ZU	Glovebox actuator: closing time	Привод бардачка: время закрытия	?
+HANDSCHUHFACH_T_PAUSE	Glovebox actuator: pause	Привод бардачка: пауза	?
+HANDSCHUHFACH_U_AUF	Glovebox actuator: opening voltage	Привод бардачка: напряжение открытия	?
+HANDSCHUHFACH_U_ZU	Glovebox actuator: closing voltage	Привод бардачка: напряжение закрытия	?
+HANDSCHUHKASTEN_PL#	Glovebox lock variant	Вариант замка бардачка	?
+HSFACH_WIEDERHOL_SPERRE	Glovebox repeat lock	Блокировка повторного срабатывания бардачка	?
+HSF_ANSTEU_ART	Glovebox actuator drive type	Тип управления приводом бардачка	?
+HSF_SPERRE_OBERE_GRENZE	Glovebox repeat lock: upper limit	Блокировка бардачка: верхний предел	?
+HSF_SPERRE_UNTERE_GRENZE	Glovebox repeat lock: lower limit	Блокировка бардачка: нижний предел	?
+HECKKLAPPE_OEFFNEN	Boot lid opening	Открытие крышки багажника	?
+FEMODE_HECKKLAPPE_OEFFNEN	Boot lid opening in emergency mode	Открытие багажника в аварийном режиме	?
+SOFTCLOSE_AUTOMATIK	Soft-close automatic	Доводчик дверей	?
+SCA_ANSTEUERUNG_HK	Soft-close: boot lid	Доводчик: крышка багажника	?
+SCA_ENTPRELLZEIT	Soft-close debounce time	Доводчик: время подавления дребезга	?
+SCA_MAX_ANSTEUERUNG	Soft-close maximum drive time	Доводчик: максимальное время работы	?
+SCA_VERZOEGERUNG	Soft-close delay	Доводчик: задержка	?
+HK_KONTAKT_ENTPRELLZEIT	Boot lid contact debounce time	Время подавления дребезга контакта багажника	?
+HK_TASTER_ENTPRELLZEIT	Boot lid button debounce time	Время подавления дребезга кнопки багажника	?
+HK_DAUER_ERSTER_PULS	Boot lid release: first pulse length	Открытие багажника: длительность первого импульса	?
+HK_PULSABSTAND	Boot lid release: pulse spacing	Открытие багажника: интервал импульсов	?
+HK_PULSDAUER_SLEEP	Boot lid release: pulse length in sleep	Открытие багажника: импульс в режиме сна	?
+VERZOEGERUNG_HK_A	Boot lid delay A	Задержка багажника A	?
+VERZOEGERUNG_HK_B	Boot lid delay B	Задержка багажника B	?
+VERZOEGERUNG_HK_C	Boot lid delay C	Задержка багажника C	?
+VERZOEGERUNG_HK_D	Boot lid delay D	Задержка багажника D	?
+VERZOEGERUNG_HK_ANST_C#	Boot lid drive delay	Задержка привода багажника	?
+LADERAUMABDK_BEI_OFFN_HKK	Load cover moves when the boot opens	Шторка багажника при открытии крышки	?
+LADERAUMABDECK_AKTIV	Load cover function	Функция шторки багажника	?
+SOROLLO_ENTPRELL_STROM	Sun blind: current debounce	Шторка: подавление дребезга тока	?
+SOROLLO_LADEABDEC_HANDS	Sun blind / load cover manual	Шторка / покрытие багажника вручную	?
+SOROLLO_I_MAX_C	Sun blind maximum current	Шторка: максимальный ток	?
+SOROLLO_T_MAX	Sun blind maximum run time	Шторка: максимальное время хода	?
+ENTSICHERN_CENTERLOCK	Centre lock unsecures	Центральный замок снимает блокировку	?
+WIEDERHOLSPERRE_ZV	Central locking repeat lock	Блокировка повторного срабатывания центрального замка
+T_GESICHERT	Secured state time	Время состояния «защищено»	?
+TUN_GESICHERT	Unsecured state time	Время состояния «не защищено»	?
+// seats, heating, pumps
+SITZHEIZUNG_LOW	Seat heating low level	Низкая ступень подогрева сидений	?
+NACHLAUFZEIT_SITZHEIZUNG	Seat heating run-on time	Время работы подогрева сидений после выключения	?
+ZWEITE_SITZREIHE	Second seat row	Второй ряд сидений	?
+FOND_SCHICHT_POT	Rear temperature layering potentiometer	Потенциометр послойной температуры сзади	?
+ZUSATZWASSERPUMPE	Auxiliary water pump	Дополнительный водяной насос
+ZWP_ABSCHALTUNG_DKG	Auxiliary water pump off with dual-clutch transmission	Отключение доп. водяного насоса с DKG	?
+ZWP_ABSCHALTUNG_EGS	Auxiliary water pump off with automatic transmission	Отключение доп. водяного насоса с АКПП	?
+STANDHEIZUNG_JBBF	Parking heater	Стояночный отопитель
+WASSER_VENTIL_BF	Water valve, passenger side	Водяной клапан, сторона пассажира	?
+WASSER_VENTIL_FA	Water valve, driver side	Водяной клапан, сторона водителя	?
+WASSER_VENTIL_PL	Water valve variant	Вариант водяного клапана	?
+WV_RESTWAERME_#	Water valve, residual heat {1}	Водяной клапан, остаточное тепло {1}	?
+WV_RESTWAERME_-#	Water valve, residual heat -{1}	Водяной клапан, остаточное тепло -{1}	?
+WV_SCHLIESSUNG_KL#	Water valve closes at terminal {1}	Водяной клапан закрывается при клемме {1}	?
+STAT_VENTIL_KLIMA_E#E	Air conditioning valve status	Состояние клапана кондиционера	?
+// air conditioning compressor
+KOMPRESSORVENTIL	Compressor control valve	Регулирующий клапан компрессора	?
+KOMPRESSOR_MAG_KUPPLUNG	Compressor magnetic clutch	Электромагнитная муфта компрессора	?
+KOMPRESSOR_HIGH	Compressor upper characteristic	Верхняя характеристика компрессора	?
+KOMPRESSOR_LOW	Compressor lower characteristic	Нижняя характеристика компрессора	?
+KOMP_V_DRU_#	Compressor valve: pressure point {1}	Клапан компрессора: точка давления {1}	?
+KOMP_V_WID_#	Compressor valve: resistance point {1}	Клапан компрессора: точка сопротивления {1}	?
+DRUCKSENSOR	Refrigerant pressure sensor	Датчик давления хладагента	?
+AUC_SENSOR	Air quality sensor (automatic recirculation)	Датчик качества воздуха (автоматическая рециркуляция)
+ECO_VENTIL	ECO valve	Клапан ECO	?
+// steering and pumps
+SERVOTRONIC_VENTIL	Servotronic valve	Клапан Servotronic
+ST_IPUMPC_#	Steering pump current {1}	Ток насоса рулевого управления {1}	?
+ST_N_PUMPE	Steering pump speed	Обороты насоса рулевого управления	?
+ST_NPUMP_MIN	Steering pump minimum speed	Минимальные обороты насоса руля	?
+ST_VDOT_LENK	Steering pump flow	Подача насоса руля	?
+ST_VDOT_BASIS	Steering pump base flow	Базовая подача насоса руля	?
+ST_VDOT_MAX	Steering pump maximum flow	Максимальная подача насоса руля	?
+ST_VDOT_NPUMP	Steering pump flow per speed	Подача насоса руля по оборотам	?
+VDOT_MAX	Maximum flow	Максимальная подача	?
+ST_ALW_ABS_FILT	Steering: angle filter	Рулевое: фильтр угла	?
+ST_ALW_FAKTOR	Steering: angle factor	Рулевое: коэффициент угла	?
+ST_VLW_ABS_FILT	Steering: angle speed filter	Рулевое: фильтр скорости вращения руля	?
+ST_VLW_FAKTOR	Steering: angle speed factor	Рулевое: коэффициент скорости вращения руля	?
+ST_FAKTOR_TOTZONE_#	Steering: dead zone factor {1}	Рулевое: коэффициент мёртвой зоны {1}	?
+ST_FAKTOR_VSR_#	Steering: speed factor {1}	Рулевое: коэффициент скорости {1}	?
+ST_LWG_TOTZONE	Steering: angle dead zone	Рулевое: мёртвая зона угла	?
+ST_LWG_VSR	Steering: angle vs speed	Рулевое: угол и скорость	?
+ST_VX_KMH	Steering: speed threshold	Рулевое: порог скорости	?
+ST_VX_KMH_TOTZONE	Steering: dead zone speed	Рулевое: скорость мёртвой зоны	?
+ST_VX_KMH_VSR	Steering: speed-dependent threshold	Рулевое: порог в зависимости от скорости	?
+LWG_OG	Steering angle upper limit	Верхний предел угла руля	?
+LWG_UG	Steering angle lower limit	Нижний предел угла руля	?
+R_NGB_GRADIENT	Control: gradient	Регулирование: градиент	?
+R_NGB_TOTZEIT	Control: dead time	Регулирование: мёртвое время	?
+R_PAR_DT	Control parameter: time step	Параметр регулирования: шаг времени	?
+R_PAR_TFILT_ALW	Control parameter: angle filter time	Параметр регулирования: время фильтра угла	?
+R_PAR_TFILT_VLW	Control parameter: angle speed filter time	Параметр регулирования: время фильтра скорости	?
+R_PAR_STRAPTRANSMISSION	Control parameter: belt drive ratio	Параметр регулирования: ремённая передача	?
+// power management, sleep and wake-up
+AUS_BEI_NICHT_EINSCHLAF	Switch off when the bus does not go to sleep	Отключение, если шина не засыпает	?
+AUS_BEI_SZ#AUS	Switch off after terminal {1} off	Отключение после выключения клеммы {1}	?
+AUS_BEI_WECKER	Switch off after repeated wake-ups	Отключение после повторных пробуждений	?
+RESET_BEI_NICHT_EINSCHLAF	Reset when the bus does not go to sleep	Сброс, если шина не засыпает	?
+RESET_BEI_SVAUS	Reset after supply off	Сброс после отключения питания	?
+RESET_BEI_WECKER	Reset after repeated wake-ups	Сброс после повторных пробуждений	?
+COUNTDOWN_BIS_AUS	Countdown until switch-off	Обратный отсчёт до отключения	?
+COUNTDOWN_BIS_RESET	Countdown until reset	Обратный отсчёт до сброса	?
+EINSCHLAFV_BIS_AUS	Sleep attempts until switch-off	Попытки засыпания до отключения	?
+EINSCHLAFV_BIS_POWERD	Sleep attempts until power-down	Попытки засыпания до выключения питания	?
+EINSCHLAFV_BIS_RESET	Sleep attempts until reset	Попытки засыпания до сброса	?
+WECKER_BIS_AUS	Wake-ups until switch-off	Пробуждения до отключения	?
+WECKER_BIS_POWERDOWN	Wake-ups until power-down	Пробуждения до выключения питания	?
+WECKER_BIS_RESET	Wake-ups until reset	Пробуждения до сброса	?
+ENTPRELLZEIT_RESET_DTIMER	Reset timer debounce time	Время подавления дребезга таймера сброса	?
+RESET_DAUER	Reset duration	Длительность сброса	?
+NACHL_KL#F	Terminal {1} run-on time	Время задержки клеммы {1}	?
+NACHLZ_BISTABR_TRANSPM	Bistable relay run-on in transport mode	Задержка бистабильного реле в транспортном режиме	?
+BISTABILES_RELAIS_JBBF#	Bistable relay position	Положение бистабильного реле	?
+T_ENTPR_UNTERSPANNUNG	Undervoltage debounce time	Время подавления дребезга при пониженном напряжении	?
+U_SPERR	Lock-out voltage	Напряжение блокировки	?
+U_ENT_SPERR	Release voltage	Напряжение снятия блокировки	?
+U_SPERR_MSA	Lock-out voltage with auto start-stop	Напряжение блокировки при старт-стоп	?
+UBATT_LIMIT	Battery voltage limit	Предел напряжения аккумулятора	?
+T_LIMIT	Temperature limit	Предел температуры	?
+T_LIMIT_ABSOLUT	Absolute temperature limit	Абсолютный предел температуры	?
+THERMOSCHUTZ_AUSSENTEMP	Thermal protection: outside temperature	Тепловая защита: наружная температура	?
+WIEDEREINSCH_TEMP	Switch-on again below temperature	Повторное включение ниже температуры	?
+T_AUF_START_MAX	Maximum start time	Максимальное время старта	?
+LICHT_SICHERUNG	Light circuit protection	Защита цепи света	?
+NVK_FEHLT	Missing message counter	Счётчик отсутствующих сообщений	?
+TVK_FEHLT_#	Missing message timeout {1}	Тайм-аут отсутствующего сообщения {1}	?
+TSM_ENTPR	Message debounce	Подавление дребезга сообщения	?
+TSM_SEND_ZYK	Message send cycle	Цикл отправки сообщения	?
+XWR	XWR function	Функция XWR	?
+FZM_NMIN	Vehicle state manager: minimum engine speed	Менеджер состояния: минимальные обороты	?
+FZM_TA	Vehicle state manager: outside temperature	Менеджер состояния: наружная температура	?
+FZM_TM	Vehicle state manager: engine temperature	Менеджер состояния: температура двигателя	?
+FZM_XSMKS	Vehicle state manager: function XSMKS	Менеджер состояния: функция XSMKS	?
+FZM_XZS	Vehicle state manager: function XZS	Менеджер состояния: функция XZS	?
+IGR_DELAY_TIME	Intelligent alternator control: delay	Интеллектуальное управление генератором: задержка	?
+IGR_SPEED_THRESHOLD	Intelligent alternator control: speed threshold	Интеллектуальное управление генератором: порог скорости	?
+// sensors, switches, other
+HANDBREMSKONTAKT	Handbrake switch	Датчик ручного тормоза
+TANKGEBER_PWM	Fuel sender with PWM signal	Датчик топлива с ШИМ-сигналом	?
+TANKGEBER_PWM_AKT_ZEIT	Fuel sender PWM active time	Датчик топлива: время активного ШИМ	?
+TANKGEBER_PWM_PERIOD	Fuel sender PWM period	Датчик топлива: период ШИМ	?
+DSC_SWITCH	DSC button	Кнопка DSC
+RPA_SWITCH	Flat tyre monitor reset button	Кнопка сброса индикатора проколов	?
+FDS_SWITCH	Driving dynamics switch	Переключатель динамики движения	?
+FDS_SPORT_AB_#_#	Sport mode from setting {1}.{2}	Режим Sport с настройки {1}.{2}	?
+EDC_LED_SWITCH	EDC button LED	Светодиод кнопки EDC	?
+EDC_LED_SWITCH_MSA	Start-stop button LED	Светодиод кнопки старт-стоп	?
+EDC_DIMM_MAX_#	EDC LED maximum brightness	Максимальная яркость светодиода EDC	?
+EDC_DIMM_MIN_#	EDC LED minimum brightness	Минимальная яркость светодиода EDC	?
+PIA_EDC	Personal profile for EDC	Личный профиль для EDC	?
+USA_REVERSE_JBBF	US reverse gear function	Функция задней передачи (США)	?
+DC_DC_DIAGNOSE_#R	DC/DC converter diagnosis	Диагностика преобразователя DC/DC	?
+DC_DC_DIAGNOSE_DSC_E#	DC/DC converter diagnosis for DSC	Диагностика преобразователя DC/DC для DSC	?
+PL#_GWTABLE_VOR_#_#	Gateway table for platform {1}	Таблица шлюза для платформы {1}	?

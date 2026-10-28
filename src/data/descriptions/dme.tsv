@@ -1,0 +1,6 @@
+// DME — engine control (excerpt seen in the traces). Written from the parameter names.
+MILANSTEUERUNG	Check engine (MIL) lamp control	Управление лампой Check Engine (MIL)	?
+VMAXCODIERUNG_ME#_ECE	Top speed limiter coding	Кодирование ограничителя максимальной скорости
+KL_#_ANSTEUERUNG	Terminal {1} control	Управление клеммой {1}	?
+OELWARTUNGSINTERVALL_NEU	Oil service interval	Интервал замены масла
+IGR_CODIERUNG_ME#	Intelligent alternator control (IGR)	Интеллектуальное управление генератором (IGR)	?

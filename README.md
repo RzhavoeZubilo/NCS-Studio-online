@@ -52,6 +52,21 @@ File System Access API; without it the app falls back to file downloads).
   function with **all possible values** and translations, searchable
 - Everything stays local: no data is bundled with the app
 
+### Parameter descriptions (built-in, EN + RU)
+
+- `src/data/descriptions/*.tsv` — the project's own English and Russian
+  descriptions, one file per ECU, bundled with the site (no download needed)
+- Written from the parameter names themselves (German abbreviations such as
+  `BC_DIGITAL_V`, `TAG_LICHT_AN`), independently of NCS Dummy's
+  `Translations.csv`; covered under this project's GPL-3.0
+- Line format: `NAME <TAB> English <TAB> Russian [<TAB> ?]`; `#` in a name
+  matches a number (`CBS_STAT_#H` → `{1}`), `*` any name part
+  (`*_ALIVE_ZAEHLER`); `?` marks a description inferred from the name and not
+  yet checked on a car — shown as "?" in the editor
+- Corrections are welcome as pull requests; when you fix a "?" entry from
+  your own car, drop the `?`. Do not paste text from `Translations.csv`.
+- A loaded `Translations.csv` still takes precedence for the English text
+
 ### Dictionary (Russian overlay)
 
 - Editable Russian translations for every known function/value name,

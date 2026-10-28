@@ -1,0 +1,68 @@
+// IHKA — automatic climate control (E8x/E9x). Written from the parameter names.
+OFF_MEMORY	Remember the OFF state after restart	Запоминать выключенное состояние после перезапуска
+UMLUFT_MEMORY	Remember recirculation after restart	Запоминать рециркуляцию после перезапуска
+MSA_MEMORY	Remember the auto start-stop mode	Запоминать режим старт-стоп	?
+KLIMA_SPERREN	Lock the air conditioning	Блокировка кондиционера	?
+KLIMA_MIT_AUTO_#	A/C switches on together with AUTO	Кондиционер включается вместе с AUTO
+KLIMA_MIT_AUTO_#/#	A/C switches on together with AUTO	Кондиционер включается вместе с AUTO
+C_CKM_D_KLIMA_MIT_AUTO	Default per key: A/C with AUTO	Значение по умолчанию для ключа: кондиционер с AUTO
+AUTO_BEI_KL#_EIN_#	AUTO mode at terminal {1} on	Режим AUTO при включении клеммы {1}
+AUTO_BEI_KL#_EIN_#/#	AUTO mode at terminal {1} on	Режим AUTO при включении клеммы {1}
+C_CKM_D_AUTO_BEI_KL#_EIN	Default per key: AUTO at terminal {1} on	Значение по умолчанию для ключа: AUTO при клемме {1}
+GEBLAESE_OFFSET_#	Blower speed offset	Смещение скорости вентилятора
+GEBLAESE_OFFSET_#/#	Blower speed offset	Смещение скорости вентилятора
+C_CKM_D_GEBLAESE_OFFSET	Default per key: blower offset	Значение по умолчанию для ключа: смещение вентилятора
+TEMPERATUR_OFFSET_#	Temperature offset	Смещение температуры
+TEMPERATUR_OFFSET_#/#	Temperature offset	Смещение температуры
+C_CKM_D_TEMPERATUR_OFFSET	Default per key: temperature offset	Значение по умолчанию для ключа: смещение температуры
+EL_ZUHEIZER_PTC	Electric PTC auxiliary heater	Электрический дополнительный нагреватель PTC
+BAUKASTEN_PTC	PTC heater module	Модуль нагревателя PTC	?
+PSEUDOZUHEIZEN	Simulated auxiliary heating	Имитация дополнительного подогрева	?
+SH_ZUHEIZEN	Auxiliary heating with the parking heater	Дополнительный подогрев стояночным отопителем	?
+STANDHEIZUNG	Parking heater	Стояночный отопитель
+STANDHEIZUNG_SZ	Parking heater button	Кнопка стояночного отопителя	?
+ANZEIGE_TIMER_STHZ_SA	Parking heater timer display	Индикация таймера стояночного отопителя
+CC_MELDUNG_SH	Check Control messages for the parking heater	Сообщения Check Control стояночного отопителя	?
+DELAY_SH_LED	Parking heater LED delay	Задержка светодиода стояночного отопителя	?
+TEILLASTBETRIEB_SH	Parking heater part-load mode	Режим частичной нагрузки стояночного отопителя	?
+RL_LL	Left- or right-hand drive	Левый или правый руль
+EINBAUORT	Installation position	Место установки	?
+LAENDERVARANTE	Country variant	Страновой вариант
+GEBLAESE_AUTO_MIT_A	Blower display: AUTO with "A"	Индикация вентилятора: AUTO с буквой «A»	?
+GEBLAESE_AUTO_MIT_BALKEN	Blower display: AUTO with bars	Индикация вентилятора: AUTO со шкалой	?
+GEBLAESE_MIT_LUEFTER_SYMB	Blower display with fan symbol	Индикация вентилятора со значком	?
+GEBLAESE_MIT_RAHMEN	Blower display with frame	Индикация вентилятора в рамке	?
+GBL_OFF	Blower can be switched off	Вентилятор можно выключить	?
+KOMPRESSOR	A/C compressor type	Тип компрессора кондиционера
+KOMPRESSOR_MITTEL	Medium-size compressor	Компрессор среднего размера	?
+KOMPRESSOR_KUPPLUNG	Compressor with clutch	Компрессор с муфтой
+UEBERSETZUNG_KOMPRESSOR	Compressor drive ratio	Передаточное отношение привода компрессора
+KMK_ZUSCHALTSCHWELLE	Compressor switch-on threshold	Порог включения компрессора	?
+KOMP_AKUSTIK	Compressor noise strategy	Стратегия шумности компрессора	?
+SOLARSENSORKENNLINIE	Solar sensor characteristic	Характеристика датчика солнца
+ERSTE_HEIZZEIT_HHS_A	Heated rear window: first heating time A	Обогрев заднего стекла: первое время нагрева A	?
+ERSTE_HEIZZEIT_HHS_B	Heated rear window: first heating time B	Обогрев заднего стекла: первое время нагрева B	?
+ZWEITE_HEIZZEIT_HHS	Heated rear window: second heating time	Обогрев заднего стекла: второе время нагрева	?
+TAKTUNGSDAUER_HHS	Heated rear window: cycle duration	Обогрев заднего стекла: длительность цикла	?
+ZWP/EWP	Auxiliary or electric water pump	Дополнительный или электрический водяной насос	?
+MOTOR_IHX	Engine type for climate control	Тип двигателя для климат-контроля
+PIA_PORTIERUNG	Personal profile data transfer	Перенос данных личного профиля	?
+NACHLAUFZEIT_UM_VENTIL	Changeover valve run-on time	Время выбега перепускного клапана	?
+ALKS	Active air flaps	Активные воздушные заслонки	?
+IGR	Integrated recirculation function	Интегрированная функция рециркуляции	?
+DEFROST_LEITSCHAUFELN	Defrost guide vanes	Направляющие заслонки обдува стёкол	?
+MANUELLES_VERDECK_E#	Manual convertible top	Ручная складная крыша	?
+MSA_NOTSTRATEGIE	Auto start-stop emergency strategy	Аварийная стратегия старт-стоп	?
+MSA_ANSTEUERLOGIK	Auto start-stop control logic	Логика управления старт-стоп	?
+MSA_KENNLINIENSATZ_US	Auto start-stop characteristic set (US)	Набор характеристик старт-стоп (США)	?
+WARTUNGSINTERVALL_FZE	Microfilter service interval	Интервал замены салонного фильтра	?
+IHX_CBS	Service reminder for the climate system (CBS)	Сервисное напоминание климатической системы (CBS)	?
+KLIMAGERAET_MIT_SCHICHTNG	Climate unit with temperature layering	Климатический блок с послойным распределением температуры	?
+ABK_KLIMASTIL	Climate style (intensity) choices	Выбор стилей климата (интенсивность)	?
+VERBRAUCHSOPTIMIERUNG	Consumption-optimised operation	Режим с оптимизацией расхода	?
+F#_BESCHL_VERM	Acceleration-dependent compressor cut-off	Отключение компрессора при разгоне	?
+ECO_PRO_MODE	ECO PRO mode	Режим ECO PRO
+ECO_PRO_DEFAULT_START	ECO PRO active at start	ECO PRO активен при запуске	?
+ECO_PRO_LAST_FU	ECO PRO: remember last state	ECO PRO: запоминать последнее состояние	?
+KOREA_SYMBOL	Korea-specific symbols	Символы для Кореи	?
+HDC_ZYKLISCH	Cyclic operation	Циклический режим	?

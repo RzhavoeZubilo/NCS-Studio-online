@@ -1,0 +1,168 @@
+// KOMBI — instrument cluster (E8x/E9x). Written from the parameter names.
+CC_BLINKFREQUENZ_LANGSAM	Check Control: slow flashing rate of warning lights	Check Control: частота медленного мигания контрольных ламп
+CC_BLINKFREQUENZ_SCHNELL	Check Control: fast flashing rate of warning lights	Check Control: частота быстрого мигания контрольных ламп
+CC_#_EIN	Check Control behaviour with terminal {1} switched on	Поведение Check Control при включённой клемме {1}	?
+CC_#_AUS	Check Control behaviour with terminal {1} switched off	Поведение Check Control при выключенной клемме {1}	?
+CC_R_EIN	Check Control behaviour with terminal R (accessory) on	Поведение Check Control при включённой клемме R (радиоположение)	?
+CC_R_AUS	Check Control behaviour with terminal R (accessory) off	Поведение Check Control при выключенной клемме R (радиоположение)	?
+CC_ML	Check Control behaviour with the engine running	Поведение Check Control при работающем двигателе	?
+CC_TEMPERATURWARNUNG	Outside temperature (ice) warning	Предупреждение о низкой наружной температуре (гололёд)
+CC_BREMSWARNL_NUR_ROT	Brake warning light shown only in red	Контрольная лампа тормозов только красного цвета	?
+CC_ZUENDSCHLUESSEL	Reminder: key left in the ignition	Напоминание о ключе, оставленном в замке зажигания
+CC_NR_ROLLE	Check Control message number scrolling	Прокрутка номеров сообщений Check Control	?
+CC_ID_AKTIV_#	Check Control message group {1} enabled	Группа сообщений Check Control {1} включена	?
+SHOW_CC_MSG_NR	Show Check Control message numbers	Показывать номера сообщений Check Control
+WARNFELD_INFO_DME	Warning field information from the engine control unit (DME)	Информационное поле предупреждений от блока двигателя (DME)	?
+WARNUNG_GESCHW_LIMIT	Speed limit warning (menu)	Предупреждение о превышении заданной скорости (меню)
+PREDRIVE_PERIODENDAUER	Pre-drive check: duration of the lamp test	Предстартовая проверка: длительность теста ламп
+PREDRIVE_ABB_MOT	Pre-drive check: stop the lamp test when the engine starts	Предстартовая проверка: прерывать тест ламп при пуске двигателя
+PREDRIVE_START_MIT_OBD	Pre-drive check: start together with the OBD request	Предстартовая проверка: запуск вместе с запросом OBD	?
+KL_PREDRIVE_AUSWAHL_#	Pre-drive check: lamp selection, set {1}	Предстартовая проверка: набор контрольных ламп {1}	?
+// fuel gauge
+TANK_FILTER_FALLEND	Fuel gauge damping when the level falls	Демпфирование указателя топлива при снижении уровня
+TANK_FILTER_STEIGEND	Fuel gauge damping when the level rises	Демпфирование указателя топлива при росте уровня
+TANK_MITTLUNGSZEIT	Fuel level averaging time	Время усреднения уровня топлива
+TANK_BERUHIGUNGSZEIT	Fuel level settling time	Время успокоения уровня топлива
+TANK_SICHERHEITSFAKTOR	Range calculation safety factor	Коэффициент запаса при расчёте запаса хода
+TANK_RED_REICHWEITE	Range shown when running on reserve	Запас хода, показываемый на резерве	?
+TANK_RW_WARNUNG	Low range warning threshold	Порог предупреждения о малом запасе хода
+TANK_OHM_FEHLER_OG	Fuel sender: upper resistance fault limit	Датчик топлива: верхний предел сопротивления (неисправность)
+TANK_OHM_FEHLER_UG	Fuel sender: lower resistance fault limit	Датчик топлива: нижний предел сопротивления (неисправность)
+TANK_VOLL_ERKENNUNG	Full tank detection after refuelling	Распознавание полного бака после заправки
+TANK_SCHWELLE_AUF_AB	Fuel level hysteresis up/down	Гистерезис уровня топлива вверх/вниз	?
+C#_TANK_SCHWELLE_RESERVE	Fuel reserve threshold	Порог резерва топлива
+TNK_LITER_LINKS	Fuel tank characteristic, left half: litres	Характеристика бака, левая половина: литры
+TNK_LITER_RECHTS	Fuel tank characteristic, right half: litres	Характеристика бака, правая половина: литры
+TNK_OHM_LINKS	Fuel tank characteristic, left half: sender resistance	Характеристика бака, левая половина: сопротивление датчика
+TNK_OHM_RECHTS	Fuel tank characteristic, right half: sender resistance	Характеристика бака, правая половина: сопротивление датчика
+// outside temperature
+AUSSENTEMP_ZEITKONST_Z#	Outside temperature filter: time constant {1}	Фильтр наружной температуры: постоянная времени {1}
+AUSSENTEMP_DELTA_K#	Outside temperature filter: threshold {1} (K)	Фильтр наружной температуры: порог {1} (K)	?
+AUSSENTEMP_ANZ_FEHLER_#	Outside temperature: display on sensor fault, value {1}	Наружная температура: индикация при неисправности датчика, значение {1}	?
+AUSSENTEMP_SPERR_FAKTOR	Outside temperature: update lock factor (hot engine)	Наружная температура: коэффициент блокировки обновления (горячий двигатель)	?
+AUSSENTEMP_SPERR_OFFSET	Outside temperature: update lock offset (hot engine)	Наружная температура: смещение блокировки обновления (горячий двигатель)	?
+// on-board computer
+BC_V_KORREKTUR	On-board computer: corrected speed	Бортовой компьютер: скорректированная скорость
+BC_DIGITAL_V	On-board computer: digital speed readout	Бортовой компьютер: цифровая скорость
+BC_DIGITAL_V_KORREKTUR	Digital speed readout: corrected instead of real speed	Цифровая скорость: скорректированная вместо фактической
+BC_DIG_GESCHW_BEI_KL_R	Digital speed readout already at terminal R	Цифровая скорость уже при клемме R	?
+BC_LEERZEILE	On-board computer: empty line in the list	Бортовой компьютер: пустая строка в списке	?
+BC_LIMIT_ENABLE	On-board computer: speed limit function	Бортовой компьютер: функция ограничения скорости
+BC_#_ENABLE	On-board computer: function {1}	Бортовой компьютер: функция {1}	?
+DIGITAL_KVA	Digital fuel consumption display	Цифровая индикация расхода топлива
+GPS_UHR	Set the clock from GPS time	Установка часов по времени GPS
+TEMPOMAT_SETZ_ANZ_DAUER	Cruise control: how long the set speed is shown	Круиз-контроль: длительность показа установленной скорости
+// service (CBS)
+CBS_STAT_#H	Service item {1} (CBS): status	Сервисная позиция {1} (CBS): состояние
+CBS_STAT_#AH	Service item {1}A (CBS): status	Сервисная позиция {1}A (CBS): состояние
+CBS_EINH_#H	Service item {1} (CBS): unit (time or distance)	Сервисная позиция {1} (CBS): единица (время или пробег)
+CBS_EINH_#AH	Service item {1}A (CBS): unit (time or distance)	Сервисная позиция {1}A (CBS): единица (время или пробег)
+CBS_SCEN_#H	Service item {1} (CBS): scenario	Сервисная позиция {1} (CBS): сценарий	?
+CBS_SCEN_#AH	Service item {1}A (CBS): scenario	Сервисная позиция {1}A (CBS): сценарий	?
+CBS_INTD_#H	Service item {1} (CBS): distance interval	Сервисная позиция {1} (CBS): интервал по пробегу	?
+CBS_INTW_#H	Service item {1} (CBS): time interval	Сервисная позиция {1} (CBS): интервал по времени	?
+CBS_GELB	Service display turns yellow: threshold	Порог перехода сервисной индикации в жёлтый
+CBS_GELB_KM_MIN	Service display turns yellow: minimum distance	Минимальный пробег для жёлтой сервисной индикации	?
+CBS_GELB_HUAU	Yellow service display for inspection / emissions test	Жёлтая сервисная индикация для техосмотра / замера выхлопа	?
+CBS_RES_SPERR	Service reset lock	Блокировка сброса сервиса	?
+CBS_AVKM_START	Starting value for average daily distance (CBS)	Начальное значение среднего суточного пробега (CBS)	?
+CBS_TZ_SCHALTER	Time source for service dates	Источник времени для сервисных сроков
+// gauges and display
+DZM_UMRECHNUNG	Tachometer scaling	Масштаб тахометра	?
+DZM_DISP_RPM	Tachometer: displayed rpm range	Тахометр: отображаемый диапазон оборотов	?
+MOTORKONSTANTE	Engine constant for the rpm signal	Константа двигателя для сигнала оборотов	?
+C#_K_ZAHL_TACHO	Speedometer calibration (K-number)	Калибровка спидометра (K-число)
+C#_K_ZAHL_TACHO_KOMPL	Speedometer calibration (K-number), complement	Калибровка спидометра (K-число), дополнение	?
+C#_K_ZAHL_WEG	Odometer calibration (K-number)	Калибровка одометра (K-число)
+C#_K_ZAHL_WEG_KOMPL	Odometer calibration (K-number), complement	Калибровка одометра (K-число), дополнение	?
+DIMM_MN_MAX	Display dimming: maximum brightness	Подсветка дисплея: максимальная яркость	?
+DIMM_MN_MIN	Display dimming: minimum brightness	Подсветка дисплея: минимальная яркость	?
+CRASH_TH_DIMMUNG	Dimming after a crash signal	Затемнение после сигнала аварии	?
+M_TAG_SKALENBELEUCHTUNG	M: gauge illumination in daytime	M: подсветка шкал днём
+SPORT_ANZEIGE	Sport display	Спортивная индикация	?
+SP_ANZEIGE	Sport display	Спортивная индикация	?
+SP_ANZEIGE_#	Sport display, variant {1}	Спортивная индикация, вариант {1}	?
+SHOW_OEL_STAND	Show engine oil level	Показывать уровень масла
+KUEHL_MTL_AKTIV	Coolant temperature display	Индикация температуры охлаждающей жидкости	?
+SCHALT_PKT_BC	Shift point indicator in the on-board computer	Индикатор переключения передач в бортовом компьютере
+SCHALT_PKT_DAUERHAFT	Shift point indicator shown permanently	Индикатор переключения передач постоянно	?
+SPA_IST_GANG_ENABLE	Show the engaged gear	Показывать включённую передачу	?
+SHIFTLIGHTS	Shift lights	Шифтлайты (индикаторы переключения)
+SHIFTLIGHTS_#	Shift lights, setting {1}	Шифтлайты, параметр {1}	?
+MMI_ENA_SHIFTLIGHTS	Shift lights setting in the menu	Настройка шифтлайтов в меню
+MOTORSPORT	Motorsport (M) display mode	Режим индикации Motorsport (M)	?
+// equipment
+GETRIEBE_ART	Transmission type	Тип коробки передач
+HU_VERBAUT_C#	Head unit installed (variant)	Установленное головное устройство (вариант)
+LL_RL_FZG	Left- or right-hand drive vehicle	Левый или правый руль
+E#_E#_FZG	Vehicle body variant	Вариант кузова	?
+VERDECKVARIANTE	Convertible top variant	Вариант складной крыши
+DSC_VARIANTE	DSC variant	Вариант DSC
+DSC_MIT_RPA_CC	DSC with flat tyre warning (RPA) messages	DSC с сообщениями индикатора проколов (RPA)
+DSC_ALLRAD_CC_WAHL	All-wheel drive Check Control messages	Сообщения Check Control полного привода	?
+ACC_AUSSTATTUNG	Active cruise control equipment variant	Вариант активного круиз-контроля
+ACC_FILTER_FALLEND	Active cruise control display damping (falling)	Демпфирование индикации активного круиз-контроля (снижение)	?
+ACC_FILTER_STEIGEND	Active cruise control display damping (rising)	Демпфирование индикации активного круиз-контроля (рост)	?
+ACC_ZEIGER_AUF_NULL	Active cruise control needle returns to zero	Стрелка активного круиз-контроля возвращается в ноль	?
+SZ_ANSTEUERUNG	Switch centre control	Управление блоком переключателей	?
+SZ_LED_VERBAUT	Switch centre LEDs installed	Светодиоды блока переключателей установлены	?
+EINST_HILFE	Entry aid	Помощь при посадке	?
+SITZ_L_UEBERWACHUNG	Seat occupancy monitoring	Контроль занятости сиденья	?
+TELEX_STATUS_SC	Teleservice status	Состояние Teleservice	?
+MSA_ENABLE	Auto start-stop (MSA)	Автоматический старт-стоп (MSA)
+MSA_SWITCH_ON_OFF_ENABLE	Auto start-stop button can switch MSA off	Кнопка старт-стоп может отключать MSA
+MSA_N_VERFUEGBAR	Auto start-stop not available message	Сообщение «старт-стоп недоступен»	?
+FDS_ENABLE	Driving dynamics switch function	Функция переключателя динамики движения	?
+E#_FDS_COMFORT	Driving dynamics switch: Comfort mode	Переключатель динамики: режим Comfort	?
+// iDrive / cluster menu: which settings are offered
+MMI_ENA_PIA	Personal profile settings in the menu	Настройки личного профиля в меню
+MMI_ENA_RPA_RDC	Tyre pressure / flat tyre settings in the menu	Настройки давления в шинах / индикатора проколов в меню
+MMI_ENA_UHR_DATUM	Clock and date settings in the menu	Настройки часов и даты в меню
+RDC_DISP_SWITCH	Tyre pressure display switch	Переключение индикации давления в шинах	?
+FB_ALLE_TUEREN	Menu: remote opens all doors	Меню: пульт открывает все двери
+FB_FA_TUER	Menu: remote opens the driver's door first	Меню: пульт сначала открывает дверь водителя
+HEIMLEUCHTEN_#S	Menu: follow-me-home lights for {1} s	Меню: подсветка «проводи домой» {1} с
+HEIMLEUCHTEN_AUS	Menu: follow-me-home lights off	Меню: подсветка «проводи домой» выключена
+LICHT_AUT_WERT_#	Menu: automatic headlight sensitivity, step {1}	Меню: чувствительность автосвета, ступень {1}	?
+OHNE_QUITT_ENT	Menu: no confirmation on unlocking	Меню: без подтверждения при открытии
+OHNE_QUITT_VER	Menu: no confirmation on locking	Меню: без подтверждения при закрытии
+QUITT_AKUST_ENT	Menu: horn/chirp confirmation on unlocking	Меню: звуковое подтверждение открытия
+QUITT_AKUST_VER	Menu: horn/chirp confirmation on locking	Меню: звуковое подтверждение закрытия
+QUITT_OPT_ENT	Menu: light flash confirmation on unlocking	Меню: световое подтверждение открытия
+QUITT_OPT_VER	Menu: light flash confirmation on locking	Меню: световое подтверждение закрытия
+QUITT_OPT_AKUST_ENT	Menu: light and sound confirmation on unlocking	Меню: световое и звуковое подтверждение открытия
+QUITT_OPT_AKUST_VER	Menu: light and sound confirmation on locking	Меню: световое и звуковое подтверждение закрытия
+SITZ_AUT_VERST_AUS	Menu: automatic seat adjustment off	Меню: автоматическая регулировка сиденья выключена	?
+SITZ_AUT_VERST_ENT	Menu: automatic seat adjustment on unlocking	Меню: автоматическая регулировка сиденья при открытии	?
+SITZ_AUT_VERST_ENT_T	Menu: automatic seat adjustment on opening the door	Меню: автоматическая регулировка сиденья при открытии двери	?
+TAG_LICHT_AN	Menu: daytime running lights on	Меню: дневные ходовые огни включены
+TAG_LICHT_AUS	Menu: daytime running lights off	Меню: дневные ходовые огни выключены
+TIPP_BLINKEN_#X	Menu: comfort turn signal, {1} flashes	Меню: комфортный поворотник, {1} мигания
+ZV_VER_AUS	Menu: automatic locking off	Меню: автоматическое запирание выключено
+ZV_VER_FAHRT	Menu: lock when driving off	Меню: запирание при начале движения
+ZV_VER_FAHRT_ZEIT	Menu: lock when driving off and after a delay	Меню: запирание при начале движения и по времени	?
+ZV_VER_ZEIT	Menu: lock again after a delay	Меню: повторное запирание по времени
+// turn signal sound
+KLACK_AMP	Turn signal sound "tock": volume	Звук поворотника «так»: громкость	?
+KLACK_FRE	Turn signal sound "tock": pitch	Звук поворотника «так»: частота	?
+KLACK_TON	Turn signal sound "tock": tone	Звук поворотника «так»: тембр	?
+KLICK_AMP	Turn signal sound "tick": volume	Звук поворотника «тик»: громкость	?
+KLICK_FRE	Turn signal sound "tick": pitch	Звук поворотника «тик»: частота	?
+KLICK_TON	Turn signal sound "tick": tone	Звук поворотника «тик»: тембр	?
+AKUSTIK_V_X	Gong speed threshold X	Порог скорости для гонга X	?
+AKUSTIK_V_Y_C#	Gong speed threshold Y	Порог скорости для гонга Y	?
+// units by country set
+K#D_C_WEG_#	Units, country set {1}: distance, option {2}	Единицы, набор страны {1}: пробег, вариант {2}	?
+K#D_D_WEG	Units, country set {1}: default distance unit	Единицы, набор страны {1}: пробег по умолчанию	?
+K#_C_VERBRAUCH_#	Units, country set {1}: consumption, option {2}	Единицы, набор страны {1}: расход, вариант {2}	?
+K#_D_VERBRAUCH	Units, country set {1}: default consumption unit	Единицы, набор страны {1}: расход по умолчанию	?
+K#_C_ZEIT_#	Units, country set {1}: time format, option {2}	Единицы, набор страны {1}: формат времени, вариант {2}	?
+K#_D_ZEIT	Units, country set {1}: default time format	Единицы, набор страны {1}: формат времени по умолчанию	?
+K#_C_TEMPERATUR_#	Units, country set {1}: temperature, option {2}	Единицы, набор страны {1}: температура, вариант {2}	?
+K#_D_TEMPERATUR	Units, country set {1}: default temperature unit	Единицы, набор страны {1}: температура по умолчанию	?
+K#_C_DRUCK_#	Units, country set {1}: pressure, option {2}	Единицы, набор страны {1}: давление, вариант {2}	?
+K#_D_DRUCK	Units, country set {1}: default pressure unit	Единицы, набор страны {1}: давление по умолчанию	?
+K#C_C_DATUM_#	Units, country set {1}: date format, option {2}	Единицы, набор страны {1}: формат даты, вариант {2}	?
+K#C_D_DATUM	Units, country set {1}: default date format	Единицы, набор страны {1}: формат даты по умолчанию	?
+K#_C_SPRACHE_#	Language set {1}: option {2}	Набор языков {1}: вариант {2}	?
+K#_D_SPRACHE	Language set {1}: default language	Набор языков {1}: язык по умолчанию	?

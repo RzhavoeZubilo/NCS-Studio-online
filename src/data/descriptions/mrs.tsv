@@ -1,0 +1,74 @@
+// MRS — airbag / occupant restraint system (E8x/E9x). Written from the parameter names.
+AIRBAG_FAHRER_#	Driver front airbag	Фронтальная подушка водителя
+AIRBAG_BEIFAHRER_#	Passenger front airbag	Фронтальная подушка пассажира
+FAHRERBAG_STUFE#_#	Driver airbag stage {1}	Ступень {1} подушки водителя
+BEIFAHRERBAG_STUFE#_#	Passenger airbag stage {1}	Ступень {1} подушки пассажира
+ADAPTIVER_BEIFAHRERAIRBAG	Adaptive passenger airbag	Адаптивная подушка пассажира
+CURTAIN_FAHRER_#	Driver side curtain airbag	Шторка безопасности со стороны водителя
+CURTAIN_BEIFAHRER_#	Passenger side curtain airbag	Шторка безопасности со стороны пассажира
+LANGER_CURTAIN_#	Long curtain airbag	Удлинённая шторка безопасности	?
+SIDEBAG_LINKS_#	Left side airbag	Левая боковая подушка
+SIDEBAG_RECHTS_#	Right side airbag	Правая боковая подушка
+KNIEBAG_FAHRER_#	Driver knee airbag	Коленная подушка водителя
+KNIEBAG_BEIFAHRER_#	Passenger knee airbag	Коленная подушка пассажира
+KNIEAIRBAG_FAHRER_#	Driver knee airbag	Коленная подушка водителя
+KNIEAIRBAG_BEIFAHRER_#	Passenger knee airbag	Коленная подушка пассажира
+ITS_GEGENUEBER_#	Head airbag (ITS), opposite side	Головная подушка (ITS), противоположная сторона	?
+ITS_SCHRAEGCRASH_#	Head airbag (ITS) in an oblique crash	Головная подушка (ITS) при косом ударе	?
+GURTSTRAFFER_FAHRER_#	Driver belt tensioner	Преднатяжитель ремня водителя
+GURTSTRAFFER_BEIFAHRER_#	Passenger belt tensioner	Преднатяжитель ремня пассажира
+GURTSTRAFFER_FONDLINKS_#	Rear left belt tensioner	Преднатяжитель заднего левого ремня
+GURTSTRAFFER_FONDRECHTS_#	Rear right belt tensioner	Преднатяжитель заднего правого ремня
+GURTSTRAMM_SEITENCRASH_#	Belt tensioning in a side crash	Натяжение ремня при боковом ударе	?
+AUFROLLSTRAMMER_LINKS_#	Left reel tensioner	Левый натяжитель катушки ремня	?
+AUFROLLSTRAMMER_RECHTS_#	Right reel tensioner	Правый натяжитель катушки ремня	?
+AUFROLL_SEITENCRASH	Reel tensioner in a side crash	Натяжитель катушки при боковом ударе	?
+SLV_FAHRER_#	Driver belt force limiter	Ограничитель усилия ремня водителя	?
+SLV_BEIFAHRER_#	Passenger belt force limiter	Ограничитель усилия ремня пассажира	?
+GURTKONTAKT_FAHRER_#	Driver seat belt buckle switch	Датчик замка ремня водителя
+GURTKONTAKT_BEIFAHRER_#	Passenger seat belt buckle switch	Датчик замка ремня пассажира
+CC_GURTWARNUNG_#	Seat belt warning message	Сообщение о непристёгнутом ремне
+GURT_NICHT_AB_GK	Belt warning without buckle switch	Предупреждение о ремне без датчика замка	?
+SBR_FAHRER_#	Driver seat belt reminder	Напоминание о ремне водителя
+SBR_BEIFAHRER_#_CD	Passenger seat belt reminder	Напоминание о ремне пассажира
+SBR_SENSOR_BEIFAHRER_MCD	Passenger seat belt reminder sensor	Датчик напоминания о ремне пассажира
+SBR_PREWARNING_FA_MRS	Driver seat belt pre-warning	Предварительное напоминание о ремне водителя	?
+SBR_PREWARNING_BF_MRS	Passenger seat belt pre-warning	Предварительное напоминание о ремне пассажира	?
+SEAT_BELT_MONITOR	Seat belt monitoring	Контроль ремней безопасности	?
+SEAT_BELT_SPEED	Seat belt warning speed threshold	Порог скорости для предупреждения о ремне	?
+SEAT_BELT_DISTANCE	Seat belt warning distance threshold	Порог расстояния для предупреждения о ремне	?
+SBE_SCHWELLE_ON	Seat occupancy detection threshold	Порог распознавания занятости сиденья	?
+SBE_STEP_DOWN	Seat occupancy detection step down	Шаг вниз распознавания занятости сиденья	?
+SBE_STEP_UP	Seat occupancy detection step up	Шаг вверх распознавания занятости сиденья	?
+SBE#_#_CD	Seat occupancy detection {1}	Распознавание занятости сиденья {1}	?
+SBE#_STATUS_VERZ_MCD	Seat occupancy status delay	Задержка статуса занятости сиденья	?
+SPSF_#_CD	Driver seat position sensor	Датчик положения сиденья водителя	?
+SPSBF_#	Passenger seat position sensor	Датчик положения сиденья пассажира	?
+OC#_#	Occupant classification sensor	Датчик классификации пассажира (OC)	?
+GK/OC#/POL	Belt contact / occupant classification / passenger occupant logic	Замок ремня / классификация пассажира / логика занятости	?
+POL_#	Passenger occupant logic	Логика занятости пассажирского сиденья	?
+POL_MAX_SCHWELLE	Passenger occupant logic: upper threshold	Логика занятости: верхний порог	?
+POL_MIN_SCHWELLE	Passenger occupant logic: lower threshold	Логика занятости: нижний порог	?
+POS_#	Passenger occupancy sensing	Определение занятости пассажирского сиденья	?
+O_GW_F_#	Occupant weight sensing, driver	Определение веса водителя	?
+O_GW_BF_#_MCD	Occupant weight sensing, passenger	Определение веса пассажира	?
+UPFRONT_LINKS_#	Left upfront crash sensor	Левый передний датчик удара
+UPFRONT_RECHTS_#	Right upfront crash sensor	Правый передний датчик удара
+UP_FR_PARAM_CD_C#	Upfront sensor parameter set	Набор параметров передних датчиков удара	?
+FR_HE_PARAM_#_CD_C#	Front/rear crash parameter set {1}	Набор параметров фронтального/заднего удара {1}	?
+SEITEN_PARAM_CD_C#	Side crash parameter set	Набор параметров бокового удара	?
+PARAMETERSATZ_#_CD_C#	Crash parameter set {1}	Набор параметров удара {1}	?
+EAM_TIMEDELAY_CD_C#	Deployment time delay set	Набор задержек срабатывания	?
+US_SCHWELLEN_#	US deployment thresholds	Пороги срабатывания для США	?
+ROLLOVER_OPTION_#	Rollover detection	Распознавание опрокидывания
+AKS_LINKS_#_CD	Left active head restraint	Левый активный подголовник	?
+AKS_RECHTS_#_CD	Right active head restraint	Правый активный подголовник	?
+AGKL_#	Left side crash sensor	Левый датчик бокового удара	?
+AGKR_#	Right side crash sensor	Правый датчик бокового удара	?
+BPLUS_TRENNUNG#_#	Battery cut-off (safety battery terminal) {1}	Отключение аккумулятора (пиропатрон клеммы) {1}
+LENKSEITE_#	Steering side	Сторона руля
+AACN_#	Automatic crash notification	Автоматическое оповещение об аварии	?
+MRSA_TUERE_#_C#	Door crash sensor {1}	Датчик удара в двери {1}	?
+TCU_UEBERWACHUNG_#_#	Telematics unit monitoring	Контроль телематического блока	?
+TROMMELSPEICHER	Crash data storage	Хранение данных аварии	?
+BAUREIHE_MRS#CD	Vehicle series	Серия автомобиля

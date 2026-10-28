@@ -68,6 +68,13 @@ export function DetailPanel() {
         {text.title !== seg.name && <div className="mt-1 text-sm text-fg">{text.title}</div>}
         {text.original && <div className="mt-0.5 text-sm text-mut">{text.original}</div>}
         {text.hint && <div className="mt-1 font-mono text-xs text-faint">{text.hint}</div>}
+        {text.unverified && (
+          <div className="mt-1.5 text-xs text-faint">
+            {lang === 'ru'
+              ? 'Описание составлено по имени параметра и ещё не проверено на машине.'
+              : 'Described from the parameter name, not yet checked on a car.'}
+          </div>
+        )}
         {changed && (
           <div className="mt-2 inline-flex items-center gap-1 rounded bg-amber-500/15 px-2 py-0.5 text-xs text-amber-600">
             {t(lang, 'modified')}

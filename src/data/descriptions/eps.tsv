@@ -1,0 +1,17 @@
+// EPS — electric power steering (E8x/E9x). Written from the parameter names.
+AUSWAHL_DATEN	Data set selection	Выбор набора данных	?
+FAHRBAHNRUECKMELDUNG	Road feedback	Обратная связь от дороги	?
+LUEFTERANSTEUERUNG	Fan control	Управление вентилятором	?
+MAX-UNTERSTUETZUNG	Maximum steering assistance	Максимальное усиление руля	?
+MESSIDENTIFIER	Measurement identifiers	Идентификаторы измерений	?
+MSA	Auto start-stop support	Поддержка старт-стоп	?
+SPORTSCHALTER	Sport button changes steering	Кнопка Sport меняет усилие руля	?
+SW-ENDANSCHLAG	Software end stop	Программный упор	?
+LENKWINKELKORREKTUR_EPS	Steering angle correction	Коррекция угла поворота руля	?
+NACHLAUFTEST	Run-on test	Тест выбега	?
+BORDNETZHOCHOHMIGKEIT	Supply resistance monitoring	Контроль сопротивления бортовой сети	?
+REIBUNGSERKENNUNG	Friction detection	Распознавание трения	?
+HEIZUNGRELAIS	Heater relay	Реле обогрева	?
+KREUZGELENKKOMPENSATION	Universal joint compensation	Компенсация карданного шарнира	?
+SCHALTENRELAIS	Switching relay	Коммутационное реле	?
+VARIANTENCODIERUNG_#	Vehicle variant coding {1}	Кодирование варианта автомобиля {1}	?

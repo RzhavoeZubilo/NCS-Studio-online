@@ -1,0 +1,92 @@
+// RAD2 — Professional radio / head unit (E8x/E9x). Written from the parameter names.
+HELPNET	Helpnet emergency call service	Служба экстренного вызова Helpnet	?
+PDC	Park distance control tones through the radio	Сигналы парктроника через аудиосистему
+BAUREIHEX	Vehicle series	Серия автомобиля
+KEY_MEMORY_R	Key memory: settings stored per remote key	Память ключа: настройки сохраняются для каждого ключа
+MUTE_TIMES	Mute timing variant	Вариант времени приглушения	?
+BMW_HOME_DEALER	BMW service: home dealer	Сервис BMW: дилер по умолчанию	?
+BMW_INITIALIZE	BMW services: initialisation	Сервисы BMW: инициализация	?
+BMW_MOBILE_SERVICE	BMW mobile service	Мобильный сервис BMW	?
+BMW_PHONE_SERVICES	BMW phone services	Телефонные сервисы BMW	?
+BMW_ROAMING	BMW services while roaming	Сервисы BMW в роуминге	?
+BMW_TELESERVICE_ONLY	BMW Teleservice only	Только BMW Teleservice	?
+BMW_ASSIST_RAD#	BMW Assist	BMW Assist	?
+BMW_HOTLINE_RAD#	BMW hotline	Горячая линия BMW	?
+CAR_COMP_ACTIVE	On-board computer menu in the radio	Меню бортового компьютера в радио	?
+CONTACT_NR_DEALER	Contact number: dealer	Контактный номер: дилер	?
+CONTACT_NR_HOTLINE	Contact number: hotline	Контактный номер: горячая линия	?
+CONTACT_NR_MOBILE_SRVC	Contact number: mobile service	Контактный номер: мобильный сервис	?
+V_INFO_RAD#	Vehicle info menu	Меню информации об автомобиле	?
+MY_INFO_RAD#_#	My Info menu	Меню My Info	?
+DELTA_GONG_ENT	Entertainment volume reduction during gongs	Снижение громкости аудио во время гонгов	?
+DELTA_PDC_ENT	Entertainment volume reduction during PDC tones	Снижение громкости аудио во время сигналов парктроника	?
+DELTA_NAV_ENT_RAD#	Entertainment volume reduction during navigation prompts	Снижение громкости аудио во время подсказок навигации	?
+OFFSET_ENT_GONG	Gong volume offset to entertainment	Смещение громкости гонга относительно аудио	?
+OFFSET_ENT_PDC	PDC tone volume offset to entertainment	Смещение громкости парктроника относительно аудио	?
+OFFSET_ENT_NAV_RAD#	Navigation volume offset to entertainment	Смещение громкости навигации относительно аудио	?
+TIME_OUT_GONG	Gong timeout	Тайм-аут гонга	?
+TIME_DIST_SAME_PRIO	Gap between sounds of the same priority	Пауза между сигналами одного приоритета	?
+TIME_LAG_IMG	Image display delay	Задержка вывода изображения	?
+SDV_CURVE	Speed-dependent volume curve	Кривая громкости в зависимости от скорости
+AUDIO_SIGNAL_ROUTING	Audio signal routing	Маршрутизация аудиосигнала	?
+AUX_HEATING	Auxiliary heating control from the radio	Управление дополнительным отопителем из радио	?
+SDARS_PHONE_NUMBER_#	Satellite radio (SDARS) phone number {1}	Телефон спутникового радио (SDARS) {1}	?
+SDARS_INBOX	Satellite radio (SDARS)	Спутниковое радио (SDARS)
+SDARS_DTC	Satellite radio fault reporting	Регистрация ошибок спутникового радио	?
+VOL_SRS_MAX	Maximum volume, source SRS	Максимальная громкость, источник SRS	?
+VOL_SRS_MIN	Minimum volume, source SRS	Минимальная громкость, источник SRS	?
+VOLUME_MAX_ON	Maximum switch-on volume	Максимальная громкость при включении
+VOLUME_STEPS_RAD#	Volume steps table	Таблица ступеней громкости	?
+RAD#_VEHICLE_FILTERS	Sound filters for the vehicle and audio system	Звуковые фильтры под автомобиль и аудиосистему
+RAD#_VOLUME_TABLE_B	Volume table for the vehicle and audio system	Таблица громкости под автомобиль и аудиосистему	?
+RAD#_CROSSOVER_B	Speaker crossover settings	Настройки разделения частот динамиков	?
+RAD#_BMW_AKD	BMW AKD	BMW AKD	?
+RAD#_MDRIVE	M Drive menu	Меню M Drive	?
+RAD#_VOL_TEL_MAX_B	Maximum phone volume	Максимальная громкость телефона	?
+RAD#_VOL_TEL_MIN_B	Minimum phone volume	Минимальная громкость телефона	?
+RAD#_RATIO_GONGS_#	Gong volume ratio	Соотношение громкости гонгов	?
+RATIO_AUDIO_SOURCESR#_#	Volume ratio between audio sources	Соотношение громкости источников звука	?
+AF_IN_CFG	Audio input configuration (phone mute)	Конфигурация аудиовхода (приглушение телефоном)	?
+CENTER_VALUE_VOL_TP_MIN	Traffic programme minimum volume, centre value	Минимальная громкость дорожных сообщений, среднее значение	?
+DEFAULT_OFFSET_TP_MIN	Traffic programme minimum volume offset	Смещение минимальной громкости дорожных сообщений	?
+AUX_RAD#	AUX input	Вход AUX
+VEHICLE_FINDER_MODE	Vehicle finder	Поиск автомобиля	?
+COUNTRYCODE_RADIO_#	Radio country variant	Страновой вариант радио
+ENT_MUTE_ON_CRASH_#	Mute audio after a crash	Приглушение звука после аварии	?
+RING_STATUS_#	Ring tone status	Состояние мелодии звонка	?
+RING_MAX_B	Maximum ring tone volume	Максимальная громкость звонка	?
+RING_MIN_B	Minimum ring tone volume	Минимальная громкость звонка	?
+STOLEN_VEHICLE_MODE_#	Stolen vehicle mode	Режим угнанного автомобиля	?
+VOL_NAV_MAX_RAD#	Maximum navigation volume	Максимальная громкость навигации	?
+VOL_NAV_MIN_RAD#	Minimum navigation volume	Минимальная громкость навигации	?
+VOL_GONG_MAX_RAD#_#	Maximum gong volume	Максимальная громкость гонга	?
+VOL_GONG_MIN_RAD#_#	Minimum gong volume	Минимальная громкость гонга	?
+VOL_PDC_MAX_RAD#_#	Maximum PDC tone volume	Максимальная громкость парктроника	?
+VOL_PDC_MIN_RAD#_#	Minimum PDC tone volume	Минимальная громкость парктроника	?
+PDC_ADAPTION_F_R_RAD#_#	PDC tone balance front/rear	Баланс сигналов парктроника перед/зад	?
+AUDIO_SYSTEM_RAD#	Installed audio system	Установленная аудиосистема
+AUDIO_PLAYER_INBOX_ON_OFF	Built-in audio player	Встроенный аудиоплеер	?
+BASIC_VR_INBOX_ON_OFF	Basic voice recognition	Базовое голосовое управление	?
+BT_MODUL_INBOX_ON_OFF	Built-in Bluetooth module	Встроенный модуль Bluetooth
+MICROPHONE_INBOX	Microphone configuration	Конфигурация микрофона
+MICROPHONE_MUTE	Microphone mute	Отключение микрофона	?
+PB_SORTING_INBOX	Phone book sorting	Сортировка телефонной книги
+RAD_EXTERNAL_CALL_LISTS	External call lists	Внешние списки вызовов	?
+CALL_WAITING_INBOX	Call waiting	Ожидание вызова	?
+DAB_INBOX	Digital radio (DAB)	Цифровое радио (DAB)
+LAENDERVARIANTE_DAB_INBOX	Digital radio (DAB) country variant	Страновой вариант цифрового радио (DAB)
+DAB_BAND_RAD	Digital radio (DAB) bands	Диапазоны цифрового радио (DAB)	?
+DAB_STANDARD_RAD	Digital radio standard (DAB / DAB+)	Стандарт цифрового радио (DAB / DAB+)
+LW_ON_OFF	Long wave band	Диапазон длинных волн
+LIMITER_F_L_B	Output limiter: front left	Ограничитель выхода: передний левый	?
+LIMITER_F_R_B	Output limiter: front right	Ограничитель выхода: передний правый	?
+LIMITER_R_L_B	Output limiter: rear left	Ограничитель выхода: задний левый	?
+LIMITER_R_R_B	Output limiter: rear right	Ограничитель выхода: задний правый	?
+LIMITER_GAIN_B	Output limiter gain	Усиление ограничителя выхода	?
+M_GROUP_C_#	Display and amplifier configuration	Конфигурация дисплея и усилителя	?
+SPRACHE_SVS	Voice control languages	Языки голосового управления	?
+SECOND_USB	Second USB port	Второй порт USB	?
+MODE_BEHAVIOR	MODE button behaviour	Поведение кнопки MODE	?
+COLORSWITCH_E#	Display colour scheme	Цветовая схема дисплея	?
+COLORSWITCH_E#_LINE	Display colour scheme by trim line	Цветовая схема дисплея по линии исполнения	?
+FADER	Front/rear fader	Регулировка баланса перед/зад
