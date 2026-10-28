@@ -162,8 +162,8 @@ function AllModules() {
       ) : !spDaten ? (
         <p className="px-3 text-xs leading-relaxed text-faint">
           {ru
-            ? 'Выберите папку SP-Daten кузова в верхней панели (например, E89 для E90) — здесь появится список всех блоков.'
-            : 'Choose the chassis SP-Daten folder in the top bar (e.g. E89 for an E90) to list every module here.'}
+            ? 'Укажите скачанную папку SP-Daten в верхней панели (например, «BMW SP-Daten 74») — здесь появится список всех блоков.'
+            : 'Point the top bar to your downloaded SP-Daten folder (e.g. “BMW SP-Daten 74”) to list every module here.'}
         </p>
       ) : (
         <>

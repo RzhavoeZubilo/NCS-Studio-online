@@ -10,7 +10,8 @@ function tree(name: string, spec: Record<string, unknown>): DirLike {
       for (const [k, v] of Object.entries(spec)) {
         if (typeof v === 'string') {
           yield { kind: 'file', name: k, getFile: async () => new File([v], k) } satisfies FileLike
-        } else yield tree(k, v as Record<string, unknown>)
+        } else if ((v as DirLike).kind === 'directory') yield v as DirLike
+        else yield tree(k, v as Record<string, unknown>)
       }
     },
   }
@@ -19,7 +20,24 @@ function tree(name: string, spec: Record<string, unknown>): DirLike {
 const daten = { 'SWTFSW03.DAT': '', 'SWTPSW03.DAT': '', 'KMBI_PL2.C08': '' }
 
 describe('locateSpDaten', () => {
-  it('finds DATEN\\E89 and ECU\\T_GRTB.PRG in the SP-Daten root', async () => {
+  it('finds the chassis and its own T_GRTB in a downloaded SP-Daten set without opening data\\', async () => {
+    let firmwareListed = false
+    const firmware = tree('data', { KOMBI: { 'fw.0pa': '' } })
+    const data: DirLike = { ...firmware, values: () => ((firmwareListed = true), firmware.values()) }
+    const root = tree('BMW SP-Daten 74', {
+      'E89.rar': '',
+      BASE: { daten: { 'A.DAT': '' }, ecu: { 'T_GRTB.prg': 'base' } },
+      E53: { daten: { ...daten }, ecu: { 't_grtb.prg': 'e53' } },
+      E89: { daten: { ...daten }, ecu: { 'T_GRTB.prg': 'e89' }, data },
+    })
+    const layout = await locateSpDaten(root)
+    expect(layout?.chassis).toBe('E89')
+    expect(layout?.chassisOptions).toEqual(['E53', 'E89'])
+    expect(await (await layout!.tgrtb!.getFile()).text()).toBe('e89')
+    expect(firmwareListed).toBe(false)
+  })
+
+  it('finds DATEN\\E89 and a shared ECU\\T_GRTB.PRG in an installed layout', async () => {
     const root = tree('BMW SP-Daten 69.0', {
       DATEN: { E60: { ...daten }, E89: { ...daten } },
       ECU: { 'T_GRTB.PRG': '', 'KOMB87.PRG': '' },

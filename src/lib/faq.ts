@@ -23,8 +23,8 @@ export const FAQ: FaqItem[] = [
   {
     q: { en: 'Where do I get SP-Daten and Translations.csv?', ru: 'Где взять SP-Daten и Translations.csv?' },
     a: {
-      en: 'SP-Daten sets (e.g. SP-Daten 69.0) are widely shared by the community — choose a chassis folder with the SP-Daten button in the top bar (E89 covers E81–E93). Translations.csv ships with NCS Dummy; import it in Settings. The database stores locally in your browser.',
-      ru: 'Наборы SP-Daten (например, SP-Daten 69.0) распространяются сообществом — выберите папку кузова кнопкой SP-Daten в верхней панели (E89 покрывает E81–E93). Translations.csv идёт в комплекте с NCS Dummy; импортируйте его в Настройках. База хранится локально в браузере.',
+      en: 'SP-Daten sets (e.g. “BMW SP-Daten 74”) are widely shared by the community. Download and unpack the set, then choose its folder as it is with the SP-Daten button in the top bar — no EDIABAS or NCS Expert installation is needed. The app finds the chassis folders inside (E89 covers E81–E93; switch the chassis next to the button), reads only the coding data and the ECU table and never touches the firmware. Translations.csv ships with NCS Dummy and is optional; import it in Settings. Everything stays in your browser.',
+      ru: 'Наборы SP-Daten (например, «BMW SP-Daten 74») распространяются сообществом. Скачайте и распакуйте набор, затем выберите его папку как есть кнопкой SP-Daten в верхней панели — устанавливать EDIABAS или NCS Expert не нужно. Приложение само найдёт внутри папки кузовов (E89 покрывает E81–E93, кузов переключается рядом с кнопкой), прочитает только данные кодировки и таблицу блоков и не трогает прошивки. Translations.csv идёт в комплекте с NCS Dummy и необязателен; импортируется в Настройках. Всё хранится в вашем браузере.',
     },
   },
   {

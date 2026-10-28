@@ -42,8 +42,13 @@ File System Access API; without it the app falls back to file downloads).
 
 ### Modules (SP-Daten option tree)
 
-- Open a chassis folder (e.g. `SP-Daten 69.0\E89`, which covers E81–E93):
-  folder picker or "Choose files" fallback
+- Choose a downloaded SP-Daten set as it is (e.g. `BMW SP-Daten 74`) — no
+  EDIABAS or NCS Expert installation needed. Also accepted: one chassis
+  folder (`…\E89`), or an installed `NCSEXPER\DATEN` + `EDIABAS\Ecu`.
+  The app finds each chassis by its `daten\` (E89 covers E81–E93, switchable
+  in the top bar), takes `T_GRTB.prg` from that chassis' own `ecu\` and never
+  opens `data\`, `sgdat\` and the other firmware folders. "Choose files" is
+  the fallback without a folder picker
 - Parses `daten\` in the browser: `SWTFSW*`/`SWTPSW*` keyword tables,
   `*SGET.000` module families, `BR_REF.DAT` chassis map and every
   `<module>.Cxx` coding file (record format per NCS-Workbench's `ncsdata.h`,

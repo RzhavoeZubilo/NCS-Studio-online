@@ -48,8 +48,8 @@ function Welcome() {
     {
       done: !!spDaten,
       text: ru
-        ? 'Выберите папку SP-Daten кузова в верхней панели — для E90 это E89. Папка запоминается.'
-        : 'Choose the chassis SP-Daten folder in the top bar — E89 for an E90. The folder is remembered.',
+        ? 'Укажите в верхней панели скачанную папку SP-Daten как есть (например, «BMW SP-Daten 74»): кузов и нужные файлы найдутся сами, для E90 это E89. Папка запоминается.'
+        : 'Point the top bar to your downloaded SP-Daten folder as it is (e.g. “BMW SP-Daten 74”): the chassis and the files it needs are found automatically — E89 for an E90. The folder is remembered.',
     },
     {
       done: !!descriptions,
