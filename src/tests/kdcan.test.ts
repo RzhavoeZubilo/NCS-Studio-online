@@ -123,8 +123,14 @@ dscT('T_GRTB.PRG (address assignment table)', () => {
     ),
   )
 
-  it('extracts over 1200 address entries', () => {
-    expect(entries.length).toBeGreaterThan(1200)
+  it('extracts over a thousand address entries', () => {
+    // the count differs between SP-Daten versions (1163 in 69.0)
+    expect(entries.length).toBeGreaterThan(1000)
+  })
+
+  it('keeps the diagnostic index that picks the variant', () => {
+    expect(entries.find((e) => e.address === 0x60 && e.sgbd === 'KOMB87')?.diagIndex).toBe(0x8d0)
+    expect(entries.find((e) => e.address === 0x63 && e.sgbd === 'RAD2' && e.baureihe === 'E90')?.diagIndex).toBe(0xfa8)
   })
 
   it('maps known addresses to module names', () => {

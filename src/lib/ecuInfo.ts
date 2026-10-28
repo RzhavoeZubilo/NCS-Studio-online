@@ -63,9 +63,9 @@ function byAddress(spDaten: SpDatenIndex | null, address: number, sgbd?: string)
   const long = entry?.name ?? ''
   const fromVariant = sgbd ? variantName(address, sgbd) : undefined
   if (fromVariant) return { short: fromVariant, long }
-  // another chassis than E81–E93: its own T_GRTB group names
-  const e89x = !spDaten || /^E89$/i.test(spDaten.folderName) || spDaten.ecuByAddress.size === 0
-  const builtIn = e89x ? (ISTA_NAMES[address] ?? E89X_ECU_NAMES[address]) : undefined
+  // a chassis folder other than E89 (E60, E70…): its own T_GRTB group names
+  const otherChassis = !!spDaten && /^[A-Z]\d{2,3}$/i.test(spDaten.folderName) && !/^E89$/i.test(spDaten.folderName)
+  const builtIn = otherChassis ? undefined : (ISTA_NAMES[address] ?? E89X_ECU_NAMES[address])
   const short = builtIn ?? (entry ? groupLabel(entry.group) || entry.sgbd.toUpperCase() : hexAddr(address))
   return { short, long }
 }
@@ -89,9 +89,9 @@ export function ecuLabel(
 }
 
 /**
- * Coding files that may serve a bus address: modules named after the T_GRTB
- * SGBD (RAD2 → RAD2.C0x) or belonging to the same ECU family in SGET
- * (D_KOMBI → KOMBI → KMBI_PL2.C08). With the diagnostic index from 1A 80 only
+ * Coding files that may serve a bus address: modules SGET links to the T_GRTB
+ * SGBD (KOMB87 → KMBI_PL2.C08), modules named after it (RAD2 → RAD2.C0x) or
+ * of the same ECU family (D_KOMBI → KOMBI). With the diagnostic index from 1A 80 only
  * the exact T_GRTB variant is considered.
  */
 export function variantCandidates(spDaten: SpDatenIndex, address: number, diagIndex?: number): SpDatenModule[] {
@@ -101,7 +101,10 @@ export function variantCandidates(spDaten: SpDatenIndex, address: number, diagIn
   const sgbds = pool.map((e) => e.sgbd.toUpperCase()).filter(Boolean)
   const families = pool.map((e) => groupLabel(e.group)).filter(Boolean)
   return spDaten.modules.filter(
-    (m) => sgbds.some((s) => m.fileName.startsWith(s)) || (!!m.family && families.includes(m.family.toUpperCase())),
+    (m) =>
+      m.sgbds.some((s) => sgbds.includes(s)) ||
+      sgbds.some((s) => m.fileName.startsWith(s)) ||
+      (!!m.family && families.includes(m.family.toUpperCase())),
   )
 }
 

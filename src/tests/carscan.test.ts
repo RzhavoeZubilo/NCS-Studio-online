@@ -91,9 +91,9 @@ describe('resolveEcu', () => {
     chassisMap: [],
     skipped: [],
     modules: [
-      { fileName: 'CCC_60.C21', family: 'CCC', codingIndex: 0x21, functions: [] },
-      { fileName: 'RAD2.C21', family: 'RAD', codingIndex: 0x21, functions: [] },
-      { fileName: 'KMBI_PL2.C08', family: 'KOMBI', codingIndex: 0x08, functions: [] },
+      { fileName: 'CCC_60.C21', family: 'CCC', sgbds: [], codingIndex: 0x21, functions: [] },
+      { fileName: 'RAD2.C21', family: 'RAD', sgbds: [], codingIndex: 0x21, functions: [] },
+      { fileName: 'KMBI_PL2.C08', family: 'KOMBI', sgbds: [], codingIndex: 0x08, functions: [] },
     ],
     ecuByAddress: new Map([
       [0x63, [entry(0x63, 'CCC_60', 'D_MMI', 0x0100), entry(0x63, 'RAD2', 'D_MMI', 0x0a00)]],

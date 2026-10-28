@@ -140,3 +140,30 @@ export async function readVin(serial: KdCanSerial, casAddress = 0x40): Promise<s
   const uds = await query(serial, casAddress, [0x22, 0xf1, 0x90], 500)
   return uds ? parseVin(uds.subarray(3)) : null
 }
+
+/**
+ * Reads an ECU's coding blocks: KWP2000 22 <block hi> <block lo>
+ * ReadDataByCommonIdentifier → 62 <block> <data> (KOMB87.prg job C_C_LESEN,
+ * "$3000 - $3EFF CodingDataSet"). Read-only. Returns coding memory keyed by
+ * byte address (block << 8) + offset, and the blocks that did not answer.
+ */
+export async function readCodingBlocks(
+  serial: KdCanSerial,
+  address: number,
+  blocks: { block: number; address: number; length: number }[],
+  onProgress: (done: number, total: number) => void,
+  shouldCancel: () => boolean = () => false,
+): Promise<{ mem: Map<number, number>; failed: number[] }> {
+  const mem = new Map<number, number>()
+  const failed: number[] = []
+  let done = 0
+  for (const b of blocks) {
+    if (shouldCancel()) break
+    const resp = await query(serial, address, [0x22, b.block >> 8, b.block & 0xff], 800)
+    if (resp && resp.length > 3) {
+      resp.subarray(3).forEach((byte, i) => mem.set(b.address + i, byte))
+    } else failed.push(b.block)
+    onProgress(++done, blocks.length)
+  }
+  return { mem, failed }
+}

@@ -54,8 +54,8 @@ function Welcome() {
     {
       done: !!descriptions,
       text: ru
-        ? 'Перетащите в окно Translations.csv из папки NCS Dummy — появятся описания параметров и значений wert_xx. Файл запоминается.'
-        : 'Drop Translations.csv from the NCS Dummy folder into the window — parameter and wert_xx descriptions appear. The file is remembered.',
+        ? 'Необязательно: перетащите в окно Translations.csv из папки NCS Dummy — добавятся пояснения к значениям wert_xx. Файл запоминается.'
+        : 'Optional: drop Translations.csv from the NCS Dummy folder into the window to explain wert_xx values. The file is remembered.',
     },
     {
       done: connected,
@@ -196,7 +196,7 @@ function Stepper() {
   const doc = useStore((s) => s.doc)
   const changed = doc ? docStats(doc).changed : 0
   const steps: { id: Step; label: string; note: string; done: boolean }[] = [
-    { id: 'read', label: ru ? 'Прочитать' : 'Read', note: doc ? doc.fileName : ru ? 'через NCS Expert' : 'via NCS Expert', done: !!doc },
+    { id: 'read', label: ru ? 'Прочитать' : 'Read', note: doc ? doc.fileName : ru ? 'из блока или файла' : 'from the ECU or a file', done: !!doc },
     {
       id: 'edit',
       label: ru ? 'Изменить' : 'Edit',
@@ -251,11 +251,70 @@ function Instructions({ items }: { items: ReactNode[] }) {
 
 const code = (s: string) => <code className="rounded bg-panel2 px-1 font-mono text-[13px] text-fg">{s}</code>
 
+/** Reading the coding straight from the ECU over the cable (KWP2000 22 30xx). */
+function ReadFromCar() {
+  const ru = useRu()
+  const connected = useStore((s) => s.carConnected)
+  const ecuSel = useStore((s) => s.ecuSel)
+  const spDaten = useStore((s) => s.spDaten)
+  const progress = useStore((s) => s.codingRead)
+  const readCodingFromCar = useStore((s) => s.readCodingFromCar)
+  const module = spDaten?.modules.find((m) => m.fileName === ecuSel?.fileName)
+
+  // what is still missing, in the order the user fixes it
+  const missing = !connected
+    ? ru
+      ? 'Подключите кабель и просканируйте шину.'
+      : 'Connect the cable and scan the bus.'
+    : ecuSel?.address === undefined
+      ? ru
+        ? 'Выберите блок из списка «Блоки в машине».'
+        : 'Pick the ECU under “ECUs in the car”.'
+      : !spDaten
+        ? ru
+          ? 'Выберите SP-Daten: без файла кодировки байты не перевести в параметры.'
+          : 'Choose SP-Daten: the coding file turns bytes into parameters.'
+        : !module
+          ? ru
+            ? 'Файл кодировки блока не определён — выберите вариант в шапке блока.'
+            : 'The ECU coding file is unknown — pick the variant in the ECU header.'
+          : null
+
+  return (
+    <div className="rounded-xl border border-line bg-panel/40 px-4 py-3">
+      <div className="flex flex-wrap items-center gap-3">
+        <div className="min-w-0 flex-1">
+          <div className="text-sm font-medium text-fg">{ru ? 'Прочитать из блока' : 'Read from the ECU'}</div>
+          <div className="text-xs text-faint">
+            {missing ??
+              (ru
+                ? `Только чтение: ${module!.fileName}, блоки кодировки читаются запросом 22 30xx.`
+                : `Read-only: ${module!.fileName}, coding blocks are read with 22 30xx.`)}
+          </div>
+        </div>
+        <button
+          type="button"
+          onClick={() => void readCodingFromCar()}
+          disabled={!!missing || !!progress}
+          className={btnPrimary}
+        >
+          {progress
+            ? `${ru ? 'Чтение' : 'Reading'} ${progress.done}/${progress.total}…`
+            : ru
+              ? 'Прочитать'
+              : 'Read'}
+        </button>
+      </div>
+    </div>
+  )
+}
+
 function ReadStep() {
   const ru = useRu()
   const doc = useStore((s) => s.doc)
   const ecuSel = useStore((s) => s.ecuSel)
   const setStep = useStore((s) => s.setStep)
+  const codingSource = useStore((s) => s.codingSource)
   const sgbd = ecuSel?.fileName ? sgbdOf(ecuSel.fileName) : null
   const stats = doc ? docStats(doc) : null
 
@@ -265,45 +324,54 @@ function ReadStep() {
         <div className="flex items-center gap-3 rounded-xl border border-emerald-600/40 bg-emerald-500/10 px-4 py-3 text-sm">
           <Check className="h-5 w-5 shrink-0 text-emerald-600" />
           <span className="flex-1 text-fg2">
-            {ru ? 'Загружен' : 'Loaded'} <span className="font-mono text-fg">{doc.fileName}</span> —{' '}
-            {stats.options} {ru ? 'опций' : 'options'}
+            {codingSource ? (ru ? 'Прочитано из блока' : 'Read from the ECU') : ru ? 'Загружен' : 'Loaded'}{' '}
+            <span className="font-mono text-fg">{doc.fileName}</span> — {stats.options} {ru ? 'опций' : 'options'}
+            {codingSource && codingSource.unmatched.length > 0 && (
+              <span className="text-faint">
+                {' '}
+                · {ru ? 'не распознано' : 'unrecognised'}: {codingSource.unmatched.length}
+              </span>
+            )}
           </span>
           <button type="button" onClick={() => setStep('edit')} className={btnPrimary}>
             {ru ? 'Изменить' : 'Edit'} <ArrowRight className="h-4 w-4" />
           </button>
         </div>
       )}
-      <div>
-        <h3 className="mb-3 text-sm font-medium text-fg">
-          {ru ? 'Прочитайте блок в NCS Expert' : 'Read the ECU in NCS Expert'}
-        </h3>
-        <Instructions
-          items={
-            ru
-              ? [
-                  <>Прочитайте FA: {code('VIN/ZCS/FA')} → {code('ZCS/FA f. ECU')}, серия по SP-Daten, источник CAS или FRM.</>,
-                  <>{code('Process ECU')} → выберите блок {sgbd ? code(sgbd) : 'нужный блок'} → {code('Change job')} → {code('CODIERDATEN_LESEN')} → {code('Execute job')}.</>,
-                  <>NCS Expert сохранит результат в {code('C:\\NCSEXPER\\WORK\\FSW_PSW.TRC')}.</>,
-                ]
-              : [
-                  <>Read the FA: {code('VIN/ZCS/FA')} → {code('ZCS/FA f. ECU')}, chassis per SP-Daten, source CAS or FRM.</>,
-                  <>{code('Process ECU')} → pick {sgbd ? code(sgbd) : 'the ECU'} → {code('Change job')} → {code('CODIERDATEN_LESEN')} → {code('Execute job')}.</>,
-                  <>NCS Expert saves the result to {code('C:\\NCSEXPER\\WORK\\FSW_PSW.TRC')}.</>,
-                ]
-          }
-        />
-      </div>
-      <TraceDrop
-        hint={
-          doc
-            ? ru
-              ? 'Новый файл заменит текущий.'
-              : 'A new file replaces the current one.'
-            : ru
-              ? 'Файл не покидает браузер.'
-              : 'The file never leaves your browser.'
-        }
-      />
+      <ReadFromCar />
+      <details className="group">
+        <summary className="cursor-pointer select-none text-sm text-mut hover:text-fg">
+          {ru ? 'Или через NCS Expert и файл FSW_PSW.TRC' : 'Or via NCS Expert and an FSW_PSW.TRC file'}
+        </summary>
+        <div className="mt-3 space-y-4">
+          <Instructions
+            items={
+              ru
+                ? [
+                    <>Прочитайте FA: {code('VIN/ZCS/FA')} → {code('ZCS/FA f. ECU')}, серия по SP-Daten, источник CAS или FRM.</>,
+                    <>{code('Process ECU')} → выберите блок {sgbd ? code(sgbd) : 'нужный блок'} → {code('Change job')} → {code('CODIERDATEN_LESEN')} → {code('Execute job')}.</>,
+                    <>NCS Expert сохранит результат в {code('C:\\NCSEXPER\\WORK\\FSW_PSW.TRC')}.</>,
+                  ]
+                : [
+                    <>Read the FA: {code('VIN/ZCS/FA')} → {code('ZCS/FA f. ECU')}, chassis per SP-Daten, source CAS or FRM.</>,
+                    <>{code('Process ECU')} → pick {sgbd ? code(sgbd) : 'the ECU'} → {code('Change job')} → {code('CODIERDATEN_LESEN')} → {code('Execute job')}.</>,
+                    <>NCS Expert saves the result to {code('C:\\NCSEXPER\\WORK\\FSW_PSW.TRC')}.</>,
+                  ]
+            }
+          />
+          <TraceDrop
+            hint={
+              doc
+                ? ru
+                  ? 'Новый файл заменит текущий.'
+                  : 'A new file replaces the current one.'
+                : ru
+                  ? 'Файл не покидает браузер.'
+                  : 'The file never leaves your browser.'
+            }
+          />
+        </div>
+      </details>
     </div>
   )
 }

@@ -22,8 +22,12 @@ export interface SpDatenModule {
   fileName: string
   /** ECU family from SGET.000, '' if unknown */
   family: string
+  /** diagnostic SGBDs this file codes, from SGET.000 (e.g. KOMB87) */
+  sgbds: string[]
   codingIndex: number
   functions: ModuleFunction[]
+  /** the raw file, for the coding layout (addresses, masks, value data) */
+  data?: Uint8Array
 }
 
 export interface SpDatenIndex {
@@ -58,7 +62,7 @@ const upper = (s: string) => s.toUpperCase()
 export function indexSpDatenItems(items: SpDatenItem[], folderName: string): SpDatenIndex {
   const fswNames = new Map<number, string>()
   const pswNames = new Map<number, string>()
-  const families = new Map<string, string>()
+  const families = new Map<string, { family: string; sgbds: string[] }>()
   let chassisMap: { chassis: string; folder: string }[] = []
   let tgrtbEntries: EcuAddressEntry[] = []
   const modules: SpDatenModule[] = []
@@ -76,7 +80,7 @@ export function indexSpDatenItems(items: SpDatenItem[], folderName: string): SpD
           if (!pswNames.has(id)) pswNames.set(id, k)
         }
       } else if (FAMILIES_FILE.test(name)) {
-        for (const f of parseModuleFamilies(item.data)) families.set(f.file, f.family)
+        for (const f of parseModuleFamilies(item.data)) families.set(f.file, f)
       } else if (CHASSIS_MAP_FILE.test(name)) {
         chassisMap = parseChassisMap(item.data)
       } else if (TGRB_FILE.test(name)) {
@@ -86,9 +90,11 @@ export function indexSpDatenItems(items: SpDatenItem[], folderName: string): SpD
         if (coding.status === ModuleStatus.MODULE_OK) {
           modules.push({
             fileName: name,
-            family: families.get(name) ?? '',
+            family: families.get(name)?.family ?? '',
+            sgbds: families.get(name)?.sgbds ?? [],
             codingIndex: coding.codingIndex,
             functions: coding.functions,
+            data: item.data,
           })
         } else {
           skipped.push(name)
@@ -103,7 +109,9 @@ export function indexSpDatenItems(items: SpDatenItem[], folderName: string): SpD
 
   // Families are defined in SGET.000 which may come after the modules.
   for (const m of modules) {
-    if (!m.family) m.family = families.get(m.fileName) ?? ''
+    const f = families.get(m.fileName)
+    if (!m.family) m.family = f?.family ?? ''
+    if (!m.sgbds.length) m.sgbds = f?.sgbds ?? []
   }
   modules.sort((a, b) => a.fileName.localeCompare(b.fileName))
 

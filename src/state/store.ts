@@ -5,7 +5,8 @@ import { readTextSmart } from '@/lib/fileio'
 import { parsePrg, type PrgFile } from '@/lib/prg'
 import { idbDel, idbGet, idbSet } from '@/lib/idb'
 import { indexSpDatenItems, readSpDatenFiles, type SpDatenIndex } from '@/lib/spdaten'
-import { resolveEcu } from '@/lib/ecuInfo'
+import { ecuLabel, resolveEcu } from '@/lib/ecuInfo'
+import { codingToTrc, parseCodingLayout, type CodingMemory } from '@/lib/codingLayout'
 import { locateSpDaten, readSpDatenLayout, type DirLike } from '@/lib/spdatenDir'
 import { parseCsv, type TranslationMap } from '@/lib/translations'
 import { looksLikeTranslationsCsv, parseDescriptions } from '@/lib/descriptions'
@@ -17,6 +18,7 @@ import type { Lang } from '@/lib/i18n'
 import { KdCanSerial, probeAdapter, type AdapterProbeResult } from '@/lib/serial'
 import {
   scanBus,
+  readCodingBlocks,
   readSgbdIndex,
   readVin as readVinSvc,
   type FoundEcu,
@@ -88,6 +90,10 @@ interface AppState {
   carFound: FoundEcu[]
   carError: string | null
   carVin: string | null
+  /** reading the coding from the ECU: blocks done / total */
+  codingRead: { done: number; total: number } | null
+  /** the coding last read from the car — kept for writing */
+  codingSource: { address: number; fileName: string; mem: CodingMemory; failed: number[]; unmatched: string[] } | null
   readingVin: boolean
 
   setView: (view: View) => void
@@ -122,6 +128,7 @@ interface AppState {
   scanCar: () => Promise<void>
   cancelScan: () => void
   readVin: () => Promise<void>
+  readCodingFromCar: () => Promise<void>
 }
 
 let serialInstance: KdCanSerial | null = null
@@ -173,6 +180,8 @@ export const useStore = create<AppState>((set, get) => ({
   carFound: [],
   carError: null,
   carVin: null,
+  codingRead: null,
+  codingSource: null,
   readingVin: false,
 
   selectEcu: (ecuSel) => {
@@ -182,7 +191,7 @@ export const useStore = create<AppState>((set, get) => ({
     set(
       keepDoc
         ? { ecuSel, view: 'coding' }
-        : { ecuSel, view: 'coding', doc: null, selected: null, query: '', changedOnly: false, linkedModule: null, step: 'read' },
+        : { ecuSel, view: 'coding', doc: null, selected: null, query: '', changedOnly: false, linkedModule: null, step: 'read', codingSource: null },
     )
   },
   setStep: (step) => set({ step }),
@@ -385,6 +394,52 @@ export const useStore = create<AppState>((set, get) => ({
     }
   },
 
+  readCodingFromCar: async () => {
+    const { ecuSel, spDaten, lang } = get()
+    const ru = lang === 'ru'
+    const module = spDaten?.modules.find((m) => m.fileName === ecuSel?.fileName)
+    if (!serialInstance?.connected || ecuSel?.address === undefined || !spDaten || !module?.data) {
+      set({ toast: ru ? 'Нужны кабель, блок из скана и SP-Daten с его файлом' : 'Needs the cable, a scanned ECU and its SP-Daten file' })
+      return
+    }
+    const layout = parseCodingLayout(module.data)
+    if (layout.blocks.length === 0) {
+      set({ toast: ru ? `В ${module.fileName} нет блоков кодировки` : `${module.fileName} has no coding blocks` })
+      return
+    }
+    set({ codingRead: { done: 0, total: layout.blocks.length } })
+    try {
+      const { mem, failed } = await readCodingBlocks(serialInstance, ecuSel.address, layout.blocks, (done, total) =>
+        set({ codingRead: { done, total } }),
+      )
+      if (mem.size === 0) {
+        set({ toast: ru ? 'Блок не отдал кодировку' : 'The ECU returned no coding data' })
+        return
+      }
+      const { text, unmatched } = codingToTrc(layout, mem, spDaten.fswNames, spDaten.pswNames)
+      const name = `${ecuLabel(spDaten, ecuSel).short.replace(/[^A-Za-z0-9_-]+/g, '_')}.TRC`
+      set({
+        doc: parseTrc(text, name),
+        selected: null,
+        query: '',
+        changedOnly: false,
+        step: 'edit',
+        codingSource: { address: ecuSel.address, fileName: module.fileName, mem, failed, unmatched },
+        toast: failed.length
+          ? ru
+            ? `Прочитано, но ${failed.length} блок(ов) не ответили`
+            : `Read, but ${failed.length} block(s) did not answer`
+          : ru
+            ? 'Кодировка прочитана из блока'
+            : 'Coding read from the ECU',
+      })
+    } catch (e) {
+      set({ toast: e instanceof Error ? e.message : String(e) })
+    } finally {
+      set({ codingRead: null })
+    }
+  },
+
   openFile: async (file) => {
     if (/\.prg$/i.test(file.name)) {
       await get().openPrgFile(file)
@@ -397,6 +452,7 @@ export const useStore = create<AppState>((set, get) => ({
       return
     }
     set({
+      codingSource: null,
       doc: parseTrc(content, file.name),
       selected: null,
       query: '',

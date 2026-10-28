@@ -234,15 +234,18 @@ export interface ModuleFamily {
   file: string
   /** e.g. "DSC" */
   family: string
+  /** diagnostic SGBDs served by this coding file (T_GRTB names, e.g. KMBI_PL2 → KOMB87) */
+  sgbds: string[]
 }
 
 /**
  * <folder>SGET.000: module file name -> ECU family, e.g. MK60_87.C0A -> DSC.
  * Tables SGAUSWAHL_* list SGNAME (MK60_87), CBD (C0A) and UMRSG (DSC) among
- * their leading string fields. Keys are upper case.
+ * their leading string fields; SGAUSWAHL_SGBD also names the diagnostic SGBD
+ * (KMBI_PL2.C08 → KOMB87). Keys are upper case.
  */
 export function parseModuleFamilies(p: Uint8Array): ModuleFamily[] {
-  const out = new Map<string, string>()
+  const out = new Map<string, { family: string; sgbds: Set<string> }>()
   const recs = parseNcsRecords(p)
   const tables = ['SGAUSWAHL_SGBD', 'SGAUSWAHL_VM', 'SGAUSWAHL_VMSGBD']
   for (const name of tables) {
@@ -251,11 +254,12 @@ export function parseModuleFamilies(p: Uint8Array): ModuleFamily[] {
     const names = splitFieldNames(t.fields)
     let strings = 0 // leading string fields, readable one after another
     while (strings < t.format.length && t.format[strings] === 'S') ++strings
-    let sg = -1, cbd = -1, family = -1
+    let sg = -1, cbd = -1, family = -1, sgbd = -1
     for (let i = 0; i < names.length && i < strings; i++) {
       if (names[i] === 'SGNAME') sg = i
       else if (names[i] === 'CBD') cbd = i
       else if (names[i] === 'UMRSG') family = i
+      else if (names[i] === 'SGBD') sgbd = i
     }
     if (sg < 0 || cbd < 0 || family < 0) continue
     for (const r of recs) {
@@ -269,10 +273,12 @@ export function parseModuleFamilies(p: Uint8Array): ModuleFamily[] {
       }
       if (!values[sg] || !values[cbd] || !values[family]) continue
       const file = (values[sg] + '.' + values[cbd]).toUpperCase()
-      out.set(file, values[family])
+      const entry = out.get(file) ?? { family: values[family], sgbds: new Set<string>() }
+      if (sgbd >= 0 && values[sgbd]) entry.sgbds.add(values[sgbd].toUpperCase())
+      out.set(file, entry)
     }
   }
-  return [...out.entries()].map(([file, family]) => ({ file, family }))
+  return [...out.entries()].map(([file, e]) => ({ file, family: e.family, sgbds: [...e.sgbds] }))
 }
 
 export interface ChassisMapEntry {
