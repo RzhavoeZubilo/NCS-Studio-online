@@ -96,7 +96,7 @@ function CarEcus() {
 
       <div className="px-1.5">
         {found.map((ecu) => {
-          const label = ecuLabel(spDaten, { address: ecu.address, fileName: ecu.variantFile })
+          const label = ecuLabel(spDaten, { address: ecu.address, sgbd: ecu.sgbd })
           const selected =
             ecuSel?.address === ecu.address ||
             (ecuSel?.address === undefined && !!ecu.variantFile && ecuSel?.fileName === ecu.variantFile)
@@ -112,7 +112,7 @@ function CarEcus() {
             >
               <span className="min-w-0 truncate text-sm font-medium">{label.short}</span>
               <span className={`shrink-0 font-mono text-xs ${ecu.variantFile ? 'text-blue-500' : 'text-faint'}`}>
-                {ecu.variantFile ?? hexAddr(ecu.address)}
+                {ecu.variantFile ?? ecu.sgbd ?? hexAddr(ecu.address)}
               </span>
             </button>
           )
@@ -125,6 +125,7 @@ function CarEcus() {
 function AllModules() {
   const lang = useStore((s) => s.lang)
   const spDaten = useStore((s) => s.spDaten)
+  const spDatenSaved = useStore((s) => s.spDatenSaved)
   const ecuSel = useStore((s) => s.ecuSel)
   const select = useSelectEcu()
   const [filter, setFilter] = useState('')
@@ -152,7 +153,13 @@ function AllModules() {
         {ru ? 'Все блоки SP-Daten' : 'All SP-Daten modules'}
         {spDaten && <span className="ml-1 normal-case tracking-normal text-faint2">({rows.length})</span>}
       </div>
-      {!spDaten ? (
+      {!spDaten && spDatenSaved ? (
+        <p className="px-3 text-xs leading-relaxed text-amber-600">
+          {ru
+            ? `SP-Daten «${spDatenSaved}» запомнены, но ещё не загружены: нажмите кнопку в верхней панели, чтобы браузер снова дал доступ к папке.`
+            : `SP-Daten “${spDatenSaved}” are remembered but not loaded yet: press the button in the top bar to grant folder access again.`}
+        </p>
+      ) : !spDaten ? (
         <p className="px-3 text-xs leading-relaxed text-faint">
           {ru
             ? 'Выберите папку SP-Daten кузова в верхней панели (например, E89 для E90) — здесь появится список всех блоков.'

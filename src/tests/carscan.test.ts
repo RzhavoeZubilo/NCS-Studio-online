@@ -2,7 +2,8 @@ import { describe, expect, it } from 'vitest'
 import type { Telegram } from '@/lib/kdcan'
 import type { KdCanSerial } from '@/lib/serial'
 import { readSgbdIndex, readVin, scanBus } from '@/lib/carscan'
-import { ecuLabel } from '@/lib/ecuInfo'
+import { ecuLabel, resolveEcu } from '@/lib/ecuInfo'
+import type { SpDatenIndex } from '@/lib/spdaten'
 
 /** Fake cable: answers each request (by target + hex payload) with canned telegrams. */
 function fakeSerial(answers: Record<string, number[][]>) {
@@ -45,7 +46,7 @@ describe('readSgbdIndex', () => {
   it('takes ID_COD_INDEX from payload byte 9 of 1A 80', async () => {
     const ident = [0x5a, 0x80, 0, 0, 0, 0, 0, 0, 0, 0x0b, 0x01, 0x02]
     const { serial } = fakeSerial({ '60:1a 80': [ident] })
-    expect(await readSgbdIndex(serial, 0x60)).toEqual({ codingIndex: 0x0b })
+    expect(await readSgbdIndex(serial, 0x60)).toEqual({ codingIndex: 0x0b, diagIndex: 0x0102 })
   })
 
   it('falls back to UDS 22 F1 50', async () => {
@@ -64,9 +65,51 @@ describe('scanBus', () => {
 })
 
 describe('ecuLabel', () => {
-  it('names E81–E93 ECUs by address without SP-Daten', () => {
+  it('names E81–E93 ECUs by address like ISTA without SP-Daten', () => {
     expect(ecuLabel(null, { address: 0x60 }).short).toBe('KOMBI')
     expect(ecuLabel(null, { address: 0x40 }).short).toBe('CAS')
+    expect(ecuLabel(null, { address: 0x00 }).short).toBe('JBE')
+    expect(ecuLabel(null, { address: 0x78 }).short).toBe('IHKA')
     expect(ecuLabel(null, { address: 0xc5 }).short).toBe('0xC5')
+  })
+
+  it('names the head unit and its MOST gateway after the variant', () => {
+    expect(ecuLabel(null, { address: 0x63, sgbd: 'RAD2' }).short).toBe('RAD2')
+    expect(ecuLabel(null, { address: 0x62, sgbd: 'RAD2_GW' }).short).toBe('RAD2-GW')
+    expect(ecuLabel(null, { address: 0x12, sgbd: 'D60M57A0' }).short).toBe('DDE')
+  })
+})
+
+describe('resolveEcu', () => {
+  const entry = (address: number, sgbd: string, group: string, diagIndex: number) => ({
+    address, sgbd, group, diagIndex, baureihe: 'E89', name: '',
+  })
+  const spDaten: SpDatenIndex = {
+    folderName: 'E89',
+    fswNames: new Map(),
+    pswNames: new Map(),
+    chassisMap: [],
+    skipped: [],
+    modules: [
+      { fileName: 'CCC_60.C21', family: 'CCC', codingIndex: 0x21, functions: [] },
+      { fileName: 'RAD2.C21', family: 'RAD', codingIndex: 0x21, functions: [] },
+      { fileName: 'KMBI_PL2.C08', family: 'KOMBI', codingIndex: 0x08, functions: [] },
+    ],
+    ecuByAddress: new Map([
+      [0x63, [entry(0x63, 'CCC_60', 'D_MMI', 0x0100), entry(0x63, 'RAD2', 'D_MMI', 0x0a00)]],
+      [0x60, [entry(0x60, 'KOMB87', 'D_KOMBI', 0x0300)]],
+    ]),
+  }
+
+  it('picks the SGBD by diagnostic index and the file by coding index', () => {
+    expect(resolveEcu(spDaten, 0x63, { codingIndex: 0x21, diagIndex: 0x0a00 })).toEqual({ sgbd: 'RAD2', variantFile: 'RAD2.C21' })
+  })
+
+  it('stays unresolved when the coding index alone is ambiguous', () => {
+    expect(resolveEcu(spDaten, 0x63, { codingIndex: 0x21 })).toEqual({ sgbd: undefined, variantFile: undefined })
+  })
+
+  it('finds coding files named unlike their SGBD through the SGET family', () => {
+    expect(resolveEcu(spDaten, 0x60, { codingIndex: 0x08, diagIndex: 0x0300 }).variantFile).toBe('KMBI_PL2.C08')
   })
 })

@@ -1,10 +1,14 @@
+import { useCallback } from 'react'
 import { create } from 'zustand'
 import { dominantIndent, parseTrc, type Segment, type TrcDocument } from '@/lib/trc'
 import { readTextSmart } from '@/lib/fileio'
 import { parsePrg, type PrgFile } from '@/lib/prg'
 import { idbDel, idbGet, idbSet } from '@/lib/idb'
 import { indexSpDatenItems, readSpDatenFiles, type SpDatenIndex } from '@/lib/spdaten'
-import { parseCsv } from '@/lib/translations'
+import { resolveEcu } from '@/lib/ecuInfo'
+import { locateSpDaten, readSpDatenLayout, type DirLike } from '@/lib/spdatenDir'
+import { parseCsv, type TranslationMap } from '@/lib/translations'
+import { looksLikeTranslationsCsv, parseDescriptions } from '@/lib/descriptions'
 import { mapFunctionNames, countSharedFunctions, pickModule } from '@/lib/ncsdata'
 import { translateValue } from '@/lib/ruTranslate'
 import faOptions from '@/data/faOptions.json'
@@ -14,7 +18,6 @@ import {
   scanBus,
   readSgbdIndex,
   readVin as readVinSvc,
-  resolveVariant,
   type FoundEcu,
 } from '@/lib/carscan'
 
@@ -59,6 +62,8 @@ interface AppState {
   spDatenStatus: string | null
   /** remembered SP-Daten folder that needs the read permission re-granted */
   spDatenSaved: string | null
+  /** chassis folders found in the picked SP-Daten folder, e.g. ["E60", "E89"] */
+  spDatenChassisOptions: string[]
   ecuSel: EcuSelection | null
   step: Step
   lang: Lang
@@ -67,6 +72,8 @@ interface AppState {
   paramLang: ParamLang
   linkedModule: { fileName: string; matchPct: number } | null
   overlay: Record<string, string> | null
+  /** Translations.csv from NCS Dummy: name → English description */
+  descriptions: TranslationMap | null
   overlayFile: string
   dictStatus: string | null
   autoTranslateRunning: boolean
@@ -88,6 +95,7 @@ interface AppState {
   openSpDatenFolder: () => Promise<void>
   openSpDatenFiles: (files: File[]) => Promise<void>
   loadSpDatenDir: (dir: FileSystemDirectoryHandle) => Promise<void>
+  chooseChassis: (chassis: string) => Promise<void>
   restoreSpDaten: () => Promise<void>
   reconnectSpDaten: () => Promise<void>
   selectEcu: (sel: EcuSelection | null) => void
@@ -103,6 +111,8 @@ interface AppState {
   setAutoTranslateRunning: (running: boolean) => void
   setFaqOpen: (open: boolean) => void
   restoreOverlay: () => Promise<void>
+  loadDescriptions: (content: string) => void
+  clearDescriptions: () => Promise<void>
   linkModule: () => void
   connectCar: () => Promise<void>
   disconnectCar: () => Promise<void>
@@ -120,40 +130,8 @@ type DirHandle = FileSystemDirectoryHandle & {
 }
 const SP_DATEN_DIR_KEY = 'spDatenDir'
 
-/** Reads every file of an SP-Daten chassis folder (daten\ + ecu\). */
-async function readSpDatenDir(
-  dir: FileSystemDirectoryHandle,
-  onProgress: (count: number) => void,
-): Promise<{ name: string; data: Uint8Array }[]> {
-  // daten\ holds modules/keywords; ecu\ holds T_GRTB.PRG (address map) and groups
-  const folders: FileSystemDirectoryHandle[] = []
-  try {
-    folders.push(await dir.getDirectoryHandle('daten'))
-  } catch {
-    // maybe the user picked the daten folder itself
-    folders.push(dir)
-  }
-  try {
-    folders.push(await dir.getDirectoryHandle('ecu'))
-  } catch {
-    // no ecu folder — fine
-  }
-  const items: { name: string; data: Uint8Array }[] = []
-  for (const folder of folders) {
-    const iter = (
-      folder as unknown as {
-        values(): AsyncIterable<{ kind: string; name: string; getFile(): Promise<File> }>
-      }
-    ).values()
-    for await (const entry of iter) {
-      if (entry.kind !== 'file') continue
-      const file = await entry.getFile()
-      items.push({ name: entry.name, data: new Uint8Array(await file.arrayBuffer()) })
-      if (items.length % 25 === 0) onProgress(items.length)
-    }
-  }
-  return items
-}
+/** The last SP-Daten folder picked or restored — re-read when the chassis changes. */
+let spDatenRoot: FileSystemDirectoryHandle | null = null
 
 export const useStore = create<AppState>((set, get) => ({
   doc: null,
@@ -170,6 +148,7 @@ export const useStore = create<AppState>((set, get) => ({
   spDaten: null,
   spDatenStatus: null,
   spDatenSaved: null,
+  spDatenChassisOptions: [],
   ecuSel: null,
   step: 'read',
   lang: (localStorage.getItem('lang') as Lang) || 'en',
@@ -178,6 +157,7 @@ export const useStore = create<AppState>((set, get) => ({
   paramLang: (localStorage.getItem('paramLang') as ParamLang) || 'ru',
   linkedModule: null,
   overlay: null,
+  descriptions: null,
   overlayFile: '',
   dictStatus: null,
   autoTranslateRunning: false,
@@ -289,9 +269,26 @@ export const useStore = create<AppState>((set, get) => ({
     try {
       const saved = await idbGet<Record<string, string>>('ruOverlay')
       if (saved) set({ overlay: saved })
+      const csv = await idbGet<string>('descriptionsCsv')
+      if (csv) set({ descriptions: parseDescriptions(csv) })
     } catch {
       // no overlay yet
     }
+  },
+
+  loadDescriptions: (content) => {
+    const descriptions = parseDescriptions(content)
+    void idbSet('descriptionsCsv', content)
+    const ru = get().lang === 'ru'
+    set({
+      descriptions,
+      toast: ru ? `Описания параметров загружены: ${descriptions.size}` : `Parameter descriptions loaded: ${descriptions.size}`,
+    })
+  },
+
+  clearDescriptions: async () => {
+    await idbDel('descriptionsCsv')
+    set({ descriptions: null })
   },
 
   connectCar: async () => {
@@ -337,32 +334,20 @@ export const useStore = create<AppState>((set, get) => ({
         () => cancelScanFlag,
         addresses,
       )
-      // Identify each ECU: read its SGBD index (22 F1 50) and resolve the
-      // exact variant file among the address candidates.
+      // Identify each ECU (1A 80): the diagnostic index picks the SGBD variant
+      // in T_GRTB, the coding index the .Cxx file.
       // scanning stays on with no progress while the variants are identified
       set({ carScanProgress: null })
       const resolved: FoundEcu[] = []
       for (const ecu of found) {
         if (cancelScanFlag) break
-        const candidates = spDaten
-          ? spDaten.modules
-              .filter((m) =>
-                (spDaten.ecuByAddress.get(ecu.address) ?? []).some((entry) =>
-                  m.fileName.toUpperCase().startsWith(entry.sgbd.toUpperCase()),
-                ),
-              )
-              .map((m) => ({ fileName: m.fileName, codingIndex: m.codingIndex }))
-          : []
         const id = await readSgbdIndex(serialInstance, ecu.address)
         const updated: FoundEcu = { ...ecu }
         if (id) {
           updated.sgbdIndex = id.sgbdIndex
           updated.codingIndex = id.codingIndex
-          const variant = resolveVariant(
-            updated,
-            candidates.map((c) => ({ fileName: c.fileName, codingIndex: c.codingIndex })),
-          )
-          if (variant) updated.variantFile = variant
+          updated.diagIndex = id.diagIndex
+          if (spDaten) Object.assign(updated, resolveEcu(spDaten, ecu.address, id))
         }
         resolved.push(updated)
         set({ carFound: [...resolved] })
@@ -401,6 +386,11 @@ export const useStore = create<AppState>((set, get) => ({
       return
     }
     const content = await readTextSmart(file)
+    // NCS Dummy's Translations.csv (any file name) — the description database
+    if (looksLikeTranslationsCsv(content)) {
+      get().loadDescriptions(content)
+      return
+    }
     set({
       doc: parseTrc(content, file.name),
       selected: null,
@@ -527,23 +517,40 @@ export const useStore = create<AppState>((set, get) => ({
       set({ toast: 'No SP-Daten files among the selected files' })
       return
     }
-    set({ spDaten: indexSpDatenItems(items, 'selection'), spDatenSaved: null })
+    set({ spDaten: indexSpDatenItems(items, 'selection'), spDatenSaved: null, spDatenChassisOptions: [] })
   },
 
   loadSpDatenDir: async (dir) => {
-    set({ spDatenStatus: 'Indexing…' })
+    spDatenRoot = dir
+    const ru = get().lang === 'ru'
+    set({ spDatenStatus: ru ? 'поиск папок…' : 'looking for folders…' })
     try {
-      const items = await readSpDatenDir(dir, (n) => set({ spDatenStatus: `Indexing… ${n} files` }))
-      if (items.length === 0) {
-        set({ toast: 'No SP-Daten files found in this folder' })
+      const preferred = localStorage.getItem('spDatenChassis') ?? 'E89'
+      const layout = await locateSpDaten(dir as unknown as DirLike, preferred)
+      if (!layout) {
+        set({
+          toast: ru
+            ? 'В папке нет данных NCS (SWTFSW…). Выберите папку SP-Daten, NCSEXPER\\DATEN или папку кузова.'
+            : 'No NCS data (SWTFSW…) in this folder. Pick the SP-Daten, NCSEXPER\\DATEN or a chassis folder.',
+        })
         return
       }
-      set({ spDaten: indexSpDatenItems(items, dir.name), spDatenSaved: null })
+      const items = await readSpDatenLayout(layout, (n) => set({ spDatenStatus: `${layout.chassis} · ${n}…` }))
+      set({
+        spDaten: indexSpDatenItems(items, layout.chassis),
+        spDatenSaved: null,
+        spDatenChassisOptions: layout.chassisOptions,
+      })
     } catch (e) {
       set({ toast: `Cannot read folder: ${e instanceof Error ? e.message : String(e)}` })
     } finally {
       set({ spDatenStatus: null })
     }
+  },
+
+  chooseChassis: async (chassis) => {
+    localStorage.setItem('spDatenChassis', chassis)
+    if (spDatenRoot) await get().loadSpDatenDir(spDatenRoot)
   },
 
   restoreSpDaten: async () => {
@@ -583,7 +590,7 @@ const FA_BY_CODE: Record<string, { ru?: string; en: string }> = Object.fromEntri
 export function useTranslator() {
   const paramLang = useStore((s) => s.paramLang)
   const overlay = useStore((s) => s.overlay)
-  return (token: string): string | undefined => {
+  return useCallback((token: string): string | undefined => {
     if (paramLang === 'original') return undefined
     const key = token.trim().toLowerCase()
     const own = overlay?.[key]
@@ -598,5 +605,5 @@ export function useTranslator() {
     // word-by-word fallback, so nicht_aktiv reads "выключено", not "Nicht включено"
     const tr = translateValue(token, lang)
     return tr.toLowerCase() !== token.toLowerCase() ? tr : undefined
-  }
+  }, [paramLang, overlay])
 }

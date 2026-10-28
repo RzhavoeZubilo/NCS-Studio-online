@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { Plus, RotateCcw, X } from 'lucide-react'
-import { useStore, useTranslator } from '@/state/store'
+import { useStore } from '@/state/store'
+import { useDescribe } from '@/state/describe'
 import { usePossibleValues } from '@/state/possibleValues'
 import { isChanged } from '@/lib/trc'
 import { t } from '@/lib/i18n'
@@ -45,7 +46,7 @@ export function DetailPanel() {
   const lang = useStore((s) => s.lang)
   const doc = useStore((s) => s.doc)
   const selected = useStore((s) => s.selected)
-  const tr = useTranslator()
+  const describe = useDescribe()
   const setValues = useStore((s) => s.setValues)
   const revert = useStore((s) => s.revert)
   const possible = usePossibleValues()
@@ -55,15 +56,18 @@ export function DetailPanel() {
   if (seg.kind !== 'option') return null
 
   const changed = isChanged(seg)
-  const nameTr = tr(seg.name)
-  // quick choices: the module's possible values when known
-  const quick = possible.get(seg.name.toLowerCase()) ?? ['aktiv', 'nicht_aktiv']
+  const text = describe.fn(seg.name)
+  // choices: the module's possible values (SP-Daten), else the values named in the description
+  const quick = possible.get(seg.name.toLowerCase()) ?? [...text.values.keys()]
+  const current = seg.values.map((v) => v.text)
 
   return (
     <aside className="flex w-[380px] shrink-0 flex-col overflow-y-auto border-l border-line bg-panel/30">
       <div className="border-b border-line px-4 py-3">
         <div className="break-all font-mono text-sm font-semibold text-blue-500">{seg.name}</div>
-        {nameTr && <div className="mt-1 text-sm text-mut">{nameTr}</div>}
+        {text.title !== seg.name && <div className="mt-1 text-sm text-fg">{text.title}</div>}
+        {text.original && <div className="mt-0.5 text-sm text-mut">{text.original}</div>}
+        {text.hint && <div className="mt-1 font-mono text-xs text-faint">{text.hint}</div>}
         {changed && (
           <div className="mt-2 inline-flex items-center gap-1 rounded bg-amber-500/15 px-2 py-0.5 text-xs text-amber-600">
             {t(lang, 'modified')}
@@ -78,7 +82,7 @@ export function DetailPanel() {
         <div className="space-y-2">
           {seg.values.map((v, vi) => {
             const valueChanged = v.text !== seg.original[vi]?.text
-            const valueTr = tr(v.text)
+            const valueTr = describe.value(seg.name, v.text)
             return (
               <div key={vi}>
                 <div className="flex items-center gap-1">
@@ -123,22 +127,29 @@ export function DetailPanel() {
           }}
         />
 
-        {seg.values.length <= 1 && (
+        {seg.values.length <= 1 && quick.length > 0 && (
           <div className="mt-4">
             <div className="mb-1.5 text-xs font-medium uppercase tracking-wide text-faint">
               {t(lang, 'quickSet')}
             </div>
-            <div className="flex flex-wrap gap-1.5">
-              {quick.map((val) => (
-                <button
-                  key={val}
-                  type="button"
-                  onClick={() => setValues(selected, [val])}
-                  className="rounded-md border border-line bg-panel px-2.5 py-1 font-mono text-xs text-fg2 transition-colors hover:border-blue-500 hover:text-blue-300"
-                >
-                  {val}
-                </button>
-              ))}
+            <div className="space-y-1">
+              {quick.map((val) => {
+                const active = current.includes(val)
+                const note = describe.value(seg.name, val)
+                return (
+                  <button
+                    key={val}
+                    type="button"
+                    onClick={() => setValues(selected, [val])}
+                    className={`flex w-full items-baseline gap-2 rounded-md border px-2.5 py-1.5 text-left text-xs transition-colors ${
+                      active ? 'border-blue-600 bg-sel text-fg' : 'border-line bg-panel text-fg2 hover:border-blue-500'
+                    }`}
+                  >
+                    <span className="shrink-0 font-mono">{val}</span>
+                    {note && <span className="text-mut">{note}</span>}
+                  </button>
+                )
+              })}
             </div>
           </div>
         )}

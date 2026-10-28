@@ -1,4 +1,6 @@
+import { useRef } from 'react'
 import { Trash2, X } from 'lucide-react'
+import { readTextSmart } from '@/lib/fileio'
 import { useStore } from '@/state/store'
 import { t } from '@/lib/i18n'
 
@@ -41,6 +43,11 @@ export function SettingsPanel({ onClose }: { onClose: () => void }) {
   const paramLang = useStore((s) => s.paramLang)
   const setParamLang = useStore((s) => s.setParamLang)
   const showToast = useStore((s) => s.showToast)
+  const descriptions = useStore((s) => s.descriptions)
+  const loadDescriptions = useStore((s) => s.loadDescriptions)
+  const clearDescriptions = useStore((s) => s.clearDescriptions)
+  const csvInput = useRef<HTMLInputElement>(null)
+  const ru = lang === 'ru'
 
   const field = 'text-xs font-medium uppercase tracking-wide text-faint'
 
@@ -90,6 +97,46 @@ export function SettingsPanel({ onClose }: { onClose: () => void }) {
               ? 'Русский язык — встроенный словарь терминов BMW + ваши дополнения из режима «Словарь».'
               : 'Russian uses the built-in BMW term dictionary plus your additions from the Dictionary view.'}
           </p>
+        </div>
+
+        <div>
+          <div className={field}>{ru ? 'Описания параметров (NCS Dummy)' : 'Parameter descriptions (NCS Dummy)'}</div>
+          <div className="mt-1.5 text-sm text-fg2">
+            {descriptions
+              ? `Translations.csv · ${descriptions.size} ${ru ? 'записей' : 'entries'}`
+              : ru
+                ? 'Не загружены — выберите Translations.csv из папки NCS Dummy'
+                : 'Not loaded — choose Translations.csv from the NCS Dummy folder'}
+          </div>
+          <div className="mt-2 flex items-center gap-2">
+            <button
+              type="button"
+              onClick={() => csvInput.current?.click()}
+              className="rounded-lg border border-line bg-panel px-3 py-1.5 text-sm text-fg2 transition-colors hover:bg-panel2 hover:text-fg"
+            >
+              {descriptions ? (ru ? 'Заменить файл' : 'Replace file') : ru ? 'Выбрать файл' : 'Choose file'}
+            </button>
+            {descriptions && (
+              <button
+                type="button"
+                onClick={() => void clearDescriptions()}
+                className="inline-flex items-center gap-1.5 whitespace-nowrap rounded-lg border border-line bg-panel px-3 py-1.5 text-sm text-mut transition-colors hover:bg-panel2 hover:text-fg"
+              >
+                <Trash2 className="h-3.5 w-3.5" /> {ru ? 'Убрать' : 'Remove'}
+              </button>
+            )}
+          </div>
+          <input
+            ref={csvInput}
+            type="file"
+            accept=".csv,.txt"
+            className="hidden"
+            onChange={(e) => {
+              const file = e.target.files?.[0]
+              e.target.value = ''
+              if (file) void readTextSmart(file).then(loadDescriptions)
+            }}
+          />
         </div>
 
         <div>

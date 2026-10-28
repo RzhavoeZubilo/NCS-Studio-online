@@ -2,7 +2,8 @@ import { useEffect, useRef } from 'react'
 import type { KeyboardEvent as ReactKeyboardEvent } from 'react'
 import { useVirtualizer } from '@tanstack/react-virtual'
 import { Pencil, RotateCcw } from 'lucide-react'
-import { useStore, useTranslator } from '@/state/store'
+import { useStore } from '@/state/store'
+import { useDescribe } from '@/state/describe'
 import { isChanged } from '@/lib/trc'
 import { usePossibleValues } from '@/state/possibleValues'
 
@@ -15,7 +16,7 @@ export function OptionRows({ rows }: { rows: number[] }) {
   const pendingScroll = useStore((s) => s.pendingScroll)
   const clearScroll = useStore((s) => s.clearScroll)
   const lang = useStore((s) => s.lang)
-  const tr = useTranslator()
+  const describe = useDescribe()
   const possible = usePossibleValues()
   const parentRef = useRef<HTMLDivElement>(null)
 
@@ -62,10 +63,12 @@ export function OptionRows({ rows }: { rows: number[] }) {
           if (seg.kind !== 'option') return null
           const changed = isChanged(seg)
           const current = seg.values.map((v) => v.text)
-          const nameTr = tr(seg.name)
-          const options = possible.get(seg.name.toLowerCase())
+          const text = describe.fn(seg.name)
+          // SP-Daten list of values, else the values named in the description
+          const options = possible.get(seg.name.toLowerCase()) ?? (text.values.size ? [...text.values.keys()] : undefined)
           const single = current.length <= 1 && options && options.length > 0
           const choices = single && !options.includes(current[0] ?? '') ? [current[0] ?? '', ...options] : options
+          const valueNote = (v: string) => describe.value(seg.name, v)
 
           return (
             <div
@@ -76,9 +79,14 @@ export function OptionRows({ rows }: { rows: number[] }) {
                 changed ? 'border-l-amber-500 bg-amber-500/5' : 'border-l-transparent'
               } ${selected === segIdx ? 'bg-sel' : 'hover:bg-panel/50'}`}
             >
-              <div className="min-w-0 flex-1">
-                <div className="truncate text-sm text-fg">{nameTr ?? seg.name}</div>
-                {nameTr && <div className="truncate font-mono text-xs text-faint">{seg.name}</div>}
+              <div className="min-w-0 flex-1" title={[text.title, text.original, text.hint].filter(Boolean).join('\n')}>
+                <div className="truncate text-sm text-fg">{text.title}</div>
+                {text.title !== seg.name && (
+                  <div className="truncate text-xs text-faint">
+                    <span className="font-mono">{seg.name}</span>
+                    {text.original && <span> · {text.original}</span>}
+                  </div>
+                )}
               </div>
 
               {single && choices ? (
@@ -91,7 +99,7 @@ export function OptionRows({ rows }: { rows: number[] }) {
                   }`}
                 >
                   {choices.map((v) => {
-                    const vt = tr(v)
+                    const vt = valueNote(v)
                     return (
                       <option key={v} value={v}>
                         {v}
@@ -112,7 +120,12 @@ export function OptionRows({ rows }: { rows: number[] }) {
                     changed ? 'border-amber-600/60 text-amber-600' : 'border-line text-fg2'
                   }`}
                 >
-                  <span className="truncate">{current.join(', ') || '—'}</span>
+                  <span className="truncate">
+                    {current.join(', ') || '—'}
+                    {current.length === 1 && valueNote(current[0]) && (
+                      <span className="font-sans text-faint"> — {valueNote(current[0])}</span>
+                    )}
+                  </span>
                   <Pencil className="h-3.5 w-3.5 shrink-0 text-faint" />
                 </button>
               )}

@@ -1,6 +1,7 @@
 import { useRef, useState } from 'react'
 import type { ChangeEvent } from 'react'
 import {
+  AlertTriangle,
   BookOpen,
   Cpu,
   Database,
@@ -95,6 +96,8 @@ function SpDatenStatus() {
   const openFolder = useStore((s) => s.openSpDatenFolder)
   const openFiles = useStore((s) => s.openSpDatenFiles)
   const reconnect = useStore((s) => s.reconnectSpDaten)
+  const chassisOptions = useStore((s) => s.spDatenChassisOptions)
+  const chooseChassis = useStore((s) => s.chooseChassis)
   const inputRef = useRef<HTMLInputElement>(null)
   const ru = lang === 'ru'
   const hasPicker = 'showDirectoryPicker' in window
@@ -118,22 +121,63 @@ function SpDatenStatus() {
       </span>
     )
   } else if (spDaten) {
+    const noTable = spDaten.ecuByAddress.size === 0
     content = (
-      <button
-        type="button"
-        onClick={pick}
-        title={ru ? 'Выбрать другую папку SP-Daten' : 'Choose another SP-Daten folder'}
-        className={`${chip} transition-colors hover:bg-panel2`}
-      >
-        <Database className="h-3.5 w-3.5 text-blue-500" />
-        {spDaten.folderName} · {spDaten.modules.length} {ru ? 'блоков' : 'modules'}
-      </button>
+      <span className={chip}>
+        <button
+          type="button"
+          onClick={pick}
+          title={ru ? 'Выбрать другую папку SP-Daten' : 'Choose another SP-Daten folder'}
+          className="inline-flex items-center gap-1.5 transition-colors hover:text-fg"
+        >
+          <Database className="h-3.5 w-3.5 text-blue-500" />
+          SP-Daten
+        </button>
+        {chassisOptions.length > 1 ? (
+          <select
+            value={spDaten.folderName}
+            onChange={(e) => void chooseChassis(e.target.value)}
+            title={ru ? 'Кузов' : 'Chassis'}
+            className="rounded border border-line bg-panel px-1 text-xs text-fg outline-none"
+          >
+            {chassisOptions.map((c) => (
+              <option key={c} value={c}>
+                {c}
+              </option>
+            ))}
+          </select>
+        ) : (
+          <span className="text-fg">{spDaten.folderName}</span>
+        )}
+        · {spDaten.modules.length} {ru ? 'блоков' : 'modules'}
+        {noTable && (
+          <span
+            className="text-amber-600"
+            title={
+              ru
+                ? 'Не найден T_GRTB.PRG (папка ECU) — варианты блоков в машине не определяются. Выберите корень SP-Daten, где есть DATEN и ECU.'
+                : 'T_GRTB.PRG (ECU folder) not found — ECU variants cannot be resolved. Pick the SP-Daten root holding DATEN and ECU.'
+            }
+          >
+            · {ru ? 'без ECU' : 'no ECU'}
+          </span>
+        )}
+      </span>
     )
   } else if (saved) {
     content = (
-      <button type="button" onClick={() => void reconnect()} className={btn}>
-        <Database className="h-4 w-4 text-amber-500" />
-        {ru ? `Открыть SP-Daten ${saved}` : `Reopen SP-Daten ${saved}`}
+      <button
+        type="button"
+        onClick={() => void reconnect()}
+        title={
+          ru
+            ? `Папка «${saved}» запомнена, но после перезапуска браузер снова спрашивает доступ`
+            : `“${saved}” is remembered, but the browser asks for access again after a restart`
+        }
+        className="inline-flex items-center gap-1.5 whitespace-nowrap rounded-lg border border-amber-600/50 bg-amber-500/10 px-3 py-1.5 text-sm font-medium text-amber-600 transition-colors hover:bg-amber-500/20"
+      >
+        <AlertTriangle className="h-4 w-4" />
+        {ru ? 'SP-Daten не загружены · открыть' : 'SP-Daten not loaded · open'}
       </button>
     )
   } else {
@@ -221,7 +265,7 @@ export function TopBar() {
         title={lang === 'ru' ? 'К кодированию' : 'Back to coding'}
       >
         <FileCode2 className="h-5 w-5 text-blue-500" />
-        <span className="font-semibold tracking-tight text-fg">NCS Studio</span>
+        <span className="whitespace-nowrap font-semibold tracking-tight text-fg">NCS Studio</span>
       </button>
 
       <CarStatus />

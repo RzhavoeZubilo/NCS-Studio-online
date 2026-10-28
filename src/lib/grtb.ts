@@ -21,6 +21,8 @@ export interface EcuAddressEntry {
   baureihe: string
   /** German module name, e.g. "Junction Box Beifahrer" */
   name: string
+  /** KWP rows ("00 ---- 0100"): diagnostic index (ID_DIAG_INDEX) of this variant */
+  diagIndex?: number
 }
 
 export function parseZuordnung(prg: PrgFile): EcuAddressEntry[] {
@@ -33,8 +35,10 @@ export function parseZuordnung(prg: PrgFile): EcuAddressEntry[] {
       if (parts.length < 2) continue
       const address = parseInt(parts[0], 16)
       if (Number.isNaN(address) || address < 0 || address > 0xff) continue
+      const diag = parts.length >= 3 ? parseInt(parts[parts.length - 1], 16) : NaN
       out.push({
         address,
+        diagIndex: Number.isNaN(diag) ? undefined : diag,
         sgbd: row[1] ?? '',
         group: row[2] ?? '',
         baureihe: row[3] ?? '',

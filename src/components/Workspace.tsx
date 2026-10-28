@@ -1,7 +1,8 @@
 import { useMemo, useRef, useState } from 'react'
 import type { ChangeEvent, ReactNode } from 'react'
 import { AlertTriangle, ArrowRight, Check, FileDown, Upload } from 'lucide-react'
-import { useStore, useTranslator, type Step } from '@/state/store'
+import { useStore, type Step } from '@/state/store'
+import { useDescribe } from '@/state/describe'
 import { docStats, isChanged, serializeMan, serializeTrc } from '@/lib/trc'
 import { saveTextFile } from '@/lib/fileio'
 import { ecuLabel, hexAddr, sgbdOf, variantCandidates } from '@/lib/ecuInfo'
@@ -42,12 +43,19 @@ function Welcome() {
   const ru = useRu()
   const spDaten = useStore((s) => s.spDaten)
   const connected = useStore((s) => s.carConnected)
+  const descriptions = useStore((s) => s.descriptions)
   const items = [
     {
       done: !!spDaten,
       text: ru
         ? 'Выберите папку SP-Daten кузова в верхней панели — для E90 это E89. Папка запоминается.'
         : 'Choose the chassis SP-Daten folder in the top bar — E89 for an E90. The folder is remembered.',
+    },
+    {
+      done: !!descriptions,
+      text: ru
+        ? 'Перетащите в окно Translations.csv из папки NCS Dummy — появятся описания параметров и значений wert_xx. Файл запоминается.'
+        : 'Drop Translations.csv from the NCS Dummy folder into the window — parameter and wert_xx descriptions appear. The file is remembered.',
     },
     {
       done: connected,
@@ -101,6 +109,7 @@ function EcuHeader() {
   const doc = useStore((s) => s.doc)
   const linkedModule = useStore((s) => s.linkedModule)
   const selectEcu = useStore((s) => s.selectEcu)
+  const carFound = useStore((s) => s.carFound)
   if (!ecuSel) {
     return (
       <div className="border-b border-line px-5 py-3">
@@ -118,9 +127,13 @@ function EcuHeader() {
     )
   }
 
-  const label = ecuLabel(spDaten, ecuSel)
+  const found = carFound.find((e) => e.address === ecuSel.address)
+  const label = ecuLabel(spDaten, { ...ecuSel, sgbd: found?.sgbd })
   const module = spDaten?.modules.find((m) => m.fileName === ecuSel.fileName)
-  const candidates = !ecuSel.fileName && spDaten && ecuSel.address !== undefined ? variantCandidates(spDaten, ecuSel.address) : []
+  const candidates =
+    !ecuSel.fileName && spDaten && ecuSel.address !== undefined
+      ? variantCandidates(spDaten, ecuSel.address, found?.diagIndex)
+      : []
   const mismatch = doc && linkedModule && ecuSel.fileName && linkedModule.fileName !== ecuSel.fileName
 
   return (
@@ -300,7 +313,7 @@ function ModuleFunctions() {
   const ru = useRu()
   const spDaten = useStore((s) => s.spDaten)
   const ecuSel = useStore((s) => s.ecuSel)
-  const tr = useTranslator()
+  const describe = useDescribe()
   const [filter, setFilter] = useState('')
   const module = spDaten?.modules.find((m) => m.fileName === ecuSel?.fileName)
 
@@ -313,7 +326,9 @@ function ModuleFunctions() {
 
   if (!spDaten || !module) return null
   const f = filter.trim().toLowerCase()
-  const visible = f ? functions.filter((fn) => fn.name.toLowerCase().includes(f) || (tr(fn.name) ?? '').toLowerCase().includes(f)) : functions
+  const visible = f
+    ? functions.filter((fn) => fn.name.toLowerCase().includes(f) || describe.fn(fn.name).title.toLowerCase().includes(f))
+    : functions
 
   return (
     <div className="flex min-h-0 flex-1 flex-col">
@@ -333,14 +348,14 @@ function ModuleFunctions() {
         {visible.map((fn) => (
           <div key={fn.id} className="border-b border-line px-5 py-2">
             <div className="flex items-baseline gap-2">
-              <span className="text-sm text-fg">{tr(fn.name) ?? fn.name}</span>
-              {tr(fn.name) && <span className="font-mono text-xs text-faint">{fn.name}</span>}
+              <span className="text-sm text-fg">{describe.fn(fn.name).title}</span>
+              {describe.fn(fn.name).title !== fn.name && <span className="font-mono text-xs text-faint">{fn.name}</span>}
             </div>
             <div className="mt-1 flex flex-wrap gap-1">
               {fn.values.map((v) => {
                 const name = spDaten.pswNames.get(v) ?? `#${v}`
                 return (
-                  <span key={v} title={tr(name)} className="rounded border border-line px-1.5 font-mono text-xs text-mut">
+                  <span key={v} title={describe.value(fn.name, name)} className="rounded border border-line px-1.5 font-mono text-xs text-mut">
                     {name}
                   </span>
                 )
@@ -375,7 +390,7 @@ function EditStep() {
   const setChangedOnly = useStore((s) => s.setChangedOnly)
   const revertAll = useStore((s) => s.revertAll)
   const setStep = useStore((s) => s.setStep)
-  const tr = useTranslator()
+  const describe = useDescribe()
 
   const rows = useMemo(() => {
     if (!doc) return []
@@ -385,13 +400,14 @@ function EditStep() {
       if (seg.kind !== 'option') return
       if (changedOnly && !isChanged(seg)) return
       if (q) {
-        const hay = `${seg.name}\n${tr(seg.name) ?? ''}\n${seg.values.map((v) => v.text).join('\n')}`.toLowerCase()
+        const text = describe.fn(seg.name)
+        const hay = `${seg.name}\n${text.title}\n${text.original ?? ''}\n${seg.values.map((v) => v.text).join('\n')}`.toLowerCase()
         if (!hay.includes(q)) return
       }
       out.push(i)
     })
     return out
-  }, [doc, query, changedOnly, tr])
+  }, [doc, query, changedOnly, describe])
 
   if (!doc) {
     return (
@@ -453,7 +469,7 @@ function WriteStep() {
   const setStep = useStore((s) => s.setStep)
   const scrollTo = useStore((s) => s.scrollTo)
   const showToast = useStore((s) => s.showToast)
-  const tr = useTranslator()
+  const describe = useDescribe()
   if (!doc) return <NeedTrace />
 
   const sgbd = ecuSel?.fileName ? sgbdOf(ecuSel.fileName) : null
@@ -493,7 +509,7 @@ function WriteStep() {
                 className="grid w-full grid-cols-[minmax(0,1.2fr)_minmax(0,1fr)] items-center gap-3 border-b border-line px-4 py-2 text-left last:border-b-0 hover:bg-panel/60"
               >
                 <span className="min-w-0">
-                  <span className="block truncate text-sm text-fg">{tr(c.name) ?? c.name}</span>
+                  <span className="block truncate text-sm text-fg">{describe.fn(c.name).title}</span>
                   <span className="block truncate font-mono text-xs text-faint">{c.name}</span>
                 </span>
                 <span className="truncate font-mono text-[13px]">

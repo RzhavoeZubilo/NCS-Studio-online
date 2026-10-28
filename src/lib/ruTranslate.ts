@@ -64,6 +64,13 @@ export function translateFunctionName(name: string, lang: OutputLang): string {
   return translatePhrase(name, lang)
 }
 
+/** Только точный перевод из словаря (без пословной сборки), или null. */
+export function translateExact(token: string, lang: OutputLang): string | null {
+  const key = token.toLowerCase()
+  const exact = VALUE_OVERRIDES[key] ?? FUNCTION_OVERRIDES[key]
+  return exact ? pick(exact, lang) : null
+}
+
 /** Перевод значения. */
 export function translateValue(value: string, lang: OutputLang): string {
   const key = value.toLowerCase()

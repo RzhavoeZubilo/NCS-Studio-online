@@ -18,6 +18,10 @@ export interface FoundEcu {
   address: number
   /** first response payload bytes (0x7E positive / 0x7F negative / ...) */
   response: number[]
+  /** diagnostic index from 1A 80 (ID_DIAG_INDEX): picks the SGBD variant in T_GRTB */
+  diagIndex?: number
+  /** exact SGBD variant from T_GRTB, e.g. "RAD2_GW" */
+  sgbd?: string
   /** SGBD index reported by 22 F1 50 (UDS ECUs), as uppercase hex string */
   sgbdIndex?: string
   /** coding index (last byte of the SGBD index), when readable */
@@ -101,15 +105,16 @@ async function query(
 
 /**
  * Reads the coding index of one ECU. E-series ECUs speak KWP2000:
- * 1A 80 ReadECUIdentification → 5A 80 ..., ID_COD_INDEX is payload byte 9
- * (KOMB87.prg job IDENT). UDS ECUs answer 22 F1 50 → 62 F1 50 <SGBD index>,
+ * 1A 80 ReadECUIdentification → 5A 80 ..., ID_COD_INDEX is payload byte 9 and
+ * ID_DIAG_INDEX bytes 10–11 (KOMB87.prg job IDENT). UDS ECUs answer 22 F1 50 → 62 F1 50 <SGBD index>,
  * whose last byte is the coding index (RAD22.C32 → 0x32).
  */
 export async function readSgbdIndex(
   serial: KdCanSerial,
   address: number,
-): Promise<{ sgbdIndex?: string; codingIndex: number } | null> {
+): Promise<{ sgbdIndex?: string; codingIndex: number; diagIndex?: number } | null> {
   const ident = await query(serial, address, [0x1a, 0x80], 300)
+  if (ident && ident.length > 11) return { codingIndex: ident[9], diagIndex: (ident[10] << 8) | ident[11] }
   if (ident && ident.length > 9) return { codingIndex: ident[9] }
   const uds = await query(serial, address, [0x22, 0xf1, 0x50], 250)
   if (uds && uds.length >= 4) {
@@ -117,25 +122,6 @@ export async function readSgbdIndex(
     return { sgbdIndex: toHex(payload), codingIndex: payload[payload.length - 1] }
   }
   return null
-}
-
-export interface ResolvedEcu extends FoundEcu {
-  /** exact variant file, e.g. "RAD22.C32" (resolved via the SGBD index) */
-  variantFile?: string
-}
-
-/**
- * Resolves the exact variant file for an ECU: among the address candidates
- * (from the T_GRTB assignment table) finds the module whose file name matches
- * the reported SGBD index (SGNAME.C<codingIndex>).
- */
-export function resolveVariant(
-  ecu: FoundEcu,
-  candidates: { fileName: string; codingIndex: number }[],
-): string | undefined {
-  if (ecu.codingIndex === undefined) return undefined
-  const matches = candidates.filter((c) => c.codingIndex === ecu.codingIndex)
-  return matches.length === 1 ? matches[0].fileName : undefined
 }
 
 /** First 17 VIN characters of an ASCII payload, or null. */
